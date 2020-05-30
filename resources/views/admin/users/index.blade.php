@@ -1,0 +1,325 @@
+@extends('layouts.app')
+
+@section('stylesheet')
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+@endsection
+
+@section('content')
+<div class="content-wrapper">
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Users</h1>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <section class="content">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-group">
+                            <div class="card">
+                                <div class="card-body" style="background-color:lightgray">
+                                    <h5 class="card-title">Total Users</h5>
+                                    <h1 class="card-text">50</h1>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body" style="background-color:lightgray">
+                                    <h5 class="card-title">This Month Users</h5>
+                                    <h1 class="card-text">50</h1>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body bordered" style="background-color:lightgray">
+                                    <h5 class="card-title">Active Users</h5>
+                                    <h1 class="card-text">50</h1>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body" style="background-color:lightgray">
+                                    <h5 class="card-title">User Growth</h5>
+                                    <h1 class="card-text">100%</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-header">
+                        Export User
+                        <button type="button" name="create_user" data-dismiss="modal" id="create_user" class="btn btn-success float-right btn-sm  ml-2">Add</button>
+                        <form class="form-inline float-right" method="POST" action="{{route('users.export')}}">
+                            @csrf
+                            <div class="form-group" id="from_date">
+                                <label for="date_from">Date From: </label>
+                                <input type="text" class="date-from" id="date_from" name="date_from" placeholder="MM/DD/YYYY">
+                            </div>
+                            <div class="form-group ml-3" id="to_date">
+                                <label for="date_to">Date To: </label>
+                                <input type="text" class="date-to" id="date_to" name="date_to" placeholder="MM/DD/YYYY">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm ml-3">Export</button>
+                        </form>
+                    </div>
+                    <div class="card-body">
+                        <table id="user-table" class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Active</th>
+                                    <th>Role</th>
+                                    <th>Action</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div id="userModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add New User</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" id="user_form" class="form-horizontal">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">User Name : </label>
+                                            <input type="text" name="name" id="name" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">Email : </label>
+                                            <input type="email" name="email" id="email" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">Password : </label>
+                                            <input type="password" name="password" id="password" class="form-control" />
+                                        </div>
+                                </div>
+                                <br />
+                                <div class="form-group text-center">
+                                    <input type="hidden" name="action" id="action" value="Add" />
+                                    <input type="hidden" name="hidden_id" id="hidden_id" />
+                                    <input type="submit" name="action_button" id="action_button" class="btn btn-primary" value="Add Tag" />
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="confirmModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Confirmation</h5>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to remove this User?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+@endsection
+
+@section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('#user-table').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ route('users.index') }}",
+        },
+        columns: [{
+                data: 'id',
+            },
+            {
+                data: 'avatar',
+            },
+            {
+                data: 'name',
+            },
+            {
+                data: 'email',
+            },
+            {
+                data: function(data) {
+                    if (data.active == 1) {
+                        return "Yes";
+                    }
+                    return "No";
+                },
+                searchable: "false",
+                orderable: "false"
+            },
+            {
+                data: function(data) {
+                    if (data.admin == 1) {
+                        return "Admin";
+                    }
+                    return "Customer";
+                },
+                searchable: "false",
+                orderable: "false"
+            },
+            {
+                data: function(data) {
+                    if (data.admin == 1 && data.id == 1) {
+                        return '<button type="button" disabled name="super_admin" id="' + data.id + '" class="btn btn-success btn-sm mr-3 super-admin">Super Admin</button>';
+                    } else if (data.admin == 1) {
+                        return '<button type="button" name="removeadmin" id="' + data.id + '" class="btn btn-success btn-sm mr-3 remove-admin">Remove Permission</button>';
+                    }
+                    return '<button type="button" name="make_admin" id="' + data.id + '" class="btn btn-secondary btn-sm mr-3 make-admin">Make Admin</button>';
+
+                },
+                searchable: "false",
+                orderable: "false"
+            },
+            {
+                data: function(data) {
+                    if (data.admin == 1 && data.id == 1) {
+                        return '<button type="button" disabled name="super_admin" id="' + data.id + '" class="btn btn-danger btn-sm mr-3 super-admin">Delete</button>';
+                    }
+                    return '<button type="button" name="delete-user" id="' + data.id + '" class="btn btn-danger btn-sm mr-3 delete-user">Delete</button>';
+                },
+                searchable: "false",
+                orderable: "false"
+            }
+        ]
+    });
+
+    $(document).on('click', '.delete-user', function() {
+        var user_id = $(this).attr('id');
+        $('#confirmModal').modal('show');
+
+        $('#ok_button').click(function() {
+            console.log(user_id);
+            $.ajax({
+                url: "users/destroy/" + user_id,
+                method: 'DELETE',
+                success: function(data) {
+                    if (data.error) {
+                        toastr.error(data.error);
+                    } else {
+                        toastr.success(data.success);
+                        $('#confirmModal').modal('hide');
+                        $('#user-table').DataTable().ajax.reload();
+                    }
+                }
+            });
+        });
+    });
+
+    $(document).on('click', '.make-admin', function() {
+        var user_id = $(this).attr('id');
+        $.ajax({
+            url: "users/makeadmin/" + user_id,
+            method: 'GET',
+            success: function(data) {
+                if (data.error) {
+                    toastr.error(data.error);
+                } else {
+                    $('#user-table').DataTable().ajax.reload();
+                    toastr.success(data.success);
+                }
+            }
+        });
+    });
+
+    $(document).on('click', '.remove-admin', function() {
+        var user_id = $(this).attr('id');
+        $.ajax({
+            url: "users/removeadmin/" + user_id,
+            method: 'GET',
+            success: function(data) {
+                if (data.error) {
+                    toastr.error(data.error);
+                } else {
+                    $('#user-table').DataTable().ajax.reload();
+                    toastr.success(data.success);
+                }
+            }
+        });
+    });
+
+    $('#create_user').click(function() {
+        $('.modal-title').text('Add New User');
+        $('#action_button').val('Add');
+        $('#action').val('Add');
+        $('#name').val('');
+        $('#email').val('');
+        $('#password').val('');
+        $('#userModal').modal('show');
+    });
+
+    $('#user_form').on('submit', function(event) {
+        event.preventDefault();
+        var action_url = '';
+        var method = '';
+
+        if ($('#action').val() == 'Add') {
+            action_url = "{{ route('users.store') }}";
+            method = "POST";
+        }
+
+        $.ajax({
+            url: action_url,
+            method: method,
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function(data) {
+                if (data.error) {
+                    toastr.error(data.error);
+                }
+                if (data.success) {
+                    toastr.success(data.success);
+                    $('#user_form')[0].reset();
+                    $('#userModal').modal('hide');
+                    $('#user-table').DataTable().ajax.reload();
+                }
+
+            }
+        })
+    });
+</script>
+<script>
+    $(function() {
+        $("#date_from").datepicker();
+        $("#date_to").datepicker();
+    });
+</script>
+@endsection

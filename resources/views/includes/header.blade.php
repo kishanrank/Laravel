@@ -28,7 +28,7 @@
                     <li><a href="{{route('posts.by.category', ['categoryslug' => $category->slug])}}">{{$category->name}}</a></li>
                     @endforeach
                     @endif
-                    <li><a href="#">About me</a></li>
+                    <li><a href="#">About us</a></li>
                     <li><a href="#">Contact us</a></li>
                 </ul>
                 <form class="navbar-form navbar-right" id="search_form" method="get" action="{{ route('search.result')}}">

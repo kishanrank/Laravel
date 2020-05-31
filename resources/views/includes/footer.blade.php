@@ -42,7 +42,7 @@
                             <h3 class="footer-title">Catagories</h3>
                             <ul class="footer-links">
                                 @foreach($headerCategories as $category)
-                                <li><a href="category.html">{{$category->name }}</a></li>
+                                <li><a href="{{route('posts.by.category', ['categoryslug' => $category->slug])}}">{{$category->name }}</a></li>
                                 @endforeach
                             </ul>
                         </div>

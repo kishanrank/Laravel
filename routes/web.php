@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\Auth;
 Auth::routes();
 Route::group(['namespace' => 'Front'], function () {
     Route::get('/', 'HomeController@index')->name('front.home');
-    Route::get('/post/{slug}', 'HomeController@single')->name('post.single');
-    Route::get('/category/{categoryslug}', 'HomeController@postsByCategory')->name('posts.by.category');
-    Route::get('/tag/{tagslug}', 'HomeController@postsByTag')->name('posts.by.tag');
     Route::get('/autocomplete', 'HomeController@autocomplete')->name('autocomplete');
     Route::get('/result', 'HomeController@searchResult')->name('search.result');
     Route::get('/about', 'HomeController@about')->name('about');
     Route::get('/contact', 'HomeController@contact')->name('contact');
+    Route::get('/post/{slug}', 'SinglePostController@single')->name('post.single');
+    Route::get('/category/{categoryslug}', 'PostByCategoryController@postsByCategory')->name('posts.by.category');
+    Route::get('/tag/{tagslug}', 'PostByTagController@postsByTag')->name('posts.by.tag');
 });
 
 Route::post('/subscribe', 'Admin\SubscriberController@subscribe')->name('subscribe');

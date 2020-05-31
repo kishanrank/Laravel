@@ -11,6 +11,7 @@ Route::group(['namespace' => 'Front'], function () {
     Route::get('/result', 'HomeController@searchResult')->name('search.result');
     Route::get('/about', 'HomeController@about')->name('about');
     Route::get('/contact', 'HomeController@contact')->name('contact');
+    
     Route::get('/post/{slug}', 'SinglePostController@single')->name('post.single');
     Route::get('/category/{categoryslug}', 'PostByCategoryController@postsByCategory')->name('posts.by.category');
     Route::get('/tag/{tagslug}', 'PostByTagController@postsByTag')->name('posts.by.tag');

@@ -31,7 +31,7 @@
                     <span class="post-date">{{$post->created_at->toFormattedDateString()}}</span>
                 </div>
                 <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h3>
-                <p>{!! \Illuminate\Support\Str::limit($post->content ?? '',165,' ...') !!}</p>
+                <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',165,' ...') }}</p>
             </div>
         </div>
     </div>

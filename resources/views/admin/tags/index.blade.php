@@ -290,7 +290,7 @@
             event.preventDefault();
 
             $.ajax({
-                url: "{{ route('tags.savecsv')}}",
+                url: "{{ route('tags.saveimport')}}",
                 method: 'POST',
                 data: new FormData(this),
                 dataType: 'JSON',

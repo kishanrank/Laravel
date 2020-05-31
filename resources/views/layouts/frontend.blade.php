@@ -22,8 +22,8 @@
     <link type="text/css" rel="stylesheet" href="{{asset('app/css/style.css')}}" />
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-
+    
+    @yield('stylesheet')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 </head>
@@ -149,10 +149,10 @@
     <!-- /Footer -->
 
     <!-- jQuery Plugins -->
-    @yield('scripts')
     <script src="{{asset('app/js/jquery.min.js')}}"></script>
     <script src="{{asset('app/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('app/js/main.js')}}"></script>
+    @yield('scripts')
 </body>
 
 </html>

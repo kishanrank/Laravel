@@ -33,7 +33,7 @@ class HomeController extends Controller
         foreach ($products as $product) {
             $url = route('post.single', ['slug' => $product->slug]);
             $link = '<a href="' . "$url" . '">' . " $product->title " . '</a>';
-            $data[] = ['title' => $product->title];
+            $data[] = ['title' => $product->title, 'url' => $url];
             // $data[] = ['title' => $product->title, 'url' => $url];
             // $data['link'][] = $link;
             // $data['url'][] = $url;

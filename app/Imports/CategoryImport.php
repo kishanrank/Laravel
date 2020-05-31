@@ -2,12 +2,12 @@
 
 namespace App\Imports;
 
-use App\Tag;
+use App\Category;
 use Exception;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class TagsImport implements ToModel, WithHeadingRow
+class CategoryImport implements ToModel, WithHeadingRow
 {
     /**
      * @param array $row
@@ -16,19 +16,23 @@ class TagsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // $header = ['tag', 'slug'];
+        // $header = ['name', 'slug'];
         // $cnt = true;
         // foreach ($row as $key => $value) {
         //     if (!array_key_exists($key, $header)) {
         //         $cnt = false;
         //     }
-        //     if ($cnt == false) {
+        //     if($cnt == false) {
         //         throw new Exception("Headers not matching.");
         //     }
         // }
-        return new Tag([
-            'tag' => $row['tag'],
+        $category =  new Category([
+            'name' => $row['name'],
             'slug' => $row['slug']
         ]);
+        if (!$category) {
+            return false;
+        }
+        return $category;
     }
 }

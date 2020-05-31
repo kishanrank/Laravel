@@ -44,7 +44,6 @@
         </div>
     </section>
 </div>
-
 @endsection
 
 @section('script')

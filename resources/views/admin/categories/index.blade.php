@@ -286,11 +286,9 @@
 
         $('#import_form').on('submit', function(event) {
             event.preventDefault();
-
             console.log(new FormData(this));
-
             $.ajax({
-                url: "{{ route('categories.savecsv')}}",
+                url: "{{ route('categories.saveimport')}}",
                 method: 'POST',
                 data: new FormData(this),
                 dataType: 'JSON',

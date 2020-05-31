@@ -90,8 +90,12 @@ class PostsController extends Controller
                 }
             }
         }
-        event(new NewPostEvent($post));
-        return redirect(route('posts'))->with('success', 'Post Saved Successfully.');
+        $notification = array(
+            'message' => 'Post Saved Successfully.',
+            'alert-type' => 'success'
+        );
+        // event(new NewPostEvent($post));
+        return redirect()->route('posts')->with($notification);
     }
 
     public function edit($id)
@@ -163,16 +167,29 @@ class PostsController extends Controller
                 }
             }
         }
-        return redirect(route('posts'))->with('success', 'Post updated successfully.');
+        $notification = array(
+            'message' => 'Post updated successfully.',
+            'alert-type' => 'success'
+        );
+        return redirect()->route('posts')->with($notification);
     }
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+
         if (!$post) {
-            return back()->with('error', 'Error in deleting Post.');
+            $notification = array(
+                'message' => 'Error in deleting Post.',
+                'alert-type' => 'error'
+            );
+            return redirect()->route('posts')->with($notification);
         }
         if ($post->delete()) {
-            return back()->with('success', 'Post deleted successfully.');
+            $notification = array(
+                'message' => 'Post deleted successfully.',
+                'alert-type' => 'success'
+            );
+            return redirect()->route('posts')->with($notification);
         }
     }
 
@@ -180,7 +197,11 @@ class PostsController extends Controller
     {
         $posts = Post::onlyTrashed()->get();
         if (!$posts) {
-            return back()->with('error', 'Error in getting post data.');
+            $notification = array(
+                'message' => 'Error in getting post data.',
+                'alert-type' => 'error'
+            );
+            return back()->with($notification);
         }
         return view('admin.posts.trashed', ['posts' => $posts]);
     }
@@ -188,23 +209,39 @@ class PostsController extends Controller
     public function kill($id)
     {
         $post = Post::withTrashed()->where('id', $id)->first();
-        if(!$post) {
-            return back()->with('message', 'Error in deleting Post.');
+        if (!$post) {
+            $notification = array(
+                'message' => 'Error in deleting Post.',
+                'alert-type' => 'error'
+            );
+            return redirect()->back()->with($notification);
         }
         $slug = $post->slug;
         $path = public_path('uploads/posts/images/' . $slug . '');
         File::deleteDirectory($path);
         $post->forceDelete();
-        return redirect()->back()->with('success', 'Post deleted permanently.');
+        $notification = array(
+            'message' => 'Post deleted permanently.',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
     }
 
     public function restore($id)
     {
         $post = Post::withTrashed()->where('id', $id)->first()->restore();
         if ($post == null) {
-            return back()->with('error', 'Error in restoring Post.');
+            $notification = array(
+                'message' => 'Error in restoring Post.',
+                'alert-type' => 'error'
+            );
+            return back()->with($notification);
         }
-        return redirect()->back()->with('success', 'Post Restored successfully.');
+        $notification = array(
+            'message' => 'Post Restored successfully.',
+            'alert-type' => 'success'
+        );
+        return redirect()->back()->with($notification);
     }
 
     protected function validatePost()

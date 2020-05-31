@@ -35,10 +35,6 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->all();
-        dd($request->all());
-        die;
-        die;
         $rules = [
             'title' => 'required',
             'info' => 'required',

@@ -40,7 +40,7 @@ class TagsController extends Controller
         }
         $tag_data = [
             'tag' => $request->tag,
-            'slug' => Str::slug($request->tag, '-') 
+            'slug' => Str::slug($request->tag, '-')
         ];
         $tag = Tag::create($tag_data);
         if (!$tag) {
@@ -53,7 +53,7 @@ class TagsController extends Controller
     {
         if (request()->ajax()) {
             $data = Tag::findOrFail($tag);
-            if ($data ==null) {
+            if ($data == null) {
                 return response()->json(['error' => 'No Tag found for this Id.']);
             }
             return response()->json(['result' => $data]);
@@ -69,7 +69,7 @@ class TagsController extends Controller
         }
         $tag_data = [
             'tag'    =>  $request->tag,
-            'slug'     =>  Str::slug($request->tag, '-') 
+            'slug'     =>  Str::slug($request->tag, '-')
         ];
         $tag = Tag::whereId($id)->update($tag_data);
         if (!$tag) {
@@ -88,7 +88,7 @@ class TagsController extends Controller
             return response()->json(['success' => 'Tag is successfully deleted.']);
         }
         return response()->json(['error' => 'Tag is not deleted.']);
-    }   
+    }
 
     public function massDelete(Request $request)
     {
@@ -108,48 +108,51 @@ class TagsController extends Controller
         return Excel::download(new TagsExport, 'tags.xlsx');
     }
 
-    public function saveimport()
+    public function saveimport(Request $request)
     {
         request()->validate(['import' => 'required']);
-        Excel::import(new TagsImport, request()->file('import'));
-        return redirect(route('tags'))->with('success', 'File has been successfully imported.');
+        $import = Excel::import(new TagsImport, request()->file('import'));
+        if($import) {
+            return response()->json(['success' => "Data imported successfully"]);
+        }
+        return response()->json(['error' => "Error in Importing file."]);
     }
 
-    public function savecsv(Request $request)
-    {
-        $file = $request->file('import');
-        if (!$file) {
-            return response()->json(['error' => "Please select a file first."]);
-        }
-        $filename = $file->getClientOriginalName();
-        $extension = $file->getClientOriginalExtension();
-        $fileSize = $file->getSize();
+    // public function savecsv(Request $request)
+    // {
+    //     $file = $request->file('import');
+    //     if (!$file) {
+    //         return response()->json(['error' => "Please select a file first."]);
+    //     }
+    //     $filename = $file->getClientOriginalName();
+    //     $extension = $file->getClientOriginalExtension();
+    //     $fileSize = $file->getSize();
 
-        $valid_extension = array('csv');
-        $maxFileSize = 2097152;
+    //     $valid_extension = array('csv');
+    //     $maxFileSize = 2097152;
 
-        if (in_array(strtolower($extension), $valid_extension)) {
-            if ($fileSize <= $maxFileSize) {
-                $location = 'uploads/csv';
-                $file_new_name = time() . $filename;
-                $file->move($location, $file_new_name);
-                $filepath = public_path($location . "/" . $file_new_name);
-                $data = $this->csvToArray($filepath);
-                foreach ($data as $importData) {
-                    $insertData = array(
-                        "tag" => $importData[0],
-                        "slug" => $importData[1],
-                    );
-                    Tag::create($insertData);
-                }
-                return response()->json(['success' => "Data imported successfully"]);
-            } else {
-                return response()->json(['error' => "Please upload file less then 2MB."]);
-            }
-        } else {
-            return response()->json(['error' => "Please upload valid CSV file type."]);
-        }
-    }
+    //     if (in_array(strtolower($extension), $valid_extension)) {
+    //         if ($fileSize <= $maxFileSize) {
+    //             $location = 'uploads/csv';
+    //             $file_new_name = time() . $filename;
+    //             $file->move($location, $file_new_name);
+    //             $filepath = public_path($location . "/" . $file_new_name);
+    //             $data = $this->csvToArray($filepath);
+    //             foreach ($data as $importData) {
+    //                 $insertData = array(
+    //                     "tag" => $importData[0],
+    //                     "slug" => $importData[1],
+    //                 );
+    //                 Tag::create($insertData);
+    //             }
+    //             return response()->json(['success' => "Data imported successfully"]);
+    //         } else {
+    //             return response()->json(['error' => "Please upload file less then 2MB."]);
+    //         }
+    //     } else {
+    //         return response()->json(['error' => "Please upload valid CSV file type."]);
+    //     }
+    // }
 
     public function csvToArray($filepath)
     {

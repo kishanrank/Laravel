@@ -1,6 +1,7 @@
+@section('stylesheet')
+@endsection
 <header id="header">
     <!-- Nav -->
-
     <!-- Main Nav -->
     <div class="container">
         <div class="nav-logo">
@@ -103,7 +104,7 @@
 </header>
 
 @section('scripts')
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 <script type="text/javascript">
     var path = "{{ route('autocomplete') }}";
     $('input.typeahead').typeahead({

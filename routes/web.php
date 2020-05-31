@@ -42,6 +42,7 @@ Route::group(
 
         Route::post('/categories/massdelete', 'CategoriesController@massDelete')->name('categories.massdelete');
         Route::post('/categories/savecsv', 'CategoriesController@savecsv')->name('categories.savecsv');
+        Route::post('/categories/saveimport', 'CategoriesController@saveimport')->name('categories.saveimport');
         Route::resource('categories', 'CategoriesController');
 
         Route::resource('news', 'NewsController');
@@ -49,6 +50,7 @@ Route::group(
         Route::get('/tags/export', 'TagsController@export')->name('tags.export');
         Route::post('/tags/massdelete', 'TagsController@massDelete')->name('tags.massdelete');
         Route::post('/tags/savecsv', 'TagsController@savecsv')->name('tags.savecsv');
+        Route::post('/tags/saveimport', 'TagsController@saveimport')->name('tags.saveimport');
         Route::resource('tags', 'TagsController');
 
         Route::get('/post/create', 'PostsController@create')->name('post.create');

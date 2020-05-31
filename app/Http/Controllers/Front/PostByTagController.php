@@ -1,9 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-
-use App\Http\Controllers\Controller;
 use App\Tag;
+use App\Http\Controllers\Controller;
 
 class PostByTagController extends Controller
 {
@@ -17,5 +16,4 @@ class PostByTagController extends Controller
             'posts' => $posts,
         ]);
     }
-
 }

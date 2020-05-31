@@ -7,6 +7,7 @@ use App\Setting;
 use App\Tag;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+
 class HomeController extends Controller
 {
     public function index()
@@ -51,8 +52,10 @@ class HomeController extends Controller
     public function contact() {
         return view('front.contact');
     }
-    
+
     public function searchResult(Request $request) {
+
+
         $search = $request->get('search');
         if($search == null) {
             return back();

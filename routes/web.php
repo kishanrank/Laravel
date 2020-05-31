@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 Route::group(['namespace' => 'Front'], function () {
+
     Route::get('/', 'HomeController@index')->name('front.home');
     Route::get('/autocomplete', 'HomeController@autocomplete')->name('autocomplete');
     Route::get('/result', 'HomeController@searchResult')->name('search.result');

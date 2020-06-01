@@ -38,14 +38,14 @@
 
     <div class="section">
         <!-- container -->
-        <div class="container-fluid">
+        <div class="container">
             <!-- row -->
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     @yield('content')
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <!-- ad -->
                     <div class="aside-widget text-center">
                         <a href="#" style="display: inline-block;margin: auto;">

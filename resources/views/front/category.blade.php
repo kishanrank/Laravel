@@ -26,15 +26,16 @@
         <div class="post post-row">
             <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{$post->featured}}" width="100px" height="150px" alt="{{ $post->title}}"></a>
             <div class="post-body">
+                <h2 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h2>
                 <div class="post-meta">
                     <a class="post-category cat-2" href="{{ route('posts.by.category', ['categoryslug' => $post->category->slug])}}">{{$post->category->name}}</a>
                     <span class="post-date">{{$post->created_at->toFormattedDateString()}}</span>
                 </div>
-                <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h3>
+
                 <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',165,' ...') }}</p>
             </div>
         </div>
-    </div>    
+    </div>
     @endforeach
     <!-- if there is post found then ad displays -->
     <div class="col-md-12">

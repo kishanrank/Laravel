@@ -11,6 +11,7 @@
                     <a class="post-category cat-2" href="category.html">{{ $post->category->name}}</a>
                     <span class="post-date">{{ $post->created_at->toFormattedDateString() }} By {{ $post->user->name}}</span>
                 </div>
+
                 <h1 class="text-dark">{{ $post->title}}</h1>
             </div>
         </div>
@@ -25,6 +26,16 @@
             <img class="img-responsive" src="{{ $post->featured }}" alt="">
             <figcaption></figcaption>
         </figure>
+        {!! $post->info !!}
+
+        @if($post->images)
+        @foreach($post->images as $image)
+        <figure class="figure-img">
+            <img class="img-responsive" src="{{ asset($image->image) }}" alt="">
+        </figure>
+        @endforeach
+        
+        @endif
         {!! $post->content !!}
 
         <!-- Tags releted to posts -->

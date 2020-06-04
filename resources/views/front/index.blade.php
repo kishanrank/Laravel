@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-    <title>{{ $setting->site_name }}</title>
+    <title>@if($setting) {{ $setting->site_name }} @endif</title>
 
     <!-- Google font -->
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700%7CNunito:300,600" rel="stylesheet">
@@ -23,15 +23,6 @@
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
-
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-		  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-		  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
 </head>
 
 <body>
@@ -41,8 +32,7 @@
 
     <!-- section -->
 
-    <div class="section">
-    </div>
+    
     <div class="section">
         <!-- container -->
         <div class="container-fluid">
@@ -267,38 +257,6 @@
                             </div>
                         </div>
                         <!-- /post -->
-
-                        <div class="clearfix visible-md visible-lg"></div>
-
-                        <!-- post -->
-                        <div class="col-md-6">
-                            <div class="post">
-                                <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-3.jpg')}}" alt=""></a>
-                                <div class="post-body">
-                                    <div class="post-meta">
-                                        <a class="post-category cat-1" href="category.html">Web Design</a>
-                                        <span class="post-date">March 27, 2018</span>
-                                    </div>
-                                    <h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /post -->
-
-                        <!-- post -->
-                        <div class="col-md-6">
-                            <div class="post">
-                                <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-4.jpg')}}" alt=""></a>
-                                <div class="post-body">
-                                    <div class="post-meta">
-                                        <a class="post-category cat-2" href="category.html">JavaScript</a>
-                                        <span class="post-date">March 27, 2018</span>
-                                    </div>
-                                    <h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /post -->
                     </div>
                 </div>
 
@@ -336,35 +294,37 @@
                                 <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
                             </div>
                         </div>
+
+                        <div class="post post-widget">
+                            <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-5.jpg')}}" alt=""></a>
+                            <div class="post-body">
+                                <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
+                            </div>
+                        </div>   
                     </div>
+                    <br>
                     <!-- /post widget -->
 
                     <!-- post widget -->
                     <div class="aside-widget">
-                        <div class="section-title">
-                            <h2>Featured Posts</h2>
+                        <div>
+                            <h2>Latest News</h2>
                         </div>
-                        <div class="post post-thumb">
-                            <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-1.jpg')}}" alt=""></a>
+                        @forelse($news_post as $news)
+                        <div class="post post-widget">
+                            <a class="post-img" href="{{ route('news.single', ['slug' => $news->slug]) }}"><img src="{{asset($news->featured)}}" alt=""></a>
                             <div class="post-body">
-                                <div class="post-meta">
-                                    <a class="post-category cat-3" href="category.html">Jquery</a>
-                                    <span class="post-date">March 27, 2018</span>
-                                </div>
-                                <h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
+                                <h3 class="post-title"><a href="{{ route('news.single', ['slug' => $news->slug]) }}">{{ $news->title }}</a></h3>
+                                <h5 class="">{{ $news->created_at->toFormattedDateString() }}</h5>
                             </div>
                         </div>
-
-                        <div class="post post-thumb">
-                            <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-2.jpg')}}" alt=""></a>
-                            <div class="post-body">
-                                <div class="post-meta">
-                                    <a class="post-category cat-2" href="category.html">JavaScript</a>
-                                    <span class="post-date">March 27, 2018</span>
-                                </div>
-                                <h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-                            </div>
+                        @empty
+                        <div>
+                            <strong>
+                                <h1>Sorry, No News found.</h1>
+                            </strong>
                         </div>
+                        @endforelse   
                     </div>
                     <!-- /post widget -->
 
@@ -382,74 +342,16 @@
         <!-- /container -->
     </div>
     <!-- /section -->
-
-    <!-- FEATURED POST section -->
-    <div class="section section-grey">
-        <!-- container -->
-        <div class="container">
-            <!-- row -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="section-title text-center">
-                        <h2>Featured Posts</h2>
-                    </div>
-                </div>
-
-                <!-- post -->
-                <div class="col-md-4">
-                    <div class="post">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-4.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-2" href="category.html">JavaScript</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="col-md-4">
-                    <div class="post">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-5.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-3" href="category.html">Jquery</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="col-md-4">
-                    <div class="post">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-3.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-1" href="category.html">Web Design</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- /post -->
-            </div>
-            <!-- /row -->
-        </div>
-        <!-- /container -->
+    <div class="section-row container">
+    <a href="#" style="display: inline-block;margin: auto;">
+        <img class="img-responsive" src="{{asset('app/img/ad-2.jpg')}}" alt="">
+    </a>
     </div>
-    <!-- /section -->
 
-    <!-- most read, category and tags  section -->
+    <!-- featured post, category and tags  section -->
     <div class="section">
         <!-- container -->
-        <div class="container">
+        <div class="container-fluid">
             <!-- row -->
             <div class="row">
                 <!-- most read  section -->
@@ -457,7 +359,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="section-title">
-                                <h2>Most Read</h2>
+                                <h2>Featured Post</h2>
                             </div>
                         </div>
                         <!-- post -->
@@ -546,34 +448,33 @@
                         <div class="section-title">
                             <h2>Catagories</h2>
                         </div>
+                        @if($sideWidgetCategory)
                         <div class="category-widget">
                             <ul>
-                                <li><a href="#" class="cat-1">Web Design<span>340</span></a></li>
-                                <li><a href="#" class="cat-2">JavaScript<span>74</span></a></li>
-                                <li><a href="#" class="cat-4">JQuery<span>41</span></a></li>
-                                <li><a href="#" class="cat-3">CSS<span>35</span></a></li>
+                                @foreach($sideWidgetCategory as $category)
+                                <li><a href="{{ route('posts.by.category', ['categoryslug' => $category->slug])}}" class="cat-1">{{ $category->name}}<span>{{$category->posts->count()}}</span></a></li>
+                                @endforeach
                             </ul>
                         </div>
+                        @endif
                     </div>
 
 
                     <!-- all tags -->
+                    @if($sideWidgetTag)
                     <div class="aside-widget">
+                        <div class="section-title">
+                            <h2>Tags</h2>
+                        </div>
                         <div class="tags-widget">
                             <ul>
-                                <li><a href="#">Chrome</a></li>
-                                <li><a href="#">CSS</a></li>
-                                <li><a href="#">Tutorial</a></li>
-                                <li><a href="#">Backend</a></li>
-                                <li><a href="#">JQuery</a></li>
-                                <li><a href="#">Design</a></li>
-                                <li><a href="#">Development</a></li>
-                                <li><a href="#">JavaScript</a></li>
-                                <li><a href="#">Website</a></li>
+                                @foreach($sideWidgetTag as $tag)
+                                <li><a href="{{route('posts.by.tag', ['tagslug' => $tag->slug])}}">{{ $tag->tag}}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
-
+                    @endif
                 </div>
             </div>
             <!-- /row -->
@@ -587,10 +488,10 @@
     <!-- /Footer -->
 
     <!-- jQuery Plugins -->
-    @yield('scripts')
     <script src="{{asset('app/js/jquery.min.js')}}"></script>
     <script src="{{asset('app/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('app/js/main.js')}}"></script>
+    @yield('scripts')
 </body>
 
 </html>

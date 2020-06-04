@@ -5,6 +5,7 @@ use App\Category;
 use App\Post;
 use App\Setting;
 use App\Tag;
+use App\News;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,11 @@ class HomeController extends Controller
     {
         $first_post = Post::orderBy('created_at', 'desc')->first();
         $second_post = Post::orderBy('created_at', 'desc')->skip(1)->take(1)->get()->first();
+        $news_post = News::orderBy('created_at', 'desc')->paginate(4);
         return view('front.index', [
             'first_post' => $first_post,
             'second_post' => $second_post,
+            'news_post' => $news_post,
             'second_category' => Category::orderBy('created_at', 'asc')->skip(1)->take(1)->get()->first(),
             // 'first_line_posts' => Category::orderBy('created_at', 'asc')->first()->posts->take(4),
             // 'second_line_posts' => Category::orderBy('created_at', 'asc')->skip(1)->take(1)->get()->first()->posts->take(4),
@@ -45,17 +48,7 @@ class HomeController extends Controller
         return ['value' => 'No Result Found', 'slug' => ''];
     }
 
-    public function about() {
-        return view('front.about');
-    }
-
-    public function contact() {
-        return view('front.contact');
-    }
-
     public function searchResult(Request $request) {
-
-
         $search = $request->get('search');
         if($search == null) {
             return back();

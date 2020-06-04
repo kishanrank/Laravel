@@ -11,18 +11,20 @@ Route::group(['namespace' => 'Front'], function () {
     Route::get('/result', 'HomeController@searchResult')->name('search.result');
     Route::get('/about', 'HomeController@about')->name('about');
     Route::get('/contact', 'HomeController@contact')->name('contact');
-    
     Route::get('/post/{slug}', 'SinglePostController@single')->name('post.single');
     Route::get('/category/{categoryslug}', 'PostByCategoryController@postsByCategory')->name('posts.by.category');
     Route::get('/tag/{tagslug}', 'PostByTagController@postsByTag')->name('posts.by.tag');
+    Route::get('/news/all', 'NewsController@allNews')->name('news');
+    Route::get('/news/{slug}', 'NewsController@singleNews')->name('news.single');
+    Route::get('/aboutus', 'AboutUsController@index')->name('aboutus');
+    Route::get('/contactus', 'ContactUsController@index')->name('contactus');
+    Route::post('/contactus', 'ContactUsController@store')->name('contactus.store');
+    Route::post('/subscribe', 'SubscriberController@subscribe')->name('subscribe');
 });
 
-Route::post('/subscribe', 'Admin\SubscriberController@subscribe')->name('subscribe');
 
 Route::get('/activate/{code}', 'ActivationCodeController@activation')->name('activate.account');
 Route::get('/resend/code', 'ActivationCodeController@resend')->name('resend.code');
-
-// Route::get('/post/{slug}', 'FrontEndController@single')->name('post.single');
 
 Route::group(
     [

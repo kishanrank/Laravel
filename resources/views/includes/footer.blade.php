@@ -11,8 +11,8 @@
                         </div>
                     </div>
                     <ul class="footer-nav">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Advertisement</a></li>
+                        <li><a>Privacy Policy</a></li>
+                        <li><a>Advertisement</a></li>
                     </ul>
                     <div class="footer-copyright">
                         <span>&copy;
@@ -30,9 +30,9 @@
                         <div class="footer-widget">
                             <h3 class="footer-title">About Us</h3>
                             <ul class="footer-links">
-                                <li><a href="about.html">About Us</a></li>
-                                <li><a href="#">Join Us</a></li>
-                                <li><a href="contact.html">Contacts</a></li>
+                                <li><a href="{{ route('aboutus')}}">About Us</a></li>
+                                <li><a href="#">Carrier</a></li>
+                                <li><a href="{{ route('contactus')}}">Contact Us</a></li>
                             </ul>
                         </div>
                     </div>

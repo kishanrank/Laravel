@@ -33,23 +33,6 @@ class SubscriberController extends Controller
         return view('admin.subscribers.index', compact('subscribers', 'subscriber30', 'subscriber120'));
     }
 
-    public function subscribe(Request $request)
-    {
-        if (!($request->email)) {
-            return response()->json(['message' => "Error in subscribing"]);
-        }
-        $subscriber_data = [
-            'email' => $request->email
-        ];
-        $data = Subscriber::where('email', $request->email)->first();
-        if ($data) {
-            return response()->json(['message' => "This Email id is already available."]);
-        }
-        $subscriber = Subscriber::create($subscriber_data);
-        // event(new SubscribedEvent($subscriber));
-        return response()->json(['message' => 'Subscribed successfully!']);
-    }
-
     public function destroy($id) {
         if($id == null) {
             return response()->json(['error' =>'No Id found.']);

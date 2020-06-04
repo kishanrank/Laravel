@@ -95,6 +95,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a href="{{route('settings')}}" class="nav-link {{ (request()->is('admin/setting*')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-envelope-open-text"></i>
+                        <p>
+                            Message / Inbox
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a href="{{ route('user.profile')}}" class="nav-link {{ (request()->is('admin/user/profile*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>

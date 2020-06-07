@@ -19,8 +19,9 @@ class Admin
         if (Auth::user()->admin) {
             return $next($request);
         }
+        Auth::logout();
         $notification = array(
-            'message' => 'You do not have permission to access this link.',
+            'message' => 'You do not have permission to access this url, please contact admin.',
             'alert-type' => 'error'
         );
         return redirect('/login')->with($notification);

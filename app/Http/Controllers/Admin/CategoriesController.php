@@ -66,6 +66,7 @@ class CategoriesController extends Controller
         if ($error->fails()) {
             return response()->json(['error' => $error->errors()->all()]);
         }
+        
         $category_data = [
             'name'    =>  $request->name,
             'slug'     =>  Str::slug($request->name, '-') 

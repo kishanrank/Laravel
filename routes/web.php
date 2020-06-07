@@ -75,5 +75,8 @@ Route::group(
         Route::get('/subscribers/export', 'SubscriberController@export')->name('subscribers.export');
         Route::post('/subscribers/massdelete', 'SubscriberController@massDelete')->name('subscribers.massdelete');
         Route::resource('subscribers', 'SubscriberController');
+
+        Route::get('/inbox', 'InboxController@index')->name('inbox');
+         Route::get('/inbox/id/{id}', 'InboxController@show')->name('inbox.show');
     }
 );

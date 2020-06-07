@@ -19,6 +19,7 @@ class ContactUsController extends Controller
             return response()->json(['error' => "Error in submitting"]);
         }
         $rules = [
+            'name' => 'required',
         	'email' => 'required|email', 
         	'subject' => 'required',
         	'message' => 'required'
@@ -28,6 +29,7 @@ class ContactUsController extends Controller
             return response()->json(['error' => $error->errors()->all()]);
         }
         $query_data = [
+            'name' => $request->name,
             'email' => $request->email,
             'subject' => $request->subject,
             'message' =>$request->message

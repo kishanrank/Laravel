@@ -3,6 +3,7 @@
 @section('stylesheet')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/responsive/2.2.5/css/dataTables.responsive.css" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -66,7 +67,7 @@
                         </form>
                     </div>
                     <div class="card-body">
-                        <table id="user-table" class="table table-hover">
+                        <table id="user-table" class="table table-hover responsive">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -148,6 +149,7 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
 
@@ -161,6 +163,7 @@
     $('#user-table').DataTable({
         processing: true,
         serverSide: true,
+        responsive:true,
         ajax: {
             url: "{{ route('users.index') }}",
         },

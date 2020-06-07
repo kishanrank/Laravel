@@ -95,7 +95,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{route('settings')}}" class="nav-link {{ (request()->is('admin/setting*')) ? 'active' : '' }}">
+                    <a href="{{route('inbox')}}" class="nav-link {{ (request()->is('admin/inbox*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-envelope-open-text"></i>
                         <p>
                             Message / Inbox

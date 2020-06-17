@@ -1,8 +1,15 @@
 <?php
 
+use Illuminate\Support\Facades\URL;
+
+
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
+
+if (env('APP_ENV') === 'production') {
+    URL::forceSchema('https');
+}
 Auth::routes();
 Route::group(['namespace' => 'Front'], function () {
 
@@ -77,6 +84,6 @@ Route::group(
         Route::resource('subscribers', 'SubscriberController');
 
         Route::get('/inbox', 'InboxController@index')->name('inbox');
-         Route::get('/inbox/id/{id}', 'InboxController@show')->name('inbox.show');
+        Route::get('/inbox/id/{id}', 'InboxController@show')->name('inbox.show');
     }
 );

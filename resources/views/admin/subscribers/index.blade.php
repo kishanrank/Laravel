@@ -2,6 +2,7 @@
 
 @section('stylesheet')
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 @endsection
 
 @section('content')
@@ -19,7 +20,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-
                     <div class="card-body">
                         <div class="card-group">
                             <div class="card">
@@ -50,14 +50,12 @@
                     </div>
 
                     <div class="card-header">
-                        <b>Subscriber List</b>
                         <button class="btn btn-danger btn-sm float-right" type="button" name="bulk_delete" id="bulk_delete">Delete</button>
                         <a href="{{route('subscribers.export')}}" class="btn btn-primary float-right btn-sm mr-2">Export</a>
                     </div>
 
                     <div class="card-body">
-                        
-                            <table id="subscriber-table" class="table">
+                            <table id="subscriber-table" class="table table-striped responsive" width="100%">
                                 <thead>
                                     <tr>
                                         <th>#</th>
@@ -101,6 +99,8 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
 
@@ -116,6 +116,7 @@
         $('#subscriber-table').DataTable({
             processing: true,
             serverSide: true,
+            responsive: true,
             ajax: {
                 url: "{{ route('subscribers.index') }}",
             },

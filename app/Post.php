@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-
     use SoftDeletes;
 
     protected $fillable = [
@@ -16,6 +15,7 @@ class Post extends Model
 
     protected $dates = ['deleted_at'];
 
+    //data is altered as per requirement during fetching 
     public function getFeaturedAttribute($featured)
     {
         return asset($featured);

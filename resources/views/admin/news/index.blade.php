@@ -2,6 +2,7 @@
 
 @section('stylesheet')
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 @endsection
 
 @section('content')
@@ -20,11 +21,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header font-weight-bold">
-                        Published News
                         <button type="button" name="create_news" data-dismiss="modal" id="create_news" class="btn btn-success float-right btn-sm  mr-2">Add News</button>
                     </div>
                     <div class="card-body">
-                        <table id="news-table" class="table table-striped">
+                        <table id="news-table" class="table table-striped responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -106,6 +106,8 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
 <script>
@@ -119,6 +121,7 @@
         $('#news-table').DataTable({
             processing: true,
             serverSide: true,
+            responsive: true,
             ajax: {
                 url: "{{ route('news.index') }}",
             },

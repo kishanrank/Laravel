@@ -16,9 +16,9 @@ class SubscriberController extends Controller
         $subscriber_data = [
             'email' => $request->email
         ];
-        $data = Subscriber::where('email', $request->email)->first();
+        $data = Subscriber::whereEmail($request->email)->first();
         if ($data) {
-            return response()->json(['message' => "This Email id is already available."]);
+            return response()->json(['message' => "This Email is already subscribed."]);
         }
         $subscriber = Subscriber::create($subscriber_data);
         // event(new SubscribedEvent($subscriber));

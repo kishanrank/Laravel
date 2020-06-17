@@ -41,6 +41,7 @@ class NewsController extends Controller
             'featured' => 'required|image',
             'content' => 'required'
         ];
+        
         $error = Validator::make($request->all(), $rules);
         if ($error->fails()) {
             return response()->json(['error' => $error->errors()->all()]);

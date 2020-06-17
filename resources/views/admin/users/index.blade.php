@@ -3,7 +3,7 @@
 @section('stylesheet')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/responsive/2.2.5/css/dataTables.responsive.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 @endsection
 
 @section('content')
@@ -49,10 +49,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                   
                     <div class="card-header">
-                        Export User
-                        <button type="button" name="create_user" data-dismiss="modal" id="create_user" class="btn btn-success float-right btn-sm  ml-2">Add</button>
+                        <span><b>Export User</b></span>
+                        
                         <form class="form-inline float-right" method="POST" action="{{route('users.export')}}">
                             @csrf
                             <div class="form-group" id="from_date">
@@ -63,11 +63,17 @@
                                 <label for="date_to">Date To: </label>
                                 <input type="text" class="date-to" id="date_to" name="date_to" placeholder="MM/DD/YYYY">
                             </div>
-                            <button type="submit" class="btn btn-primary btn-sm ml-3">Export</button>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-sm ml-3">Export</button>
+                            </div>
                         </form>
                     </div>
+
+                    <div class="card-header">
+                        <button type="button" name="create_user" data-dismiss="modal" id="create_user" class="btn btn-success float-right btn-sm  ml-2">Add</button>
+                    </div>
                     <div class="card-body">
-                        <table id="user-table" class="table table-hover responsive">
+                        <table id="user-table" class="table table-hover" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -149,7 +155,8 @@
 <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.5/js/dataTables.responsive.js"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
 
@@ -163,7 +170,7 @@
     $('#user-table').DataTable({
         processing: true,
         serverSide: true,
-        responsive:true,
+        responsive: true,
         ajax: {
             url: "{{ route('users.index') }}",
         },

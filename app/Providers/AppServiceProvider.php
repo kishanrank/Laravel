@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Http\View\Composers\HeaderComposer;
 use App\Http\View\Composers\SideWidgetComposer;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        URL::forceSchema('https');
         View::composer(['*'], HeaderComposer::class);
         View::composer(['*'], SideWidgetComposer::class);
     }

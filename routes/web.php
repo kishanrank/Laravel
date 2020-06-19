@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
-Route::group(['namespace' => 'Front'], function () {
+Route::group(['namespace' => 'Front', 'middleware' => 'forcessl'], function () {
 
     Route::get('/', 'HomeController@index')->name('front.home');
     Route::get('/autocomplete', 'HomeController@autocomplete')->name('autocomplete');
@@ -30,7 +30,7 @@ Route::group(
     [
         'prefix' => 'admin',
         'namespace' => 'Admin',
-        'middleware' => ['auth', 'admin']
+        'middleware' => ['auth', 'admin', 'forcessl']
     ],
     function () {
         Route::get('/home', 'HomeController@index')->name('admin.home');

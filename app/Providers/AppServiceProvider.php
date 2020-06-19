@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\View\Composers\HeaderComposer;
+use Illuminate\Routing\UrlGenerator;
 use App\Http\View\Composers\SideWidgetComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -24,8 +25,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(UrlGenerator $url)
     {
+        if(env('APP_ENV') !== 'local')
+        {
+            $url->forceSchema('https');
+        }
         View::composer(['*'], HeaderComposer::class);
         View::composer(['*'], SideWidgetComposer::class);
     }

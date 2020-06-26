@@ -173,7 +173,8 @@ class PostsController extends Controller
         );
         return redirect()->route('posts')->with($notification);
     }
-    public function destroy($id)
+    
+    public function destroy($id) //simple softdelete
     {
         $post = Post::findOrFail($id);
 
@@ -206,7 +207,7 @@ class PostsController extends Controller
         return view('admin.posts.trashed', ['posts' => $posts]);
     }
 
-    public function kill($id)
+    public function kill($id) //forcedelete
     {
         $post = Post::withTrashed()->where('id', $id)->first();
         if (!$post) {

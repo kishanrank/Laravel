@@ -34,7 +34,6 @@ Route::group(
     ],
     function () {
         Route::get('/home', 'HomeController@index')->name('admin.home');
-
         Route::get('/users', 'UsersController@index')->name('users.index');
         Route::post('/users/export', 'UsersController@export')->name('users.export');
         Route::post('/users/store', 'UsersController@store')->name('users.store');

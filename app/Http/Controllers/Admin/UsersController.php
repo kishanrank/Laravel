@@ -7,6 +7,7 @@ use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -93,7 +94,18 @@ class UsersController extends Controller
 
     public function destroy($id)
     {
+        $loggedUserId = Auth::user()->id;
+
+        if ($id == 1) {
+            return response()->json(['error' => 'You can not delete Super admin, so plz dont try it.']);
+        }
+
         $user = User::findOrFail($id);
+        
+        if ($id == $loggedUserId) {
+            return response()->json(['error' => 'You can not delete self account.']);
+        }
+
         $user->profile->delete();
         if ($user->delete()) {
             return response()->json(['success' => 'Successfully deleted user account.']);

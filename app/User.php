@@ -51,4 +51,16 @@ class User extends Authenticatable
     public function userActivationCode() {
         return $this->hasOne(ActivationCode::class);
     }
+
+    public function isAdmin() {
+        if ($this->admin == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getId()
+    {
+      return $this->id;
+    }
 }

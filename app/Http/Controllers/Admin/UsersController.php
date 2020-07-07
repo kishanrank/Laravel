@@ -47,6 +47,12 @@ class UsersController extends Controller
             return response()->json(['error' => $error->errors()->all()]);
         }
 
+        $users = User::all()->pluck('email')->toArray();
+    
+        if (in_array($request->email, $users)) {
+            return response()->json(['error' => 'This email already in use.']);
+        }
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -77,6 +83,13 @@ class UsersController extends Controller
         if (!($user = User::find($id))) {
             return response()->json(['error' => 'Unable to change permission right now.']);
         }
+
+        $loggedUserId = Auth::user()->id;
+
+        if ($loggedUserId == $id) {
+            return response()->json(['error' => 'You can not change your own premission']);
+        }
+
         $user->admin = 0;
         if ($user->save()) {
             return response()->json(['success' => 'Successfully changed user permission.']);
@@ -97,7 +110,7 @@ class UsersController extends Controller
         $loggedUserId = Auth::user()->id;
 
         if ($id == 1) {
-            return response()->json(['error' => 'You can not delete Super admin, so plz dont try it.']);
+            return response()->json(['error' => 'HAHAHA, You can not delete Super admin, so plz dont try it.']);
         }
 
         $user = User::findOrFail($id);
@@ -107,9 +120,11 @@ class UsersController extends Controller
         }
 
         $user->profile->delete();
+
         if ($user->delete()) {
             return response()->json(['success' => 'Successfully deleted user account.']);
         }
+        
         return response()->json(['error' => 'Error in deleting user.']);
     }
 }

@@ -217,9 +217,12 @@ class PostsController extends Controller
             );
             return redirect()->back()->with($notification);
         }
-        $slug = $post->slug;
-        $path = public_path('uploads/posts/images/' . $slug . '');
-        File::deleteDirectory($path);
+
+        $imagesPath = public_path('uploads/posts/images/' . $post->slug . '');
+
+        File::deleteDirectory($imagesPath);
+        File::delete($post->featured);
+
         $post->forceDelete();
         $notification = array(
             'message' => 'Post deleted permanently.',

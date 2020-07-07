@@ -21,9 +21,7 @@
                         </div>
                     </div>
                     @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                        <p class="text-danger">{{ $message }}</p>
                     @enderror
 
                     <div class="input-group mb-3">
@@ -35,14 +33,12 @@
                         </div>
                     </div>
                     @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
+                        <p class="text-danger">{{ $message }}</p>
                     @enderror
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
-                                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                <input type="checkbox" name="remember" id="remember" value="{{ old('remember') ? 'checked' : '' }}">
                                 <label for="remember">
                                     Remember Me
                                 </label>

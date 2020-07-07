@@ -10,6 +10,11 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const NOT_ADMIN = 0;
+    const ADMIN = 1;
+    const NOT_VERIFIED = 0;
+    const VERIFIED = 1;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -53,10 +58,10 @@ class User extends Authenticatable
     }
 
     public function isAdmin() {
-        if ($this->admin == 1) {
-            return true;
+        if ($this->admin) {
+            return self::ADMIN;
         }
-        return false;
+        return self::NOT_ADMIN;
     }
 
     public function getId()

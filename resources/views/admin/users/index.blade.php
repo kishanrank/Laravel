@@ -232,27 +232,29 @@
         ]
     });
 
+    var user_id;
     $(document).on('click', '.delete-user', function() {
-        var user_id = $(this).attr('id');
+        user_id = $(this).attr('id');
         $('#confirmModal').modal('show');
+    });
 
-        $('#ok_button').click(function() {
-            console.log(user_id);
-            $.ajax({
-                url: "users/destroy/" + user_id,
-                method: 'DELETE',
-                success: function(data) {
-                    if (data.error) {
-                        toastr.error(data.error);
-                    } else {
-                        toastr.success(data.success);
-                        $('#confirmModal').modal('hide');
-                        $('#user-table').DataTable().ajax.reload();
-                    }
+    $('#ok_button').click(function() {
+        $.ajax({
+            url: "users/destroy/" + user_id,
+            method: 'DELETE',
+            success: function(data) {
+                if (data.error) {
+                    $('#confirmModal').modal('hide');
+                    toastr.error(data.error);
+                } else {
+                    toastr.success(data.success);
+                    $('#confirmModal').modal('hide');
+                    $('#user-table').DataTable().ajax.reload();
                 }
-            });
+            }
         });
     });
+    
 
     $(document).on('click', '.make-admin', function() {
         var user_id = $(this).attr('id');
@@ -321,9 +323,8 @@
                     $('#userModal').modal('hide');
                     $('#user-table').DataTable().ajax.reload();
                 }
-
             }
-        })
+        });
     });
 </script>
 <script>

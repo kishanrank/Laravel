@@ -268,6 +268,7 @@
                 method: method,
                 data: data,
                 beforeSend: function() {
+                    $('#confirmModal').modal('hide');
                     $('#ok_button').text('Deleting...');
                 },
                 success: function(data) {

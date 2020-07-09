@@ -16,6 +16,7 @@
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     @yield('stylesheet')
+    <link rel="icon" href="{{asset('favicon-96x96.png') }}" sizes="96x96" type="image/png">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
     <!-- ./wrapper -->

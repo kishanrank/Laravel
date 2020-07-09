@@ -6,14 +6,14 @@ use App\Exports\UsersExport;
 use App\Profile;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
-class UsersController extends Controller
+class UsersController extends ResponserController
 {
     public function index(Request $request)
     {
@@ -44,13 +44,13 @@ class UsersController extends Controller
         ]);
 
         if ($error->fails()) {
-            return response()->json(['error' => $error->errors()->all()]);
+            return $this->errorMessageResponse($error->errors()->all());
         }
 
         $users = User::all()->pluck('email')->toArray();
     
         if (in_array($request->email, $users)) {
-            return response()->json(['error' => 'This email already in use.']);
+            return $this->errorMessageResponse('This email already in use.');
         }
         
         $user = User::create([
@@ -63,42 +63,56 @@ class UsersController extends Controller
             'user_id' => $user->id,
             'avatar' => 'uploads/avatars/admin.jpg'
         ]);
-        return response()->json(['success' => 'User created successfully.']);
+
+        return $this->successMessageResponse('User created successfully.');
     }
 
     public function makeadmin($id)
     {
         if ((!$user = User::find($id))) {
-            return response()->json(['error' => 'Unable to change permission right now.']);
+            return $this->errorMessageResponse('Unable to change permission right now.');
         }
-        $user->admin = 1;
+
+        $user->admin = User::ADMIN;
+
         if ($user->save()) {
-            return response()->json(['success' => 'Successfully changed user permission.']);
+            return $this->successMessageResponse('Successfully changed user permission.');
         }
-        return response()->json(['error' => 'Unable to change permission right now.']);
+        return $this->errorMessageResponse('Unable to change permission right now.');
     }
 
     public function removeadmin($id)
     {
         if (!($user = User::find($id))) {
-            return response()->json(['error' => 'Unable to change permission right now.']);
+            return $this->errorMessageResponse('Unable to change permission right now.');
         }
 
         $loggedUserId = Auth::user()->id;
 
         if ($loggedUserId == $id) {
-            return response()->json(['error' => 'You can not change your own premission']);
+            return $this->errorMessageResponse('You can not change your own premission');
         }
 
-        $user->admin = 0;
+        $user->admin = User::NOT_ADMIN;
+
         if ($user->save()) {
-            return response()->json(['success' => 'Successfully changed user permission.']);
+            return $this->successMessageResponse('Successfully changed user permission.');
         }
-        return response()->json(['error' => 'Unable to change permission right now.']);
+        return $this->errorMessageResponse('Unable to change permission right now.');
     }
 
     public function export(Request $request)
     {
+        // $error = Validator::make($request->all(), [
+        //     'date_from' => 'required',
+        //     'date_to' => 'required'
+        // ]);
+
+        // if ($error->fails()) {
+        //     return back();
+        //     // return $this->errorMessageResponse($error->errors()->all());
+        // }
+
         $this->validate($request, ['date_from' => 'required', 'date_to' => 'required']);
         $start = date("Y-m-d", strtotime($request->date_from));
         $end = date("Y-m-d", strtotime($request->date_to . "+1 day"));
@@ -110,21 +124,20 @@ class UsersController extends Controller
         $loggedUserId = Auth::user()->id;
 
         if ($id == 1) {
-            return response()->json(['error' => 'HAHAHA, You can not delete Super admin, so plz dont try it.']);
+            return $this->errorMessageResponse("HAHAHA, You can not delete Super admin, so please don't try it.");
         }
 
         $user = User::findOrFail($id);
         
         if ($id == $loggedUserId) {
-            return response()->json(['error' => 'You can not delete self account.']);
+            return $this->errorMessageResponse('You can not delete self account.');
         }
 
         $user->profile->delete();
 
         if ($user->delete()) {
-            return response()->json(['success' => 'Successfully deleted user account.']);
+            return $this->successMessageResponse('Successfully deleted user account.');
         }
-        
-        return response()->json(['error' => 'Error in deleting user.']);
+        return $this->errorMessageResponse('Error in deleting user.');
     }
 }

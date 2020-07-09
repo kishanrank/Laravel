@@ -10,13 +10,13 @@ use App\Events\NewPostEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Yajra\DataTables\Facades\DataTables;
 
-class PostsController extends Controller
+class PostsController extends ResponserController
 {
     public function index(Request $request)
     {

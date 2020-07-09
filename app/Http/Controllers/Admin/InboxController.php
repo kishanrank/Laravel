@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ContactUs;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;
 
-class InboxController extends Controller
+class InboxController extends ResponserController
 {
     public function index() 
     {
@@ -18,8 +18,9 @@ class InboxController extends Controller
     {
     	$message = ContactUs::findOrFail($id);
         if ($message == null) {
-            return response()->json(['error' => 'Error in finding data, please try after sometime.']);
+            return $this->errorMessageResponse('Error in finding data, please try after sometime.');
         }
+
     	return response()->json(['result' => $message]);
     }
 

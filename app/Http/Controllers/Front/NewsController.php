@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Front;
 
 use App\News;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;
 
-class NewsController extends Controller
+class NewsController extends ResponserController
 {
     public function allNews() {
     	$allNews = News::all();

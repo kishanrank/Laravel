@@ -6,11 +6,11 @@ use App\Exports\SubscriberExport;
 use App\Subscriber;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
-class SubscriberController extends Controller
+class SubscriberController extends ResponserController
 {
     public function index(Request $request)
     {
@@ -34,26 +34,33 @@ class SubscriberController extends Controller
     }
 
     public function destroy($id) {
-        if($id == null) {
-            return response()->json(['error' =>'No Id found.']);
-        }
+
         $subscriber = Subscriber::findOrFail($id);
-        if($subscriber->delete()) {
-            return response()->json(['success' => "Subscriber deleted successfully."]);
+
+        if (!$subscriber->id) {
+            return $this->errorMessageResponse("No data available for given id.");
         }
-        return response()->json(['error' =>'Error in deleting subscriber.']);
+
+        if($subscriber->delete()) {
+            return $this->successMessageResponse('Subscriber deleted successfully.');
+        }
+        return $this->errorMessageResponse('Error in deleting subscriber.');
     }
 
     public function massDelete(Request $request) {
+        
         if($request->input('id') == null) {
-            return response()->json(['error' =>'Please select a valid id.']);
+            return $this->errorMessageResponse('Please select a valid id.');
         }
+
         $subscriberIds = $request->input('id');
+
         $subscriber = Subscriber::whereIn('id', $subscriberIds);
+
         if($subscriber->delete()) {
-            return response()->json(['success' => "Subscriber deleted successfully."]);
+            return $this->successMessageResponse('Subscriber deleted successfully.');
         }
-        return response()->json(['error' =>'Error in deleting subscriber.']);
+        return $this->errorMessageResponse('Error in deleting subscriber.');
     }
 
     public function export() {

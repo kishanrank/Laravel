@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Front;
 use App\Post;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 
-class SinglePostController extends Controller
+class SinglePostController extends ResponserController
 {
     public function single($slug)
     {
@@ -13,7 +13,7 @@ class SinglePostController extends Controller
         $prev_id = Post::where('id', '<', $post->id)->max('id');
         $next_post = Post::find($next_id);
         $previous_post = Post::find($prev_id);
-        return view('front.single', [
+        return view('front.single.index', [
             'title' => $post->title,
             'post' => $post,
             'next_post' => $next_post,

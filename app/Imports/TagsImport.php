@@ -16,19 +16,13 @@ class TagsImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // $header = ['tag', 'slug'];
-        // $cnt = true;
-        // foreach ($row as $key => $value) {
-        //     if (!array_key_exists($key, $header)) {
-        //         $cnt = false;
-        //     }
-        //     if ($cnt == false) {
-        //         throw new Exception("Headers not matching.");
-        //     }
-        // }
-        return new Tag([
-            'tag' => $row['tag'],
-            'slug' => $row['slug']
-        ]);
+        $tags = Tag::all()->pluck('tag')->toArray();
+        if (!in_array($row['tag'], $tags)){
+            return new Tag([
+                'tag' => $row['tag'],
+                'slug' => $row['slug']
+            ]);
+        }
+        return;       
     }
 }

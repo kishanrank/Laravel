@@ -6,13 +6,13 @@ use App\Exports\TagsExport;
 use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use App\Imports\TagsImport;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
-class TagsController extends Controller
+class TagsController extends ResponserController
 {
     public function index(Request $request)
     {
@@ -35,27 +35,40 @@ class TagsController extends Controller
     {
         $rules = ['tag' => 'required'];
         $error = Validator::make($request->all(), $rules);
+
         if ($error->fails()) {
-            return response()->json(['error' => $error->errors()->all()]);
+            return $this->errorMessageResponse($error->errors()->all());
         }
+
+        $tags = Tag::all()->pluck('tag')->toArray();
+       
+        if (in_array($request->tag, $tags)) {
+            return $this->errorMessageResponse('This tag is already available.');
+            // return response()->json(['error' => 'This tag is already available.']);
+        }
+
         $tag_data = [
             'tag' => $request->tag,
             'slug' => Str::slug($request->tag, '-')
-        ];
+        ]; 
+
         $tag = Tag::create($tag_data);
-        if (!$tag) {
-            return response()->json(['error' => 'Error in saving Tag.']);
+
+        if (!$tag->id) {
+            return $this->errorMessageResponse('Error in saving Tag.', 422);
         }
-        return response()->json(['success' => 'Data added successfully.']);
+        return $this->successMessageResponse('Data added successfully.', 200);
     }
 
     public function edit($tag)
     {
         if (request()->ajax()) {
             $data = Tag::findOrFail($tag);
+
             if ($data == null) {
-                return response()->json(['error' => 'No Tag found for this Id.']);
+                return $this->errorMessageResponse('No Tag found for this Id.', 404);
             }
+            
             return response()->json(['result' => $data]);
         }
     }
@@ -64,43 +77,48 @@ class TagsController extends Controller
     {
         $rules = ['tag' => 'required'];
         $error = Validator::make($request->all(), $rules);
+
         if ($error->fails()) {
-            return response()->json(['error' => $error->errors()->all()]);
+            return $this->errorMessageResponse($error->errors()->all());
         }
+
         $tag_data = [
             'tag'    =>  $request->tag,
             'slug'     =>  Str::slug($request->tag, '-')
         ];
+
         $tag = Tag::whereId($id)->update($tag_data);
-        if (!$tag) {
-            return response()->json(['error' => 'Error in updating tag data.']);
+        if (!$tag) { // here $tag is 0 or 1
+            return $this->errorMessageResponse('Error in updating tag data.', 409);
         }
-        return response()->json(['success' => 'Tag is successfully updated']);
+
+        return $this->successMessageResponse('Tag is successfully updated', 200);
     }
 
     public function destroy($id)
     {
-        if ($id == null) {
-            return response()->json(['error' => 'Invalid id found.']);
-        }
         $tag = Tag::findOrFail($id);
+
         if ($tag->delete()) {
-            return response()->json(['success' => 'Tag is successfully deleted.']);
+            return $this->successMessageResponse('Tag is successfully deleted', 200);
         }
-        return response()->json(['error' => 'Tag is not deleted.']);
+        
+        return $this->errorMessageResponse('Tag is not deleted.',422);
     }
 
     public function massDelete(Request $request)
     {
         if ($request->input('id') == null) {
-            return response()->json(['error' => 'Please select a valid id.']);
+            return $this->errorMessageResponse('Please select a valid id.', 200);
         }
+
         $tagIds = $request->input('id');
         $tags = Tag::whereIn('id', $tagIds);
+
         if ($tags->delete()) {
-            return response()->json(['success' => 'Tag is successfully deleted.']);
+            return $this->successMessageResponse('Tag is successfully deleted', 200);
         }
-        return response()->json(['error' => 'Please select valid data.']);
+        return $this->errorMessageResponse('Tag is not deleted.', 422);
     }
 
     public function export()
@@ -110,12 +128,18 @@ class TagsController extends Controller
 
     public function saveimport(Request $request)
     {
-        request()->validate(['import' => 'required']);
+        $rules = ['import' => 'required'];
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return $this->errorMessageResponse($error->errors()->all());
+        }
+
         $import = Excel::import(new TagsImport, request()->file('import'));
         if($import) {
-            return response()->json(['success' => "Data imported successfully"]);
+            return $this->successMessageResponse('Data imported successfully', 200);
         }
-        return response()->json(['error' => "Error in Importing file."]);
+        return $this->errorMessageResponse('Error in Importing file.', 200); //422
     }
 
     // public function savecsv(Request $request)
@@ -154,23 +178,23 @@ class TagsController extends Controller
     //     }
     // }
 
-    public function csvToArray($filepath)
-    {
-        $file = fopen($filepath, "r");
-        $data_arr = [];
-        $i = 0;
-        while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
-            $num = count($filedata);
-            if ($i == 0) {
-                $i++;
-                continue;
-            }
-            for ($c = 0; $c < $num; $c++) {
-                $data_arr[$i][] = $filedata[$c];
-            }
-            $i++;
-        }
-        fclose($file);
-        return $data_arr;
-    }
+    // public function csvToArray($filepath)
+    // {
+    //     $file = fopen($filepath, "r");
+    //     $data_arr = [];
+    //     $i = 0;
+    //     while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+    //         $num = count($filedata);
+    //         if ($i == 0) {
+    //             $i++;
+    //             continue;
+    //         }
+    //         for ($c = 0; $c < $num; $c++) {
+    //             $data_arr[$i][] = $filedata[$c];
+    //         }
+    //         $i++;
+    //     }
+    //     fclose($file);
+    //     return $data_arr;
+    // }
 }

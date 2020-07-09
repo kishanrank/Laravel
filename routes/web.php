@@ -44,6 +44,7 @@ Route::group(
         Route::post('/categories/massdelete', 'CategoriesController@massDelete')->name('categories.massdelete');
         Route::post('/categories/savecsv', 'CategoriesController@savecsv')->name('categories.savecsv');
         Route::post('/categories/saveimport', 'CategoriesController@saveimport')->name('categories.saveimport');
+        Route::get('/categories/export', 'CategoriesController@export')->name('categories.export');
         Route::resource('categories', 'CategoriesController');
 
         Route::resource('news', 'NewsController');

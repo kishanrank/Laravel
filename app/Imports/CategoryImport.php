@@ -16,23 +16,13 @@ class CategoryImport implements ToModel, WithHeadingRow
      */
     public function model(array $row)
     {
-        // $header = ['name', 'slug'];
-        // $cnt = true;
-        // foreach ($row as $key => $value) {
-        //     if (!array_key_exists($key, $header)) {
-        //         $cnt = false;
-        //     }
-        //     if($cnt == false) {
-        //         throw new Exception("Headers not matching.");
-        //     }
-        // }
-        $category =  new Category([
-            'name' => $row['name'],
-            'slug' => $row['slug']
-        ]);
-        if (!$category) {
-            return false;
+        $categories = Category::all()->pluck('name')->toArray();
+        if (!in_array($row['name'], $categories)){
+            return new Category([
+                'name' => $row['name'],
+                'slug' => $row['slug']
+            ]);
         }
-        return $category;
+        return;
     }
 }

@@ -6,10 +6,10 @@ use App\Post;
 use App\Setting;
 use App\Tag;
 use App\News;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;
 
-class HomeController extends Controller
+class HomeController extends ResponserController
 {
     public function index()
     {
@@ -54,6 +54,6 @@ class HomeController extends Controller
             return back();
         }
         $posts = Post::select('*')->where('title', 'LIKE', "%{$search}%")->get();
-        return view('front.search', compact('posts'));
+        return view('front.search.index', compact('posts'));
     }
 }

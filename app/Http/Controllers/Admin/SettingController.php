@@ -5,9 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Setting;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Illuminate\Support\Facades\Validator;
 
-class SettingController extends Controller
+class SettingController extends ResponserController
 {
     public function index()
     {
@@ -22,10 +23,12 @@ class SettingController extends Controller
             'contact_number' => 'required',
             'contact_email' => 'required' 
         ];
+
         $error = Validator::make($request->all(), $rules);
         if ($error->fails()) {
-            return response()->json(['error' => $error->errors()->all()]);
+            return $this->errorMessageResponse($error->errors()->all());
         }
+
         $setting_data = [
             'site_name'    =>  $request->site_name,
             'address'     =>  $request->address,
@@ -34,8 +37,8 @@ class SettingController extends Controller
         ];
         $setting = Setting::first()->update($setting_data);
         if (!$setting) {
-            return response()->json(['error' => 'Error in updating settings.']);
+            return $this->errorMessageResponse('Error in updating settings.');
         }
-        return response()->json(['success' => 'Setting data successfully updated.']);
+        return $this->successMessageResponse('Setting data successfully updated.');
     }
 }

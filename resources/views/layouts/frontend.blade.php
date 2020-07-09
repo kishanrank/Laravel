@@ -22,6 +22,7 @@
     <link type="text/css" rel="stylesheet" href="{{asset('app/css/style.css')}}" />
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <link rel="icon" href="{{asset('favicon-96x96.png') }}" sizes="96x96" type="image/png">
     
     @yield('stylesheet')
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -30,10 +31,13 @@
 
 <body>
 
-    <!-- Header -->
+    <!-- Header Navigation-->
     @include('includes.header')
-    <!-- /Header -->
+    <!-- /Header Navigation-->
+
+    <!-- Page Description header -->
     @yield('header')
+    <!-- Page Description header -->
 
     <div class="section">
         <!-- container -->
@@ -56,7 +60,16 @@
     <script src="{{asset('app/js/jquery.min.js')}}"></script>
     <script src="{{asset('app/js/bootstrap.min.js')}}"></script>
     <script src="{{asset('app/js/main.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+
     @yield('scripts')
+    <!-- Ajax for header -->
+    @include('includes.scripts.header')
+    <!-- Ajax for header -->
+
+    <!-- Ajax for footer -->
+    @include('includes.scripts.footer')
+    <!-- Ajax for footer -->
 </body>
 
 </html>

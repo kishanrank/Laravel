@@ -170,7 +170,7 @@
             $('.modal-title').text('Add New Tag');
             $('#action_button').val('Add');
             $('#action').val('Add');
-            $('#name').val('');
+            $('#tag').val('');
             $('#tagModal').modal('show');
         });
 
@@ -216,11 +216,8 @@
                 data: $(this).serialize(),
                 dataType: "json",
                 success: function(data) {
-                    var html = '';
                     if (data.error) {
-                        for (var count = 0; count < data.error.length; count++) {
-                            toastr.error(data.error);
-                        }
+                        toastr.error(data.error);
                     }
                     if (data.success) {
                         toastr.success(data.success);

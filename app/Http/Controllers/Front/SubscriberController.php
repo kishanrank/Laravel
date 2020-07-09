@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Front;
 
 use App\Subscriber;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;
 
-class SubscriberController extends Controller
+class SubscriberController extends ResponserController
 {
     public function subscribe(Request $request)
     {

@@ -54,8 +54,8 @@
             <div class="col-md-3">
                 <div class="footer-widget">
                     <h3 class="footer-title">Join our Newsletter</h3>
-                    <div id="message">
-                        <p id="message"></p>
+                    <div>
+                        <p id="subscribe-message"></p>
                     </div>
                     <div class="footer-newsletter">
                         <form id="subscribe_form" method="POST">
@@ -78,28 +78,3 @@
     </div>
     <!-- /container -->
 </footer>
-<script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('#subscribe_form').on('submit', function(event) {
-            event.preventDefault();
-            $.ajax({
-                url: "{{route('subscribe')}}",
-                method: 'POST',
-                data: $(this).serialize(),
-                dataType: "json",
-                success: function(data) {
-                    if (data.message) {
-                        $('#message').text(data.message);
-                    }
-                    $('#email').val('');
-                }
-            });
-        });
-    });
-</script>

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Category;
+use App\Exports\CategoryExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use App\Imports\CategoryImport;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;
 
-class CategoriesController extends Controller
+class CategoriesController extends ResponserController
 {
     public function index(Request $request)
     {
@@ -31,28 +32,31 @@ class CategoriesController extends Controller
 
     public function store(Request $request)
     {
-        $rules = ['name' => 'required'];
-        $error = Validator::make($request->all(), $rules);
+        $error = Validator::make($request->all(), ['name' => 'required']);
+
         if ($error->fails()) {
-            return response()->json(['error' => $error->errors()->all()]);
+            return $this->errorMessageResponse($error->errors()->all());
         }
+
         $category_data = [
             'name' => $request->name,
             'slug' => Str::slug($request->name, '-')
         ];
+
         $category = Category::create($category_data);
-        if (!$category) {
-            return response()->json(['error' => 'Error in Category saving.']);   
+
+        if (!$category->id) {
+            return $this->errorMessageResponse('Error in Category saving.');
         }
-        return response()->json(['success' => 'Category added successfully!']);
+        return $this->successMessageResponse('Category added successfully!');
     }
 
     public function edit($category)
     {
         if (request()->ajax()) {
             $data = Category::findOrFail($category);
-            if ($data == null) {
-                return response()->json(['error' => 'No data found for this  category.']);   
+            if (!$data->id) {
+                return $this->errorMessageResponse('No data found for this  category.');
             }
             return response()->json(['result' => $data]);
         }
@@ -60,8 +64,8 @@ class CategoriesController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rules = ['name' => 'required'];
-        $error = Validator::make($request->all(), $rules);
+        $error = Validator::make($request->all(), ['name' => 'required']);
+        
         if ($error->fails()) {
             return response()->json(['error' => $error->errors()->all()]);
         }
@@ -70,47 +74,62 @@ class CategoriesController extends Controller
             'name'    =>  $request->name,
             'slug'     =>  Str::slug($request->name, '-') 
         ];
-        $category = Category::whereId($id)->update($category_data);
-        if (!$category) {
-            return response()->json(['error' => 'Error in updating category.']);
+
+        $category = Category::whereId($id)->update($category_data);  // returns 0 or 1.
+
+        if (!$category) {   // $category is 0 or 1
+            return $this->errorMessageResponse('Error in updating category.');
         }
-        return response()->json(['success' => 'Category is successfully updated.']);
+        return $this->successMessageResponse('Category is successfully updated.');
     }
 
     public function destroy($id)
     {
-        if ($id == null) {
-            return response()->json(['error' => 'Invalid id found.']);
-        }
         $category = Category::findOrFail($id);
-        if (!$category) {
-            return response()->json(['error' => 'Category is not deleted.']);
+
+        if (!$category->id) {
+            return $this->errorMessageResponse('Category is not found.');
         }
+
         $category->delete();
-        return response()->json(['success' => 'Category is successfully deleted.']);
+        return $this->successMessageResponse('Category is successfully deleted.');
     }
 
     public function massDelete(Request $request)
     {
         if ($request->input('id') == null) {
-            return response()->json(['error' => 'Please select a valid id.']);
+            return $this->errorMessageResponse('Please select a valid id.');
         }
+
         $categoryIds = $request->input('id');
         $categories = Category::whereIn('id', $categoryIds);
+
         if ($categories->delete()) {
-            return response()->json(['success' => 'Category is successfully deleted.']);
+            return $this->successMessageResponse('Category is successfully deleted.');
         }
-        return response()->json(['error' => 'Please select valid data.']);
+
+        return $this->errorMessageResponse('Please select a valid id.');
+    }
+
+    public function export()
+    {
+        return Excel::download(new CategoryExport , 'categories.xlsx');
     }
 
     public function saveimport(Request $request)
     {
-        request()->validate(['import' => 'required']);
+        $rules = ['import' => 'required'];
+        $error = Validator::make($request->all(), $rules);
+
+        if ($error->fails()) {
+            return $this->errorMessageResponse($error->errors()->all());
+        }
+        
         $import = Excel::import(new CategoryImport, request()->file('import'));
         if($import) {
-            return response()->json(['success' => "Data imported successfully"]);
+            return $this->successMessageResponse('Data imported successfully.');
         }
-        return response()->json(['error' => "Error in Importing file."]);
+        return $this->errorMessageResponse('Error in Importing file.');
     }
 
     // public function savecsv(Request $request)
@@ -146,23 +165,23 @@ class CategoriesController extends Controller
     //     }
     // }
 
-    public function csvToArray($filepath)
-    {
-        $file = fopen($filepath, "r");
-        $data_arr = [];
-        $i = 0;
-        while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
-            $num = count($filedata);
-            if ($i == 0) {
-                $i++;
-                continue;
-            }
-            for ($c = 0; $c < $num; $c++) {
-                $data_arr[$i][] = $filedata[$c];
-            }
-            $i++;
-        }
-        fclose($file);
-        return $data_arr;
-    }
+    // public function csvToArray($filepath)
+    // {
+    //     $file = fopen($filepath, "r");
+    //     $data_arr = [];
+    //     $i = 0;
+    //     while (($filedata = fgetcsv($file, 1000, ",")) !== FALSE) {
+    //         $num = count($filedata);
+    //         if ($i == 0) {
+    //             $i++;
+    //             continue;
+    //         }
+    //         for ($c = 0; $c < $num; $c++) {
+    //             $data_arr[$i][] = $filedata[$c];
+    //         }
+    //         $i++;
+    //     }
+    //     fclose($file);
+    //     return $data_arr;
+    // }
 }

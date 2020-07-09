@@ -6,12 +6,13 @@ use App\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\ResponserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
-class NewsController extends Controller
+class NewsController extends ResponserController
 {
     public function index(Request $request)
     {
@@ -44,7 +45,7 @@ class NewsController extends Controller
         
         $error = Validator::make($request->all(), $rules);
         if ($error->fails()) {
-            return response()->json(['error' => $error->errors()->all()]);
+            return $this->errorMessageResponse($error->errors()->all());
         }
 
         $file = $request->file('featured');
@@ -55,12 +56,14 @@ class NewsController extends Controller
         if ($fileSize <= $maxFileSize) {
             $location = 'uploads/news/featured';
             $file_new_name = date("Y_m_d_h_i_s") . $filename;
+
             if (!$file->move($location, $file_new_name)) {
-                return response()->json(['error' => "Error in uploadig in image, Please try after sometime."]);
+                return $this->errorMessageResponse('Error in uploadig in image, Please try after sometime.');
             }
+
             $featured = 'uploads/news/featured/' . $file_new_name;
         } else {
-            return response()->json(['error' => "Please upload file less then 200KB."]);
+            return $this->errorMessageResponse('Please upload file less then 200KB.');
         }
 
         $news = News::create([
@@ -72,17 +75,18 @@ class NewsController extends Controller
             'slug' => Str::slug($request->title, '-')
         ]);
         if (!$news) {
-            return response()->json(['error' => 'Error in News saving.']);
+            return $this->errorMessageResponse('Error in News saving.');
         }
-        return response()->json(['success' => 'News added successfully!']);
+        return $this->successMessageResponse('News added successfully!');
     }
 
     public function edit($id)
     {
         if (request()->ajax()) {
             $news = News::findOrFail($id);
-            if ($news == null) {
-                return response()->json(['error' => 'No data found for this id.']);
+            
+            if (!$news->id) {
+                return $this->errorMessageResponse('No data found for this id.');
             }
             return response()->json(['result' => $news]);
         }
@@ -95,10 +99,12 @@ class NewsController extends Controller
             'info' => 'required',
             'content' => 'required'
         ];
+
         $error = Validator::make($request->all(), $rules);
         if ($error->fails()) {
-            return response()->json(['error' => $error->errors()->all()]);
+            return $this->errorMessageResponse($error->errors()->all());
         }
+
         $news = News::findOrFail($id);
 
         if ($request->hasFile('featured')) {
@@ -111,26 +117,26 @@ class NewsController extends Controller
             $featured->move('uploads/news/featured', $featured_new_name);
             $news->featured = 'uploads/news/featured/' . $featured_new_name;
         }
+
+        
         $news->user_id = Auth::user()->id;
         $news->title = $request->title;
         $news->content = $request->content;
+
         if ($news->save()) {
-            return response()->json(['success' => 'News data successfully updated.']);
+            return $this->successMessageResponse('News data successfully updated.');
         }
-        return response()->json(['error' => 'Error in updating data, Please try after sometime.']);
+        return $this->errorMessageResponse('Error in updating data, Please try after sometime.');
     }
 
 
     public function destroy($id)
     {
-        if ($id == null) {
-            return response()->json(['error' => 'Invalid id found.']);
-        }
         $news = News::findOrFail($id);
-        if (!$news) {
-            return response()->json(['error' => 'News is not deleted.']);
+        if (!$news->id) {
+            return $this->errorMessageResponse('News is not deleted.');
         }
         $news->delete();
-        return response()->json(['success' => 'News is successfully deleted.']);
+        return $this->successMessageResponse('News is successfully deleted.');
     }
 }

@@ -57,11 +57,11 @@
                             @csrf
                             <div class="form-group" id="from_date">
                                 <label for="date_from">Date From: </label>
-                                <input type="text" class="date-from" id="date_from" name="date_from" placeholder="MM/DD/YYYY">
+                                <input type="text" class="date-from" id="date_from" name="date_from" required placeholder="MM/DD/YYYY">
                             </div>
                             <div class="form-group ml-3" id="to_date">
                                 <label for="date_to">Date To: </label>
-                                <input type="text" class="date-to" id="date_to" name="date_to" placeholder="MM/DD/YYYY">
+                                <input type="text" class="date-to" id="date_to" name="date_to" required placeholder="MM/DD/YYYY">
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary btn-sm ml-3">Export</button>

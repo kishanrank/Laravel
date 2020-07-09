@@ -18601,14 +18601,17 @@ html.maximized-card {
 .login-page, .register-page {
     -ms-flex-align: center;
     align-items: center;
-    background: #e9ecef;
+    background-image: url("../img/wallpaper.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: var(--white);
     display: -ms-flexbox;
     display: flex;
     -ms-flex-direction: column;
     flex-direction: column;
     height: 100vh;
     -ms-flex-pack: center;
-    justify-content: center
+    justify-content: center;
 }
 
 .login-box, .register-box {

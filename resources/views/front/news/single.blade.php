@@ -1,5 +1,20 @@
 @extends('layouts.frontend')
 
+@section('meta')
+    <!-- post meta tag -->
+    <meta name="subject" content="{{ $news->title }}">
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($news->content) ?? '',150,' ...') }}"/>
+    <meta name="url" content="{{ route('news.single', ['slug' => $news->slug]) }}">
+    <meta name="image" content="{{ asset($news->featured) }}">
+    <meta name="category" content="Tech news">
+    
+    <!-- og meta tags -->
+    <meta property="og:title" content="{{ $news->title }}">
+    <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($news->content) ?? '',150,' ...') }}">
+    <meta property="og:url" content="{{ route('news.single', ['slug' => $news->slug]) }}">
+    <meta property="og:image" content="{{ asset($news->featured) }}">
+@endsection
+
 @section('header')
 <div id="post-header" class="page-header">
     <div class="background-img"></div>

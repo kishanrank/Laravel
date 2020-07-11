@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Http\View\Composers\HeaderComposer;
+use App\Http\View\Composers\MostReadComposer;
 use App\Http\View\Composers\SideWidgetComposer;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -28,5 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         View::composer(['*'], HeaderComposer::class);
         View::composer(['*'], SideWidgetComposer::class);
+        View::composer(['front.index', 'includes.rightsidebar'], MostReadComposer::class);
     }
 }

@@ -11,33 +11,14 @@
         <h2>Most Read</h2>
     </div>
 
+    @foreach($mostReadPosts as $post)
     <div class="post post-widget">
-        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/widget-1.jpg')}}" alt=""></a>
+        <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a>
         <div class="post-body">
-            <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
+            <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{$post->title}}</a></h3>
         </div>
     </div>
-
-    <div class="post post-widget">
-        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/widget-2.jpg')}}" alt=""></a>
-        <div class="post-body">
-            <h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
-        </div>
-    </div>
-
-    <div class="post post-widget">
-        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/widget-3.jpg')}}" alt=""></a>
-        <div class="post-body">
-            <h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
-        </div>
-    </div>
-
-    <div class="post post-widget">
-        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/widget-4.jpg')}}" alt=""></a>
-        <div class="post-body">
-            <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-        </div>
-    </div>
+    @endforeach
 </div>
 <!-- /post widget -->
 
@@ -74,17 +55,3 @@
 </div>
 @endif
 <!-- /tags -->
-
-<!-- archive -->
-<div class="aside-widget">
-    <div class="section-title">
-        <h2>Archive</h2>
-    </div>
-    <div class="archive-widget">
-        <ul>
-            <li><a href="#">Jan 2018</a></li>
-            <li><a href="#">Feb 2018</a></li>
-            <li><a href="#">Mar 2018</a></li>
-        </ul>
-    </div>
-</div>

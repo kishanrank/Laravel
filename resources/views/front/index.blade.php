@@ -43,95 +43,46 @@
         </div>
 
         <!-- post -->
+        @forelse($first_line_recent_posts as $post)
         <div class="col-md-4">
             <div class="post">
-                <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-3.jpg')}}" alt=""></a>
+                <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a>
                 <div class="post-body">
                     <div class="post-meta">
-                        <a class="post-category cat-1" href="category.html">Web Design</a>
-                        <span class="post-date">March 27, 2018</span>
+                        <a class="post-category cat-1" href="{{ route('posts.by.category', ['categoryslug' => $post->category->slug]) }}">{{ $post->category->name}}</a>
+                        <span class="post-date">{{$post->created_at->toFormattedDateString()}}</span>
                     </div>
-                    <h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
+                    <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h3>
                 </div>
             </div>
         </div>
-        <!-- /post -->
-
-        <!-- post -->
-        <div class="col-md-4">
-            <div class="post">
-                <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-4.jpg')}}" alt=""></a>
-                <div class="post-body">
-                    <div class="post-meta">
-                        <a class="post-category cat-2" href="category.html">JavaScript</a>
-                        <span class="post-date">March 27, 2018</span>
-                    </div>
-                    <h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-                </div>
-            </div>
+        @empty
+        <div class="col-md-12">
+            <h4>No recent posts found. come back after some time.</h4>
         </div>
-        <!-- /post -->
-
-        <!-- post -->
-        <div class="col-md-4">
-            <div class="post">
-                <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-5.jpg')}}" alt=""></a>
-                <div class="post-body">
-                    <div class="post-meta">
-                        <a class="post-category cat-3" href="category.html">Jquery</a>
-                        <span class="post-date">March 27, 2018</span>
-                    </div>
-                    <h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-                </div>
-            </div>
-        </div>
+        @endforelse
         <!-- /post -->
 
         <div class="clearfix visible-md visible-lg"></div>
 
-        <!-- post -->
+        @forelse($second_line_recent_posts as $post)
         <div class="col-md-4">
             <div class="post">
-                <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-6.jpg')}}" alt=""></a>
+                <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a>
                 <div class="post-body">
                     <div class="post-meta">
-                        <a class="post-category cat-2" href="category.html">JavaScript</a>
-                        <span class="post-date">March 27, 2018</span>
+                        <a class="post-category cat-1" href="{{ route('posts.by.category', ['categoryslug' => $post->category->slug]) }}">{{ $post->category->name}}</a>
+                        <span class="post-date">{{$post->created_at->toFormattedDateString()}}</span>
                     </div>
-                    <h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
+                    <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h3>
                 </div>
             </div>
         </div>
-        <!-- /post -->
-
-        <!-- post -->
-        <div class="col-md-4">
-            <div class="post">
-                <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-1.jpg')}}" alt=""></a>
-                <div class="post-body">
-                    <div class="post-meta">
-                        <a class="post-category cat-4" href="category.html">Css</a>
-                        <span class="post-date">March 27, 2018</span>
-                    </div>
-                    <h3 class="post-title"><a href="blog-post.html">CSS Float: A Tutorial</a></h3>
-                </div>
-            </div>
+        @empty
+        <div class="col-md-12">
+            <h4>No recent posts found. come back after some time.</h4>
         </div>
-        <!-- /post -->
-
-        <!-- post -->
-        <div class="col-md-4">
-            <div class="post">
-                <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-2.jpg')}}" alt=""></a>
-                <div class="post-body">
-                    <div class="post-meta">
-                        <a class="post-category cat-1" href="category.html">Web Design</a>
-                        <span class="post-date">March 27, 2018</span>
-                    </div>
-                    <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-                </div>
-            </div>
-        </div>
+        @endforelse
         <!-- /post -->
     </div>
 
@@ -225,40 +176,14 @@
                     <h2>Most Read</h2>
                 </div>
 
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-2.jpg')}}" alt=""></a>
-                    <div class="post-body">
-                        <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
+                @foreach($mostReadPosts as $post)
+                    <div class="post post-widget">
+                        <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a>
+                        <div class="post-body">
+                            <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{$post->title}}</a></h3>
+                        </div>
                     </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-1.jpg')}}" alt=""></a>
-                    <div class="post-body">
-                        <h3 class="post-title"><a href="blog-post.html">Pagedraw UI Builder Turns Your Website Design Mockup Into Code Automatically</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-4.jpg')}}" alt=""></a>
-                    <div class="post-body">
-                        <h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-5.jpg')}}" alt=""></a>
-                    <div class="post-body">
-                        <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-                    </div>
-                </div>
-
-                <div class="post post-widget">
-                    <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-5.jpg')}}" alt=""></a>
-                    <div class="post-body">
-                        <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-                    </div>
-                </div>   
+                @endforeach 
             </div>
             <br>
             <!-- /post widget -->
@@ -305,7 +230,7 @@
     </div>
 
     <div class="row">
-        <!-- most read  section -->
+        <!-- featured post  section -->
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
@@ -328,60 +253,6 @@
                     </div>
                 </div>
                 <!-- /post -->
-
-                <!-- post -->
-                <div class="col-md-12">
-                    <div class="post post-row">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-6.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-2" href="category.html">JavaScript</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Why Node.js Is The Coolest Kid On The Backend Development Block!</a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="col-md-12">
-                    <div class="post post-row">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-1.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-4" href="category.html">Css</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">CSS Float: A Tutorial</a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="col-md-12">
-                    <div class="post post-row">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-2.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-3" href="category.html">Jquery</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-                        </div>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <div class="col-md-12">
-                    <div class="section-row">
-                        <button class="primary-button center-block">Load More</button>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -409,22 +280,6 @@
                 </div>
                 @endif
             </div>
-
-            <!-- all tags -->
-            @if($sideWidgetTag)
-            <div class="aside-widget">
-                <div class="section-title">
-                    <h2>Tags</h2>
-                </div>
-                <div class="tags-widget">
-                    <ul>
-                        @foreach($sideWidgetTag as $tag)
-                        <li><a href="{{route('posts.by.tag', ['tagslug' => $tag->slug])}}">{{ $tag->tag}}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-            @endif
         </div>
     </div>
 </div>

@@ -49,7 +49,8 @@ class TagsController extends ResponserController
 
         $tag_data = [
             'tag' => $request->tag,
-            'slug' => Str::slug($request->tag, '-')
+            'slug' => Str::slug($request->tag, '-'),
+            'description' => 'aaa'
         ]; 
 
         $tag = Tag::create($tag_data);

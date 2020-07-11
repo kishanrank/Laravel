@@ -15,6 +15,7 @@
                 dataType: "json",
                 success: function(data) {
                     if (data.message) {
+                        $('#subscribe-message').addClass("text-dark")
                         $('#subscribe-message').text(data.message);
                     }
                     $('#email').val('');

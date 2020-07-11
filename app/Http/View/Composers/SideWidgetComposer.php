@@ -10,7 +10,7 @@ use Illuminate\View\View;
 class SideWidgetComposer
 {
     public function compose(View $view) {
-        $view->with('sideWidgetCategory', Category::all())
+        $view->with('sideWidgetCategory', Category::all()->take(10))
             ->with('sideWidgetTag', Tag::all());
     }
 }

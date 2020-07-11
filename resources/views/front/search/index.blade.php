@@ -1,5 +1,15 @@
 @extends('layouts.frontend')
 
+@section('meta')
+    <!-- post meta tag -->
+    <meta name="subject" content="">
+    <meta name="description" content=""/>
+    <meta name="url" content="">
+    <meta name="image" content="">
+    <meta name="category" content="">
+@endsection
+
+
 @section('header')
 <div class="page-header">
     <div class="container">
@@ -13,8 +23,7 @@
 @section('content')
 <div class="col-md-9">
     <div class="row">
-        @if($posts)
-        @foreach($posts as $post)
+        @forelse($posts as $post)
         <div class="col-md-12">
             <div class="post post-row">
                 <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{$post->featured}}" width="150px" height="150px" alt="{{ $post->title}}"></a>
@@ -29,15 +38,15 @@
                 </div>
             </div>
         </div>
-        @endforeach
-        @else
+        @empty
         <!-- if there is post found then ad displays -->
         <div class="col-md-12 text-center">
             <strong>
                 <h1>Sorry, No data found for your search</h1>
             </strong>
         </div>
-        @endif
+        @endforelse
+
         <div class="col-md-12">
             <div class="section-row">
                 <a href="#">
@@ -45,6 +54,9 @@
                 </a>
             </div>
         </div>
+
+        {{ $posts->links('includes.pagination') }}
+
     </div>
 </div>
 <!-- /post -->

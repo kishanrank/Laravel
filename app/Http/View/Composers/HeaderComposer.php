@@ -9,7 +9,7 @@ use Illuminate\View\View;
 class HeaderComposer
 {
     public function compose(View $view) {
-        $view->with('headerCategories', Category::all()->take(5))
+        $view->with('headerCategories', Category::take(6)->orderBy('id', 'asc')->get())
         ->with('setting', Setting::first());
     }
 }

@@ -15,6 +15,11 @@ class Post extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $hidden = ['pivot'];
+    // protected $with = ['tags'];
+
+    // public $timestamps = false;
+
     //data is altered as per requirement during fetching 
     public function getFeaturedAttribute($featured)
     {

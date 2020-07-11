@@ -3,7 +3,7 @@
     <div class="container">
         <!-- row -->
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-3">
                 <div class="footer-widget">
                     <div class="footer-logo text-dark">
                         <div class="text-dark">
@@ -64,11 +64,17 @@
                             <button type="submit" id="subscribebtn" class="newsletter-btn"><i class="fa fa-paper-plane"></i></button>
                         </form>
                     </div>
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="footer-widget">
+                    <h3 class="footer-title">Follow Us On</h3>
                     <ul class="footer-social">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/kishanrank/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="https://github.com/kishanrank" target="_blank"><i class="fa fa-github"></i></a></li>
+                        <li><a href="https://twitter.com/kishan__rank" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/___k._m._rank___/" target="_blank"><i class="fa fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>

@@ -660,7 +660,7 @@ RESPONSIVE
      left: 0;
 }
  .sticky-shares a {
-     display: block;
+     display: inline-block;
      margin-bottom: 10px;
      width: 40px;
      height: 40px;

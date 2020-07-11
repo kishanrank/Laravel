@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class NewsController extends ResponserController
 {
     public function allNews() {
-    	$allNews = News::all();
+    	$allNews = News::paginate(10);
     	return view('front.news.index', compact('allNews'));
     }
 

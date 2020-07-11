@@ -135,6 +135,7 @@ class PostsController extends ResponserController
 
         $post->user_id = Auth::user()->id;
         $post->title = $request->title;
+        $post->slug = Str::slug($request->title, '-');
         $post->content = $request->content;
         $post->category_id = $request->category_id;
         $post->save();

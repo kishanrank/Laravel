@@ -1,5 +1,20 @@
 @extends('layouts.frontend')
 
+@section('meta')
+<!-- post meta tag -->
+<meta name="subject" content="{{ $category->name }}">
+<meta name="description" content="{{ $category->name }}" />
+<meta name="url" content="{{route('posts.by.category', ['categoryslug' => $category->slug])}}">
+<meta name="image" content="">
+<meta name="category" content="{{ $category->name}}">
+
+<!-- og meta tags -->
+<meta property="og:title" content="{{ $category->name }}">
+<meta property="og:description" content="{{ $category->name }}">
+<meta property="og:url" content="{{route('posts.by.category', ['categoryslug' => $category->slug])}}">
+<meta property="og:image" content="">
+@endsection
+
 @section('header')
 <div class="page-header">
     <div class="container">
@@ -32,7 +47,6 @@
                         <a class="post-category cat-2" href="{{ route('posts.by.category', ['categoryslug' => $post->category->slug])}}">{{$post->category->name}}</a>
                         <span class="post-date">{{$post->created_at->toFormattedDateString()}}</span>
                     </div>
-
                     <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',165,' ...') }}</p>
                 </div>
             </div>
@@ -53,6 +67,8 @@
             </strong>
         </div>
         @endif
+
+        {{ $posts->links('includes.pagination') }}
     </div>
 </div>
 @endsection

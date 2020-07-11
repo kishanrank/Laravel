@@ -1,5 +1,19 @@
 @extends('layouts.frontend')
 
+@section('meta')
+    <!-- post meta tag -->
+    <meta name="subject" content="Latest technicle news">
+    <meta name="description" content="Latest technicle news, all technicle news"/>
+    <meta name="image" content="">
+    <meta name="category" content="Tech news">
+    
+    <!-- og meta tags -->
+    <meta property="og:title" content="Latest technicle news">
+    <meta property="og:description" content="Latest technicle news">
+    <meta property="og:url" content="{{route('news')}}">
+    <meta property="og:image" content="">
+@endsection
+
 @section('header')
 <div class="page-header">
     <div class="container">
@@ -20,8 +34,7 @@
 @section('content')
 <div class="col-md-9">
     <div class="row">
-        @if($allNews)
-        @foreach($allNews as $news)
+        @forelse($allNews as $news)
         <div class="col-md-12">
             <div class="post post-row">
                 <a class="post-img" href="{{ route('news.single', ['slug' => $news->slug]) }}"><img src="{{asset($news->featured)}}" width="100px" height="150px" alt="{{ $news->title}}"></a>
@@ -30,12 +43,11 @@
                     <div class="post-meta">
                         <span class="post-date">Posted On : {{$news->created_at->toFormattedDateString()}}</span>
                     </div>
-
                     <p>{{ \Illuminate\Support\Str::limit(strip_tags($news->content) ?? '',185,' ...') }}</p>
                 </div>
             </div>
         </div>
-        @endforeach
+        @empty
         <!-- if there is post found then ad displays -->
         <div class="col-md-12">
             <div class="section-row">
@@ -44,13 +56,13 @@
                 </a>
             </div>
         </div>
-        @else
         <div class="col-md-12 text-center">
             <strong>
-                <h1>Sorry, No News available right now, Once available we will post it here.</h1>
+                <h3>Sorry, No News available right now, Once available we will post it here.</h3>
             </strong>
         </div>
-        @endif
+        @endforelse
+        {{ $allNews->links('includes.pagination') }}
     </div>
 </div>
 @endsection

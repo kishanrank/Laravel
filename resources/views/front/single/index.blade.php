@@ -1,8 +1,22 @@
 @extends('layouts.frontend')
 
+@section('meta')
+    <!-- post meta tag -->
+    <meta name="subject" content="{{ $post->title}}">
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',150,' ...') }}"/>
+    <meta name="url" content="{{ route('post.single', ['slug' => $post->slug]) }}">
+    <meta name="image" content="{{ $post->featured }}">
+    <meta name="category" content="{{ $post->category->name}}">
+    
+    <!-- og meta tags -->
+    <meta property="og:title" content="{{ $post->title}}">
+    <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',150,' ...') }}">
+    <meta property="og:url" content="{{ route('post.single', ['slug' => $post->slug]) }}">
+    <meta property="og:image" content="{{ $post->featured }}">
+@endsection
+
 @section('header')
 <div id="post-header" class="page-header">
-    <!-- <div class="background-img"></div> -->
     <!--style="background-image: url('{{ asset('app/img/tital-banner-3.jpg')}}')" -->
     <div class="container">
         <div class="row">
@@ -11,7 +25,6 @@
                     <a class="post-category cat-2" href="category.html">{{ $post->category->name}}</a>
                     <span class="post-date">{{ $post->created_at->toFormattedDateString() }} By {{ $post->user->name}}</span>
                 </div>
-
                 <h1 class="text-dark">{{ $post->title}}</h1>
             </div>
         </div>
@@ -21,7 +34,7 @@
 
 @section('content')
 <div class="col-md-9">
-    <div class="section-row sticky-container">
+    <div class="section-row">
         <div class="main-post">
             <figure class="figure-img">
                 <img class="img-responsive" src="{{ $post->featured }}" alt="">
@@ -40,6 +53,7 @@
             {!! $post->content !!}
 
             <!-- Tags releted to posts -->
+            <br><br>
             <div class="aside-widget">
                 <div class="tags-widget">
                     <ul>
@@ -50,6 +64,7 @@
                     </ul>
                 </div>
             </div>
+
         </div>
         <!-- share post in social media -->
         <div class="post-shares sticky-shares">
@@ -61,7 +76,7 @@
         </div>
     </div>
 
-    <div class="section-row sticky-container">
+    <div class="section-row">
         <ul class="pager">
             @if($previous_post)
             <li class="previous"><a href="{{ route('post.single', ['slug' => $previous_post->slug]) }}"><i class="fa fa-arrow-left"></i> &nbsp; Previous</a></li>
@@ -93,10 +108,10 @@
                     </div>
                     <p>{{ $post->user->profile->about}}</p>
                     <ul class="author-social">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/kishanrank/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="https://github.com/kishanrank" target="_blank"><i class="fa fa-github"></i></a></li>
+                        <li><a href="https://twitter.com/kishan__rank" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.instagram.com/___k._m._rank___/" target="_blank"><i class="fa fa-instagram"></i></a></li>
                     </ul>
                 </div>
             </div>

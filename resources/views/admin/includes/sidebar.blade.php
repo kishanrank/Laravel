@@ -55,7 +55,15 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('posts') }}" class="nav-link {{ (request()->is('admin/posts*')) ? 'active' : '' }}">
+                    <a href="{{route('post.create')}}" class="nav-link {{ (request()->is('admin/post/create')) ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-plus"></i>
+                        <p>
+                            Add New Post
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('posts') }}" class="nav-link {{ (request()->is('admin/posts')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-clone"></i>
                         <p>
                             Published Posts
@@ -66,7 +74,7 @@
                     <a href="{{ route('news.index') }}" class="nav-link {{ (request()->is('admin/news*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-bars"></i>
                         <p>
-                            News Posts
+                            Tech News Posts
                         </p>
                     </a>
                 </li>

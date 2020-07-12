@@ -1,5 +1,9 @@
 @extends('layouts.frontend')
 
+@section('title')
+<title>Tech News | K.M.R@NK's Blog</title>
+@endsection
+
 @section('meta')
     <!-- post meta tag -->
     <meta name="subject" content="Latest technicle news">

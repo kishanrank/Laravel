@@ -56,6 +56,10 @@
                                             <label class="control-label col-md-4">Tag Name : </label>
                                             <input type="text" name="tag" id="tag" class="form-control" />
                                         </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-4">Tag Description : </label>
+                                            <textarea name="description" id="description" class="form-control" ></textarea>
+                                        </div>
                                 </div>
                                 <br />
                                 <div class="form-group text-center">
@@ -171,6 +175,7 @@
             $('#action_button').val('Add');
             $('#action').val('Add');
             $('#tag').val('');
+            $('#description').val('');
             $('#tagModal').modal('show');
         });
 
@@ -184,9 +189,10 @@
                         toastr.error(data.error);
                     }
                     $('#tag').val(data.result.tag);
+                    $('#description').val(data.result.description);
                     $('#hidden_id').val(data.result.id);
                     $('.modal-title').text('Edit Tag');
-                    $('#action_button').val('Edit');
+                    $('#action_button').val('Update');
                     $('#action').val('Edit');
                     $('#tagModal').modal('show');
                 }

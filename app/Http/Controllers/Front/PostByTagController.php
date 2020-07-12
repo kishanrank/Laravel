@@ -8,7 +8,7 @@ class PostByTagController extends ResponserController
 {
     public function postsByTag($tagslug)
     {
-        $tag = Tag::where('slug', $tagslug)->first();
+        $tag = Tag::where('slug', $tagslug)->firstOrFail();
         $posts = $tag->posts()->paginate(10);
         // $tag->setRelation('posts', $tag->posts()->paginate(10));
         return view('front.tag.index', [

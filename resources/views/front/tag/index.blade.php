@@ -1,5 +1,9 @@
 @extends('layouts.frontend')
 
+@section('title')
+<title>@if($tag) {{ $tag->tag }} @endif Tag | K.M.R@NK'S Blog</title>
+@endsection
+
 @section('meta')
     <!-- post meta tag -->
     <meta name="subject" content="{{ $tag->tag }}">

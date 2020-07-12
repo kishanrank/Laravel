@@ -1,5 +1,9 @@
 @extends('layouts.frontend')
 
+@section('title')
+<title>@if($news) {{ $news->title }} @endif </title>
+@endsection
+
 @section('meta')
     <!-- post meta tag -->
     <meta name="subject" content="{{ $news->title }}">

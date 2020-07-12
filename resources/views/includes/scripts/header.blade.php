@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
     var path = "{{ route('autocomplete') }}";
     $('input.typeahead').typeahead({
         source: function(query, result) {

@@ -1,18 +1,27 @@
 @extends('layouts.frontend')
 
+@section('title')
+<title>@if($post) {{ $post->title }} @endif</title>
+@endsection
 @section('meta')
-    <!-- post meta tag -->
-    <meta name="subject" content="{{ $post->title}}">
-    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',150,' ...') }}"/>
-    <meta name="url" content="{{ route('post.single', ['slug' => $post->slug]) }}">
-    <meta name="image" content="{{ $post->featured }}">
-    <meta name="category" content="{{ $post->category->name}}">
-    
-    <!-- og meta tags -->
-    <meta property="og:title" content="{{ $post->title}}">
-    <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',150,' ...') }}">
-    <meta property="og:url" content="{{ route('post.single', ['slug' => $post->slug]) }}">
-    <meta property="og:image" content="{{ $post->featured }}">
+<!-- post meta tag -->
+<meta name="subject" content="{{ $post->title}}">
+<meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',150,' ...') }}" />
+<meta name="url" content="{{ route('post.single', ['slug' => $post->slug]) }}">
+<meta name="image" content="{{ $post->featured }}">
+<meta name="category" content="{{ $post->category->name}}">
+
+<!-- og meta tags -->
+<meta property="og:title" content="{{ $post->title}}">
+<meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',150,' ...') }}">
+<meta property="og:url" content="{{ route('post.single', ['slug' => $post->slug]) }}">
+<meta property="og:image" content="{{ $post->featured }}">
+
+<!-- twitter meta tag -->
+<meta name="twitter:title" content="{{ $post->title}}">
+<meta name="twitter:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',150,' ...') }}">
+<meta name="twitter:url" content="{{ route('post.single', ['slug' => $post->slug]) }}">
+<meta name="twitter:image" content="{{ $post->featured }}">
 @endsection
 
 @section('header')
@@ -48,7 +57,7 @@
                 <img class="img-responsive" src="{{ asset($image->image) }}" alt="">
             </figure>
             @endforeach
-            
+
             @endif
             {!! $post->content !!}
 
@@ -68,18 +77,18 @@
         </div>
         <!-- share post in social media -->
         <div class="post-shares sticky-shares">
-            <a href="https://www.linkedin.com/in/savanihd" class="share-facebook"><i class="fa fa-facebook"></i></a>
-            <a href="#" class="share-twitter"><i class="fa fa-twitter"></i></a>
-            <a href="#" class="share-google-plus"><i class="fa fa-google-plus"></i></a>
-            <a href="#" class="share-linkedin"><i class="fa fa-linkedin"></i></a>
-            <a href="#"><i class="fa fa-envelope"></i></a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{route('post.single', ['slug' => $post->slug])}}" class="share-facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+            <a href="https://twitter.com/intent/tweet?url={{route('post.single', ['slug' => $post->slug])}}&text={{ $post->title}}" class="share-twitter" target="_blank"><i class="fa fa-twitter"></i></a>
+            <a href="http://www.linkedin.com/shareArticle?mini=true&url={{route('post.single', ['slug' => $post->slug])}}&title={{$post->title}}" class="share-linkedin" target="_blank"><i class="fa fa-linkedin"></i></a>
+            <a href="mailto:info@example.com?&subject={{$post->title}}&body={{route('post.single', ['slug' => $post->slug])}}" class="share-envelope" target="_blank"><i class="fa fa-envelope"></i></a>
+            <a href="https://pinterest.com/pin/create/button/?url={{route('post.single', ['slug' => $post->slug])}}&media={{$post->featured}}&description={{$post->title}}" class="share-pinterest" target="_blank"><i class="fa fa-pinterest"></i></a>
         </div>
     </div>
 
     <div class="section-row">
         <ul class="pager">
             @if($previous_post)
-            <li class="previous"><a href="{{ route('post.single', ['slug' => $previous_post->slug]) }}"><i class="fa fa-arrow-left"></i> &nbsp; Previous</a></li>
+            <li class="previous"><a href="{{route('post.single', ['slug' => $previous_post->slug])}}"><i class="fa fa-arrow-left"></i> &nbsp; Previous</a></li>
             @endif
             @if($next_post)
             <li class="next"><a href="{{ route('post.single', ['slug' => $next_post->slug]) }}">Next &nbsp; <i class="fa fa-arrow-right"></i></a></li>
@@ -92,9 +101,7 @@
             <img class="img-responsive" src="{{asset('app/img/ad-2.jpg')}}" alt="">
         </a>
     </div>
-
     <!-- ad -->
-
     <!-- author -->
     <div class="section-row">
         <div class="post-author">

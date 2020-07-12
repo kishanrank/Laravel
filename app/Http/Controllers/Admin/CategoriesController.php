@@ -40,7 +40,8 @@ class CategoriesController extends ResponserController
 
         $category_data = [
             'name' => $request->name,
-            'slug' => Str::slug($request->name, '-')
+            'slug' => Str::slug($request->name, '-'),
+            'description' => $request->description
         ];
 
         $category = Category::create($category_data);
@@ -54,8 +55,8 @@ class CategoriesController extends ResponserController
     public function edit($category)
     {
         if (request()->ajax()) {
-            $data = Category::findOrFail($category);
-            if (!$data->id) {
+            $data = Category::findOrFail($category)->only('id', 'name', 'description');
+            if (!$data) {
                 return $this->errorMessageResponse('No data found for this  category.');
             }
             return response()->json(['result' => $data]);
@@ -64,7 +65,7 @@ class CategoriesController extends ResponserController
 
     public function update(Request $request, $id)
     {
-        $error = Validator::make($request->all(), ['name' => 'required']);
+        $error = Validator::make($request->all(), ['name' => 'required', 'description' => 'required']);
         
         if ($error->fails()) {
             return response()->json(['error' => $error->errors()->all()]);
@@ -72,7 +73,8 @@ class CategoriesController extends ResponserController
         
         $category_data = [
             'name'    =>  $request->name,
-            'slug'     =>  Str::slug($request->name, '-') 
+            'slug'     =>  Str::slug($request->name, '-'),
+            'description' => $request->description
         ];
 
         $category = Category::whereId($id)->update($category_data);  // returns 0 or 1.

@@ -53,16 +53,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="tags"> Select Tags :</label>
+                                <label for="tags" class="col-md-4 control-label"> Select Tags :</label>
+                                <br>
                                 @foreach($tags as $tag)
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="tags[]" value="{{ $tag->id }}" @foreach($post->tags as $t)
-                                        @if($tag->id == $t->id)
-                                        checked
-                                        @endif
-                                        @endforeach
-                                        > {{ $tag->tag }}</label>
-                                </div>
+                                <label class="checkbox-inline">
+                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}" @foreach($post->tags as $t)
+                                    @if($tag->id == $t->id)
+                                    checked
+                                    @endif
+                                    @endforeach
+                                    > {{ $tag->tag }} &nbsp;
+                                </label>
                                 @endforeach
                                 @error('tags')
                                 <div class="text-danger">{{ $message }}</div>

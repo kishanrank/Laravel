@@ -1,5 +1,14 @@
 @extends('layouts.frontend')
 
+@section('title')
+<title>{{ $setting->site_name }}</title>
+@endsection
+
+@section('meta')
+    <!-- post meta tag -->
+    <meta name="subject" content="K.M.R@NK">
+    <meta name="description" content="K.M.R@NK"/>
+@endsection
 @section('content')
 
 <div class="col-md-12">

@@ -48,12 +48,13 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="tags"> Select Tags :</label>
+                                <label for="tags"> Select Tags :</label><br>
                                 @foreach($tags as $tag)
-                                <div class="checkbox">
-                                    <input type="checkbox" name="tags[]" value="{{ $tag->id }}"> {{ $tag->tag }}
-                                </div>
+                                <label class = "checkbox-inline">
+                                    <input type = "checkbox"  name="tags[]" value="{{ $tag->id }}"> {{ $tag->tag }}
+                                </label>
                                 @endforeach
+                                
                                 @error('tags')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror

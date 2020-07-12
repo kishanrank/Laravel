@@ -55,6 +55,10 @@
                                             <label class="control-label col-md-4">Category Name : </label>
                                             <input type="text" name="name" id="name" class="form-control" />
                                         </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-md-6">Category Description : </label>
+                                            <textarea name="description" id="description" class="form-control" ></textarea>
+                                        </div>
                                 </div>
                                 <br />
                                 <div class="form-group text-center">
@@ -171,6 +175,7 @@
             $('#action_button').val('Add');
             $('#action').val('Add');
             $('#name').val('');
+            $('#description').val('');
             $('#categoryModal').modal('show');
         });
 
@@ -219,9 +224,10 @@
                         toastr.error(data.error)
                     }
                     $('#name').val(data.result.name);
+                    $('#description').val(data.result.description);
                     $('#hidden_id').val(data.result.id);
                     $('.modal-title').text('Edit Category');
-                    $('#action_button').val('Edit');
+                    $('#action_button').val('Update');
                     $('#action').val('Edit');
                     $('#categoryModal').modal('show');
                 }

@@ -33,7 +33,7 @@ class TagsController extends ResponserController
 
     public function store(Request $request)
     {
-        $rules = ['tag' => 'required'];
+        $rules = ['tag' => 'required', 'description' => 'required'];
         $error = Validator::make($request->all(), $rules);
 
         if ($error->fails()) {
@@ -50,7 +50,7 @@ class TagsController extends ResponserController
         $tag_data = [
             'tag' => $request->tag,
             'slug' => Str::slug($request->tag, '-'),
-            'description' => 'aaa'
+            'description' => $request->description
         ]; 
 
         $tag = Tag::create($tag_data);
@@ -64,7 +64,7 @@ class TagsController extends ResponserController
     public function edit($tag)
     {
         if (request()->ajax()) {
-            $data = Tag::findOrFail($tag);
+            $data = Tag::findOrFail($tag)->only('id', 'tag', 'description');
 
             if ($data == null) {
                 return $this->errorMessageResponse('No Tag found for this Id.', 404);
@@ -76,7 +76,7 @@ class TagsController extends ResponserController
 
     public function update(Request $request, $id)
     {
-        $rules = ['tag' => 'required'];
+        $rules = ['tag' => 'required', 'description' => 'required'];
         $error = Validator::make($request->all(), $rules);
 
         if ($error->fails()) {
@@ -85,11 +85,12 @@ class TagsController extends ResponserController
 
         $tag_data = [
             'tag'    =>  $request->tag,
-            'slug'     =>  Str::slug($request->tag, '-')
+            'slug'     =>  Str::slug($request->tag, '-'),
+            'description' => $request->description
         ];
 
         $tag = Tag::whereId($id)->update($tag_data);
-        if (!$tag) { // here $tag is 0 or 1
+        if (!$tag) { // here $tag returns 0 or 1
             return $this->errorMessageResponse('Error in updating tag data.', 409);
         }
 

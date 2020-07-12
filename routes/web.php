@@ -5,13 +5,12 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes();
 Route::group(['namespace' => 'Front'], function () {
-
     Route::get('/', 'HomeController@index')->name('front.home');
     Route::get('/autocomplete', 'HomeController@autocomplete')->name('autocomplete');
     Route::get('/result', 'HomeController@searchResult')->name('search.result');
     Route::get('/about', 'HomeController@about')->name('about');
     Route::get('/contact', 'HomeController@contact')->name('contact');
-    Route::get('/post/{slug}', 'SinglePostController@single')->name('post.single');
+    Route::get('/post/{slug}.html', 'SinglePostController@single')->name('post.single');
     Route::get('/category/{categoryslug}', 'PostByCategoryController@postsByCategory')->name('posts.by.category');
     Route::get('/tag/{tagslug}', 'PostByTagController@postsByTag')->name('posts.by.tag');
     Route::get('/news/all', 'NewsController@allNews')->name('news');
@@ -21,7 +20,6 @@ Route::group(['namespace' => 'Front'], function () {
     Route::post('/contactus', 'ContactUsController@store')->name('contactus.store');
     Route::post('/subscribe', 'SubscriberController@subscribe')->name('subscribe');
 });
-
 
 Route::get('/activate/{code}', 'ActivationCodeController@activation')->name('activate.account');
 Route::get('/resend/code', 'ActivationCodeController@resend')->name('resend.code');

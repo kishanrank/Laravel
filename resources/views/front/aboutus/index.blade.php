@@ -1,5 +1,9 @@
 @extends('layouts.frontend')
 
+@section('title')
+<title>About US | K.M.R@NK'S Blog</title>
+@endsection
+
 @section('header')
 <div id="post-header" class="page-header">
     <div class="background-img"></div>

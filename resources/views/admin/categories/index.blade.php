@@ -210,6 +210,10 @@
                         $('#category-table').DataTable().ajax.reload();
                         $('#categoryModal').modal('hide');
                     }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var message = JSON.parse(jqXHR.responseText);
+                    toastr.error(message.error);
                 }
             })
         });
@@ -240,6 +244,7 @@
             $('#confirmModal').modal('show');
             $('.modal-title').text('Confirmation!');
             $('#ok_button').val('Delete');
+            $('#ok_button').text('OK');
         });
 
         var id = [];
@@ -249,7 +254,7 @@
             });
             $('#confirmModal').modal('show');
             $('#ok_button').val('MassDelete');
-
+            $('#ok_button').text('OK');
         });
 
         $('#ok_button').click(function() {
@@ -275,16 +280,16 @@
                     $('#ok_button').text('Deleting...');
                 },
                 success: function(data) {
-                    $('#confirmModal').modal('hide');
-                    var html = '';
                     if (data.success) {
                         toastr.success(data.success);
                         $('#category-table').DataTable().ajax.reload();
+                        $('#confirmModal').modal('hide');
                     }
-                    if (data.error) {
-                        toastr.error(data.error)
-                    }
-                    $('#ok_button').text('OK');
+                }, 
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var message = JSON.parse(jqXHR.responseText);
+                    toastr.error(message.error);
+                    $('#confirmModal').modal('hide');
                 }
             })
         });
@@ -306,15 +311,16 @@
                 cache: false,
                 processData: false,
                 success: function(data) {
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
                     if (data.success) {
                         toastr.success(data.success);
                         $('#import_form')[0].reset();
                         $('#category-table').DataTable().ajax.reload();
+                        $('#importModal').modal('hide');
                     }
-                    $('#importModal').modal('hide');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var message = JSON.parse(jqXHR.responseText);
+                    toastr.error(message.error);
                 }
             });
         });

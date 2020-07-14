@@ -90,6 +90,9 @@ class PostsController extends ResponserController
                 }
             }
         }
+        
+        event(new NewPostEvent($post));
+
         $notification = array(
             'message' => 'Post Saved Successfully.',
             'alert-type' => 'success'
@@ -221,10 +224,14 @@ class PostsController extends ResponserController
 
         $imagesPath = public_path('uploads/posts/images/' . $post->slug . '');
 
-        File::deleteDirectory($imagesPath);
+        if ($imagesPath) {
+            File::deleteDirectory($imagesPath);
+        }
         File::delete($post->featured);
 
+        $post->tags()->detach();
         $post->forceDelete();
+
         $notification = array(
             'message' => 'Post deleted permanently.',
             'alert-type' => 'success'

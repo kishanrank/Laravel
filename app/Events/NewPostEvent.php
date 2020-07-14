@@ -22,7 +22,6 @@ class NewPostEvent
     public function __construct($post)
     {
         $this->post = $post;
-        
     }
 
     /**

@@ -44,7 +44,7 @@
         @forelse($posts as $post)
         <div class="col-md-12">
             <div class="post post-row">
-                <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{$post->featured}}" width="150px" height="180px" alt="{{ $post->title}}"></a>
+                <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{$post->featured}}" width="200px" height="180px" alt="{{ $post->title}}"></a>
                 <div class="post-body">
                     <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h3>
                     <div class="post-meta">

@@ -19,4 +19,11 @@ class Tag extends Model
     {
         $this->attributes['tag'] = ucfirst($value);
     }
+
+    public static function rules() {
+        return [
+            'tag' => 'required', 
+            'description' => 'required'
+        ];
+    }
 }

@@ -15,7 +15,7 @@ trait Responser {
         return response()->json(['success' => $data, 'code' => $code], $code);
     }
 
-    public function errorMessageResponse($data, $code=200) {
+    public function errorMessageResponse($data, $code=400) {
         return response()->json(['error' => $data, 'code' => $code], $code);
     }
 

@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 
 class Category extends Model
 {
@@ -17,8 +16,10 @@ class Category extends Model
         $this->attributes['name'] = ucfirst($value);
     }
 
-    // public function getCategoryList() {
-    // 	// print_r($this);
-    // 	return DB::table('categories')->get();
-    // }
+    public static function rules() {
+        return [
+            'name' => 'required|unique:categories,name', 
+            'description' => 'required'
+        ];
+    }
 }

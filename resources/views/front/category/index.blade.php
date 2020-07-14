@@ -44,7 +44,7 @@
         @foreach($posts as $post)
         <div class="col-md-12">
             <div class="post post-row">
-                <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{$post->featured}}" width="100px" height="150px" alt="{{ $post->title}}"></a>
+                <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{$post->featured}}" width="200px" height="180px" alt="{{ $post->title}}"></a>
                 <div class="post-body">
                     <h2 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h2>
                     <div class="post-meta">

@@ -231,6 +231,10 @@
                         $('#tag-table').DataTable().ajax.reload();
                         $('#tagModal').modal('hide');
                     }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    var message = JSON.parse(jqXHR.responseText);
+                    toastr.error(message.error);
                 }
             })
         });

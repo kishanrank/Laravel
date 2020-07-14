@@ -37,8 +37,16 @@ class NewPost extends Notification implements ShouldQueue
 
     public function toMail($notifiable)
     {
-        // $url = route('post.single', ['slug' => $this->post->slug]);
-        return (new MailMessage)->markdown('admin.notification.newpost', ['title' => $this->title, 'url' => "www.google.com"]);
+        // return (new MailMessage)->
+        // markdown('admin.notification.newpost', ['title' => $this->title, 'url' => "www.google.com"]);
+
+        return (new MailMessage)
+            ->subject('Hey user, New post availabe')
+            ->greeting('Hello', 'Subscriber')
+            ->line('There is a new post , hope you will like it')
+            ->line('Post title : ' . $this->title) //Send with post title
+            ->action('Read Post', url(route('post.single', ['slug' => $this->post->slug]))) //Send with post url
+            ->line('Thank you for being with us!');
     }
 
     public function toArray($notifiable)

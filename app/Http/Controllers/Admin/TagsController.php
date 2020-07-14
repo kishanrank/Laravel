@@ -33,15 +33,14 @@ class TagsController extends ResponserController
 
     public function store(Request $request)
     {
-        $rules = ['tag' => 'required', 'description' => 'required'];
-        $error = Validator::make($request->all(), $rules);
+        $error = Validator::make($request->all(), Tag::rules());
 
         if ($error->fails()) {
-            return $this->errorMessageResponse($error->errors()->all());
+            return $this->errorMessageResponse($error->errors()->all(), 422);
         }
 
         $tags = Tag::all()->pluck('tag')->toArray();
-       
+
         if (in_array($request->tag, $tags)) {
             return $this->errorMessageResponse('This tag is already available.');
             // return response()->json(['error' => 'This tag is already available.']);
@@ -51,7 +50,7 @@ class TagsController extends ResponserController
             'tag' => $request->tag,
             'slug' => Str::slug($request->tag, '-'),
             'description' => $request->description
-        ]; 
+        ];
 
         $tag = Tag::create($tag_data);
 
@@ -69,18 +68,18 @@ class TagsController extends ResponserController
             if ($data == null) {
                 return $this->errorMessageResponse('No Tag found for this Id.', 404);
             }
-            
+
             return response()->json(['result' => $data]);
         }
     }
 
     public function update(Request $request, $id)
     {
-        $rules = ['tag' => 'required', 'description' => 'required'];
-        $error = Validator::make($request->all(), $rules);
+
+        $error = Validator::make($request->all(), Tag::rules());
 
         if ($error->fails()) {
-            return $this->errorMessageResponse($error->errors()->all());
+            return $this->errorMessageResponse($error->errors()->all(), 422);
         }
 
         $tag_data = [
@@ -104,8 +103,8 @@ class TagsController extends ResponserController
         if ($tag->delete()) {
             return $this->successMessageResponse('Tag is successfully deleted', 200);
         }
-        
-        return $this->errorMessageResponse('Tag is not deleted.',422);
+
+        return $this->errorMessageResponse('Tag is not deleted.', 422);
     }
 
     public function massDelete(Request $request)
@@ -138,7 +137,7 @@ class TagsController extends ResponserController
         }
 
         $import = Excel::import(new TagsImport, request()->file('import'));
-        if($import) {
+        if ($import) {
             return $this->successMessageResponse('Data imported successfully', 200);
         }
         return $this->errorMessageResponse('Error in Importing file.', 200); //422

@@ -95,7 +95,7 @@ class Handler extends ExceptionHandler
         // }
 
         // if ($exception instanceof QueryException) {
-        //     return $this->errorMessageResponse("Query exception found", 200); // 409
+        //     return $this->errorMessageResponse("Query exception found", 200); // 500 Final code
         // }
         
         // if(config('app.debug')) {

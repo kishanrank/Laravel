@@ -6,6 +6,7 @@ use App\Post;
 use App\News;
 use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends ResponserController
 {

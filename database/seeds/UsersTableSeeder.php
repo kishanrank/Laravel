@@ -16,15 +16,16 @@ class UsersTableSeeder extends Seeder
             'email' => 'kmrank111@gmail.com',
             'password' => bcrypt('114599@kishan'),
             'admin' => 1,
-            'active' => 0
+            'active' => 1
         ]);
 
         App\Profile::create([
             'user_id' => $user->id,
             'avatar' => 'uploads/avatars/admin.jpg',
             'about' => ' Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt, optio. Explicabo doloremque vel officiis adipisci velit, perferendis omnis. Molestiae recusandae repudiandae quaerat eum ipsa dignissimos modi animi in laborum veniam!',
-            'facebook' => 'https://www.facebook.com/',
-            'youtube' => 'https://www.youtube.com/'
+            'linkedin' => 'https://www.facebook.com/',
+            'github' => 'https://www.youtube.com/',
+            'twitter' => 'https://www.youtube.com/',
         ]);
 
         $code = App\ActivationCode::create([

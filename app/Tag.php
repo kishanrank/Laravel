@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-    protected $fillable = ['tag', 'slug', 'description'];
+
+    protected $table = 'tags';
+    
+    protected $fillable = ['tag', 'slug', 'description', 'meta_title', 'meta_description'];
 
     protected $hidden = ['pivot'];
 

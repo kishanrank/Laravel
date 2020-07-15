@@ -20,8 +20,8 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header font-weight-bold">
-                        <button type="button" name="create_news" data-dismiss="modal" id="create_news" class="btn btn-success float-right btn-sm  mr-2">Add News</button>
+                <div class="card-header font-weight-bold">
+                        <a class="btn btn-primary float-right btn-sm" href="{{ route('news.create')}}">Create New News</a>
                     </div>
                     <div class="card-body">
                         <table id="news-table" class="table table-striped responsive" width="100%">
@@ -30,68 +30,13 @@
                                     <th>#</th>
                                     <th>Featured</th>
                                     <th>Title</th>
-                                    <th>Action</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
-                    </div>
-
-                    <div id="newsModal" class="modal fade bd-example-modal-xl" role="dialog">
-                        <div class="modal-dialog modal-xl">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Add News</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <form method="POST" id="news_form" class="form-horizontal" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4"> Title : </label>
-                                            <input type="text" name="title" id="title" class="form-control" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4"> Info : </label>
-                                            <textarea name="info" id="info" class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4"> Featured : </label>
-                                            <input type="file" name="featured" id="featured" class="form-control" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-md-4"> Content : </label>
-                                            <textarea name="content" id="content" class="textarea form-control"></textarea>
-                                        </div>
-                                </div>
-                                <br />
-                                <div class="form-group text-center">
-                                    <input type="hidden" name="action" id="action" value="Add" />
-                                    <input type="hidden" name="hidden_id" id="hidden_id" />
-                                    <input type="submit" name="action_button" id="action_button" class="btn btn-primary" value="Add News" />
-                                </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="confirmModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Confirmation</h5>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Are you sure you want to remove this News?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" name="ok_button" id="ok_button" class="btn btn-danger">OK</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -127,19 +72,18 @@
             },
             columns: [{
                     data: 'id',
-                    name: 'id'
                 },
                 {
                     data: 'featured',
-                    name: 'featured'
                 },
                 {
                     data: 'title',
-                    name: 'title'
                 },
                 {
-                    data: 'action',
-                    name: 'action'
+                    data: 'edit',
+                },
+                {
+                    data: 'delete'
                 }
             ]
         });

@@ -34,7 +34,7 @@
                 </ul>
                 <form class="navbar-form navbar-right" id="search_form" method="get" action="{{ route('search.result')}}">
                     <div class="form-group">
-                        <input class="typeahead form-control search-input" id="search" type="text" name="search" minlength="3" placeholder="Search Here" required>
+                        <input class="typeahead form-control search-input" id="search" type="text" name="search" minlength="3" placeholder="Search Here" required autocomplete="off">
                     </div>
                     <button type="submit" class="btn btn-default">Search</button>
                 </form>

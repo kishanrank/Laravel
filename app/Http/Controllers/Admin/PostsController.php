@@ -28,14 +28,17 @@ class PostsController extends ResponserController
                 ->get();
 
             return DataTables::of($data)
-                ->addColumn('action', function ($data) {
-                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.edit', $data->id) . '">Edit</a><a class="btn btn-danger btn-sm mr-3"  href="' . route('post.delete', $data->id) . '">Delete</a>';
+                ->addColumn('edit', function ($data) {
+                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.edit', $data->id) . '">Edit</a>';
+                })
+                ->addColumn('delete', function ($data) {
+                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.delete', $data->id) . '">Delete</a>';
                 })
                 ->addColumn('featured', function ($data) {
                     $url = asset($data->featured);
                     return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
                 })
-                ->rawColumns(['action', 'featured'])
+                ->rawColumns(['edit', 'delete', 'featured'])
                 ->make(true);
         }
         return view('admin.posts.index');
@@ -46,7 +49,7 @@ class PostsController extends ResponserController
         $categories = Category::all();
         $tags = Tag::all();
         if ($categories->count() == 0 || $tags->count() == 0) {
-            return redirect(route('categories.index'))->with('info', 'Please add Category and Tags first.');
+            return redirect(route('categories.index'))->with('error', 'Please add Category and Tags first.');
         }
         return view('admin.posts.create', ['categories' => $categories, 'tags' => $tags]);
     }
@@ -138,6 +141,7 @@ class PostsController extends ResponserController
 
         $post->user_id = Auth::user()->id;
         $post->title = $request->title;
+        $post->info = $request->info;
         $post->slug = Str::slug($request->title, '-');
         $post->content = $request->content;
         $post->category_id = $request->category_id;
@@ -198,17 +202,29 @@ class PostsController extends ResponserController
         }
     }
 
-    public function trashed()
+    public function trashed(Request $request) 
     {
-        $posts = Post::onlyTrashed()->get();
-        if (!$posts) {
-            $notification = array(
-                'message' => 'Error in getting post data.',
-                'alert-type' => 'error'
-            );
-            return back()->with($notification);
+        if ($request->ajax()) {
+            $data = DB::table('posts')
+                ->join('categories', 'posts.category_id', '=', 'categories.id')
+                ->select('posts.featured', 'posts.title', 'posts.id', 'posts.deleted_at', 'categories.name')
+                ->whereNotNull('posts.deleted_at')->get();
+
+            return DataTables::of($data)
+                ->addColumn('restore', function ($data) {
+                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.restore', $data->id) . '">Restore</a>';
+                })
+                ->addColumn('delete', function ($data) {
+                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.kill', $data->id) . '">Permanent Delete</a>';
+                })
+                ->addColumn('featured', function ($data) {
+                    $url = asset($data->featured);
+                    return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
+                })
+                ->rawColumns(['restore', 'delete', 'featured'])
+                ->make(true);
         }
-        return view('admin.posts.trashed', ['posts' => $posts]);
+        return view('admin.posts.trashed');
     }
 
     public function kill($id) //forcedelete

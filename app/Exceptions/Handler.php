@@ -94,12 +94,15 @@ class Handler extends ExceptionHandler
         //     return $this->errorMessageResponse($exception->getMessage(), $exception->getStatusCode());
         // }
 
-        // if ($exception instanceof QueryException) {
-        //     return $this->errorMessageResponse("Query exception found", 200); // 500 Final code
-        // }
-        
+
+        if ($exception instanceof QueryException) {
+            if ((!request()->is('admin*'))) {
+                return response()->view('errors.500'); // 500 Final code
+            }
+        }
+
         // if(config('app.debug')) {
-            return parent::render($request, $exception);
+        return parent::render($request, $exception);
         // }
 
         // return $this->errorMessageResponse('Unexpacted Exception error occured. Please try later', 500);

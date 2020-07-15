@@ -17,8 +17,8 @@ class InboxController extends ResponserController
     public function show($id) 
     {
     	$message = ContactUs::findOrFail($id);
-        if ($message == null) {
-            return $this->errorMessageResponse('Error in finding data, please try after sometime.');
+        if (!$message->id) {
+            return $this->errorMessageResponse('Error in finding data, please try after sometime.', 404);
         }
 
     	return response()->json(['result' => $message]);

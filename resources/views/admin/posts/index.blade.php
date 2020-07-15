@@ -29,9 +29,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Image</th>
-                                    <th>Title</th>
+                                    <th width="50%">Title</th>
                                     <th>Category</th>
                                     <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,23 +66,21 @@
         },
         columns: [{
                 data: 'id',
-                name: 'id'
             },
             {
                 data: 'featured',
-                name: 'featured'
             },
             {
                 data: 'title',
-                name: 'title'
             },
             {
                 data: 'name',
-                name: 'name'
             },
             {
-                data: 'action',
-                name: 'action'
+                data: 'edit',
+            },
+            {
+                data: 'delete',
             }
         ]
     });

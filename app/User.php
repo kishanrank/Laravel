@@ -24,6 +24,8 @@ class User extends Authenticatable
         'name', 'email', 'password', 'admin', 'active'
     ];
 
+    protected $table = 'users';
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -46,7 +48,7 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
-    public function isUserActivated() {
+    public function isUserActivated() {  /// during login check
         if($this->active) {
             return true;
         }

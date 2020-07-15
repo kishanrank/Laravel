@@ -133,7 +133,6 @@
 
 <script>
     $(document).ready(function() {
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -149,23 +148,18 @@
             },
             columns: [{
                     data: 'checkbox',
-                    name: 'checkbox',
                 },
                 {
                     data: 'id',
-                    name: 'id'
                 },
                 {
                     data: 'name',
-                    name: 'name'
                 },
                 {
                     data: 'slug',
-                    name: 'slug'
                 },
                 {
                     data: 'action',
-                    name: 'action'
                 }
             ]
         });

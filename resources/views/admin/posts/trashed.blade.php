@@ -1,11 +1,17 @@
 @extends('layouts.app')
+
+@section('stylesheet')
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+@endsection
+
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users</h1>
+                    <h1>Trashed Post</h1>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -15,31 +21,20 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table class="table table-striped">
-                            <tr>
-                                <th>Image</th>
-                                <th>Title</th>
-                                <th>Restore</th>
-                                <th>Delete</th>
-                            </tr>
-                            @if(count($posts) > 0)
-                            @foreach($posts as $post)
-                            <tr>
-                                <td><img src="{{$post->featured}}" alt="{{ $post->title}}" width="90px" height="50px"> </td>
-                                <td>{{ $post->title}}</td>
-                                <td><a class="btn btn-success btn-sm" href="{{ route('post.restore', ['post' => $post->id])}}">Restore</a></td>
-                                <td><a class="btn btn-danger btn-sm" href="{{ route('post.kill', ['post' => $post->id])}}">Delete</a></td>
-                            </tr>
-                            @endforeach
-                            @else
-                            <div class="align-center">
+                        <table id="trashed-post-table" class="table table-striped responsive" width="100%">
+                            <thead>
                                 <tr>
-                                    <td colspan="4" class="text-center"><b>No posts available in Trash.</b></td>
+                                    <th>#</th>
+                                    <th>Featured</th>
+                                    <th width="50%">Title</th>
+                                    <th>Name</th>
+                                    <th>Restore</th>
+                                    <th>Delete</th>
                                 </tr>
-                            </div>
-                            @endif
-
-                            </tabel>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -50,5 +45,42 @@
 @endsection
 
 @section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+    $('#trashed-post-table').DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        ajax: {
+            url: "{{ route('trashed.post') }}",
+        },
+        columns: [{
+                data: 'id',
+            },
+            {
+                data: 'featured',
+            },
+            {
+                data: 'title',
+            },
+            {
+                data: 'name',
+            },
+            {
+                data: 'restore',
+            },
+            {
+                data: 'delete',
+            }
+        ]
+    });
+</script>
 @include('admin.includes.toastr')
 @endsection

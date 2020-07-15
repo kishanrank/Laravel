@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-md-10">
                 <div class="post-meta">
-                    <a class="post-category cat-2" href="category.html">{{ $post->category->name}}</a>
+                    <a class="post-category cat-2" href="{{ route('posts.by.category', ['categoryslug' => $post->category->slug])}}">{{ $post->category->name}}</a>
                     <span class="post-date">{{ $post->created_at->toFormattedDateString() }} By {{ $post->user->name}}</span>
                 </div>
                 <h1 class="text-dark">{{ $post->title}}</h1>
@@ -46,7 +46,7 @@
     <div class="section-row">
         <div class="main-post">
             <figure class="figure-img">
-                <img class="img-responsive" src="{{ $post->featured }}" alt="">
+                <img class="img-responsive" src="{{ $post->featured }}"  width="720" height="380" alt="">
                 <figcaption></figcaption>
             </figure>
             {!! $post->info !!}
@@ -54,7 +54,7 @@
             @if($post->images)
             @foreach($post->images as $image)
             <figure class="figure-img">
-                <img class="img-responsive" src="{{ asset($image->image) }}" alt="">
+                <img class="img-responsive" src="{{ asset($image->image) }}" width="640" height="380" alt="">
             </figure>
             @endforeach
 
@@ -73,7 +73,6 @@
                     </ul>
                 </div>
             </div>
-
         </div>
         <!-- share post in social media -->
         <div class="post-shares sticky-shares">

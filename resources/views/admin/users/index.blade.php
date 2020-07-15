@@ -49,10 +49,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>                   
+                    </div>
                     <div class="card-header">
                         <span><b>Export User</b></span>
-                        
+
                         <form class="form-inline float-right" method="POST" action="{{route('users.export')}}">
                             @csrf
                             <div class="form-group" id="from_date">
@@ -80,7 +80,7 @@
                                     <th>Image</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Active</th>
+                                    <th>Activated</th>
                                     <th>Role</th>
                                     <th>Action</th>
                                     <th>Delete</th>
@@ -201,7 +201,7 @@
                     if (data.admin == 1) {
                         return "Admin";
                     }
-                    return "Customer";
+                    return "User";
                 },
                 searchable: "false",
                 orderable: "false"
@@ -243,18 +243,19 @@
             url: "users/destroy/" + user_id,
             method: 'DELETE',
             success: function(data) {
-                if (data.error) {
-                    $('#confirmModal').modal('hide');
-                    toastr.error(data.error);
-                } else {
+                if (data.success) {
                     toastr.success(data.success);
                     $('#confirmModal').modal('hide');
                     $('#user-table').DataTable().ajax.reload();
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                var message = JSON.parse(jqXHR.responseText);
+                toastr.error(message.error);
             }
         });
     });
-    
+
 
     $(document).on('click', '.make-admin', function() {
         var user_id = $(this).attr('id');
@@ -262,13 +263,16 @@
             url: "users/makeadmin/" + user_id,
             method: 'GET',
             success: function(data) {
-                if (data.error) {
-                    toastr.error(data.error);
-                } else {
+                if (data.success) {
                     $('#user-table').DataTable().ajax.reload();
                     toastr.success(data.success);
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                var message = JSON.parse(jqXHR.responseText);
+                toastr.error(message.error);
             }
+
         });
     });
 
@@ -278,12 +282,14 @@
             url: "users/removeadmin/" + user_id,
             method: 'GET',
             success: function(data) {
-                if (data.error) {
-                    toastr.error(data.error);
-                } else {
+                if (data.success) {
                     $('#user-table').DataTable().ajax.reload();
                     toastr.success(data.success);
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                var message = JSON.parse(jqXHR.responseText);
+                toastr.error(message.error);
             }
         });
     });
@@ -314,15 +320,16 @@
             data: $(this).serialize(),
             dataType: "json",
             success: function(data) {
-                if (data.error) {
-                    toastr.error(data.error);
-                }
                 if (data.success) {
                     toastr.success(data.success);
                     $('#user_form')[0].reset();
                     $('#userModal').modal('hide');
                     $('#user-table').DataTable().ajax.reload();
                 }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                var message = JSON.parse(jqXHR.responseText);
+                toastr.error(message.error);
             }
         });
     });

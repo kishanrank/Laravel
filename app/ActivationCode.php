@@ -8,6 +8,8 @@ class ActivationCode extends Model
 {
     protected $fillable = ['code'];
 
+    protected $table = 'activation_codes';
+
     public function getRouteKeyName()
     {
         return 'code';

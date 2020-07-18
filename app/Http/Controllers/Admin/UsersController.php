@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Exports\UsersExport;
 use App\Profile;
 use App\User;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ResponserController;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +56,10 @@ class UsersController extends ResponserController
         Profile::create([
             'user_id' => $user->id,
             'avatar' => 'uploads/avatars/admin.jpg'
+        ]);
+
+        $user->userActivationCode()->create([
+            'code' => Str::random(128)
         ]);
 
         return $this->successMessageResponse('User created successfully.', 200);

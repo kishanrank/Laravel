@@ -6,15 +6,15 @@
 
 @section('meta')
     <!-- post meta tag -->
-    <meta name="subject" content="{{ $tag->tag }}">
-    <meta name="description" content="{{ $tag->tag }}"/>
+    <meta name="subject" content="{{ $tag->meta_title }}">
+    <meta name="description" content="{{ $tag->meta_description }}"/>
     <meta name="url" content="{{route('posts.by.tag', ['tagslug' => $tag->slug])}}">
     <meta name="image" content="">
     <meta name="category" content="{{ $tag->tag}}">
     
     <!-- og meta tags -->
-    <meta property="og:title" content="{{ $tag->tag }}">
-    <meta property="og:description" content="{{ $tag->tag }}">
+    <meta property="og:title" content="{{ $tag->meta_title }}">
+    <meta property="og:description" content="{{ $tag->meta_description }}">
     <meta property="og:url" content="{{route('posts.by.tag', ['tagslug' => $tag->slug])}}">
     <meta property="og:image" content="">
 @endsection
@@ -77,6 +77,6 @@
 
 @section('rightsidebar')
 <div class="col-md-3">
-    @include('includes.rightsidebar')
+    @include('front.includes.rightsidebar')
 </div>
 @endsection

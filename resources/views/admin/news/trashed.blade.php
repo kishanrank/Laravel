@@ -36,7 +36,6 @@
                                     <th>#</th>
                                     <th>Featured</th>
                                     <th width="50%">Title</th>
-                                    <th>Name</th>
                                     <th>Restore</th>
                                     <th>Delete</th>
                                 </tr>
@@ -78,9 +77,6 @@
             },
             {
                 data: 'title',
-            },
-            {
-                data: 'name',
             },
             {
                 data: 'restore',

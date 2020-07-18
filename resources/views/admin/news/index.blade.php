@@ -38,8 +38,9 @@
                                     <th>#</th>
                                     <th>Featured</th>
                                     <th>Title</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Status</th>
+                                    <th>Publish/Unpublish<br></th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,7 +63,6 @@
 <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
 <script>
     $(document).ready(function() {
         $.ajaxSetup({
@@ -88,123 +88,23 @@
                     data: 'title',
                 },
                 {
-                    data: 'edit',
+                    data: function(data) {
+                        if (data.published == 1) {
+                            return "Published";
+                        }
+                        return "Un Published"
+                    }
                 },
                 {
-                    data: 'delete'
-                }
+                    data: 'upload'
+                },
+                {
+                    data: 'action',
+                },
+                
             ]
         });
-
-        $('#create_news').click(function() {
-            $('.modal-title').text('Add News');
-            $('#action_button').val('Add');
-            $('#action').val('Add');
-            $('#title').val('');
-            $('#info').val('');
-            $('#content').val('');
-            $('#newsModal').modal('show');
-        });
-
-        $('#news_form').on('submit', function(event) {
-            event.preventDefault();
-            var action_url = '';
-            var method = '';
-            var data = '';
-            if ($('#action').val() == 'Add') {
-                action_url = "{{ route('news.store') }}";
-                var form = $('#news_form')[0];
-                data = new FormData(form);
-            }
-
-            if ($('#action').val() == 'Edit') {
-                news_id = $('#hidden_id').val();
-                action_url = "news/" + news_id;
-                var data = new FormData($(this)[0]);
-                data.append('_method', 'PUT');
-            }
-
-            $.ajax({
-                url: action_url,
-                enctype: 'multipart/form-data',
-                method: "POST",
-                data: data,
-                dataType: 'JSON',
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(data) {
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                    if (data.success) {
-                        toastr.success(data.success);
-                        $('#news-table').DataTable().ajax.reload();
-                        $('#newsModal').modal('hide');
-                    }
-                    $('#news_form')[0].reset();
-                }
-            })
-        });
-
-        $(document).on('click', '.edit', function() {
-            var id = $(this).attr('id');
-            $.ajax({
-                url: "news/" + id + "/edit",
-                dataType: "json",
-                success: function(data) {
-                    if (data.error) {
-                        toastr.error(data.error)
-                    }
-                    $('#title').val(data.result.title);
-                    $('#info').val(data.result.info);
-                    $('#content').val(data.result.info);
-                    $('#hidden_id').val(data.result.id);
-                    $('.modal-title').text('Edit News');
-                    $('#action_button').val('Edit');
-                    $('#action').val('Edit');
-                    $('#newsModal').modal('show');
-                }
-            })
-        });
-
-        var news_id;
-        $(document).on('click', '.delete', function() {
-            news_id = $(this).attr('id');
-            $('#confirmModal').modal('show');
-            $('.modal-title').text('Confirmation!');
-            $('#ok_button').val('Delete');
-        });
-
-        $('#ok_button').click(function() {
-            if ($('#ok_button').val() == 'Delete') {
-                action_url = "news/" + news_id;
-                method = "DELETE";
-                data = news_id;
-            }
-
-            $.ajax({
-                url: action_url,
-                method: method,
-                data: data,
-                beforeSend: function() {
-                    $('#ok_button').text('Deleting...');
-                },
-                success: function(data) {
-                    if (data.success) {
-                        toastr.success(data.success);
-                        $('#news-table').DataTable().ajax.reload();
-                    }
-                    if (data.error) {
-                        toastr.error(data.error)
-                    }
-                    $('#confirmModal').modal('hide');
-                    $('#ok_button').text('OK');
-                }
-            })
-        });
-
     });
 </script>
-
+@include('admin.includes.toastr')
 @endsection

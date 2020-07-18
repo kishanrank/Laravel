@@ -213,7 +213,7 @@
                 @empty
                 <div>
                     <strong>
-                        <h1>Sorry, No News found.</h1>
+                        <h5>Sorry, No News found.</h5>
                     </strong>
                 </div>
                 @endforelse   

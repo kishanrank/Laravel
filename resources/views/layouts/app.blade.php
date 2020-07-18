@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +19,7 @@
     @yield('stylesheet')
     <link rel="icon" href="{{asset('favicon-96x96.png') }}" sizes="96x96" type="image/png">
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed">
     <!-- ./wrapper -->
     <div id="app">
@@ -34,15 +36,15 @@
     <!-- jQuery -->
     <script src="{{ asset('plugins/jquery/jquery.min.js')}}"></script>
     <!-- Bootstrap 4 -->
-    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>  
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <!-- Summernote -->
     <!-- overlayScrollbars -->
     <script src="{{ asset('plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.js')}}"></script>
+
     @yield('script')
-    
+
 </body>
 
 </html>
-

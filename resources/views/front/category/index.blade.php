@@ -6,15 +6,15 @@
 
 @section('meta')
 <!-- post meta tag -->
-<meta name="subject" content="{{ $category->name }}">
-<meta name="description" content="{{ $category->name }}" />
+<meta name="subject" content="{{ $category->meta_name }}">
+<meta name="description" content="{{ $category->meta_description }}" />
 <meta name="url" content="{{route('posts.by.category', ['categoryslug' => $category->slug])}}">
 <meta name="image" content="">
 <meta name="category" content="{{ $category->name}}">
 
 <!-- og meta tags -->
-<meta property="og:title" content="{{ $category->name }}">
-<meta property="og:description" content="{{ $category->name }}">
+<meta property="og:title" content="{{ $category->meta_title }}">
+<meta property="og:description" content="{{ $category->meta_description }}">
 <meta property="og:url" content="{{route('posts.by.category', ['categoryslug' => $category->slug])}}">
 <meta property="og:image" content="">
 @endsection
@@ -67,7 +67,7 @@
         @else
         <div class="col-md-12 text-center">
             <strong>
-                <h1>Sorry, No post found for this category</h1>
+                <h2>Sorry, No post found for this category</h2>
             </strong>
         </div>
         @endif

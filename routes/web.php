@@ -45,9 +45,19 @@ Route::group(
         Route::get('/categories/export', 'CategoriesController@export')->name('categories.export');
         Route::resource('categories', 'CategoriesController');
 
+        Route::get('/news', 'NewsController@index')->name('news.index');
+        Route::get('/news/create', 'NewsController@create')->name('news.create');
+        Route::post('/news/store', 'NewsController@store')->name('news.store');
+        Route::get('/news/delete/{news}', 'NewsController@destroy')->name('news.destroy');
+        Route::get('/news/edit/{news}', 'NewsController@edit')->name('news.edit');
+        Route::put('/news/update/{news}', 'NewsController@update')->name('news.update');
+
         Route::get('/news/published', 'NewsController@published')->name('news.published');
         Route::get('/news/trashed', 'NewsController@trashed')->name('news.trashed');
-        Route::resource('news', 'NewsController');
+        Route::get('/news/{id}/publish',  'NewsController@publishNews')->name('news.make.published');
+        Route::get('/news/{id}/unpublish',  'NewsController@unPublishNews')->name('news.make.unpublished');
+        Route::get('/news/{id}/kill', 'NewsController@kill')->name('news.kill');
+        Route::get('/news/{id}/restore', 'NewsController@restore')->name('news.restore');
 
         Route::get('/tags/export', 'TagsController@export')->name('tags.export');
         Route::post('/tags/massdelete', 'TagsController@massDelete')->name('tags.massdelete');
@@ -63,7 +73,8 @@ Route::group(
         Route::put('/post/update/{post}', 'PostsController@update')->name('post.update');
 
         Route::get('/posts/published', 'PostsController@published')->name('posts.published');
-
+        Route::get('/posts/{id}/publish',  'PostsController@publishPost')->name('post.make.published');
+        Route::get('/posts/{id}/unpublish',  'PostsController@unPublishPost')->name('post.make.unpublished');
         Route::get('/posts/trashed', 'PostsController@trashed')->name('posts.trashed');
         Route::get('/post/kill/{post}', 'PostsController@kill')->name('post.kill');
         Route::get('/post/restore/{post}', 'PostsController@restore')->name('post.restore');

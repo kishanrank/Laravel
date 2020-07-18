@@ -14,7 +14,7 @@ class HomeController extends ResponserController
         $first_post = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at', 'desc')->get()->first();
         $second_post = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at', 'desc')->skip(1)->take(1)->get()->first();
         $news_post = News::orderBy('created_at', 'desc')->paginate(4);
-        $first_line_recent_posts = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at', 'desc')->skip(2)->take(3)->get();
+        $first_line_recent_posts = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at  ', 'desc')->skip(2)->take(3)->get();
         $second_line_recent_post = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at', 'desc')->skip(5)->take(3)->get();
         return view('front.index', [
             'first_post' => $first_post,
@@ -29,7 +29,7 @@ class HomeController extends ResponserController
     {
         $query = $request->get('query');
         $posts = Post::select("title", "slug")
-            ->where("title", "LIKE", "%{$query}%")
+            ->where("title", "LIKE", "%{$query}%")->wherePublished(1)
             ->get();
         $data = [];
         foreach ($posts as $post) {
@@ -53,7 +53,7 @@ class HomeController extends ResponserController
         if ($search == null) {
             return back();
         }
-        $posts = Post::select('*')->where('title', 'LIKE', "%{$search}%")->paginate(10);
+        $posts = Post::select('*')->where('title', 'LIKE', "%{$search}%")->wherePublished(1)->paginate(10);
         return view('front.search.index', compact('posts'));
     }
 }

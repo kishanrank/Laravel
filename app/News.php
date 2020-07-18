@@ -8,10 +8,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class News extends Model
 {
     use SoftDeletes;
-
     protected $table = 'news';
 
-    protected $dates = ['deleted_at'];
+    const PUBLISHED = 1;
+    const NOT_PUBLISHED = 0;
+    const NEWS_FEATURED_PATH = 'uploads/news/featured/';
+
+
+    protected $dates = ['deleted_at', 'published_at'];
 
     protected $fillable = ['user_id', 'title', 'info', 'featured', 'content', 'slug', 'meta_title', 'meta_descrption'];
 

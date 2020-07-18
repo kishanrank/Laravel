@@ -13,6 +13,8 @@ class Post extends Model
 
     const PUBLISHED = 1;
     const NOT_PUBLISHED = 0;
+    const POST_FEATURED_PATH = 'uploads/posts/featured/';
+    const POST_IMAGES_PATH = 'uploads/posts/images/';
 
     protected $fillable = [
         'user_id', 'title', 'info', 'content', 'category_id', 'featured', 'slug', 'meta_title', 'meta_description'
@@ -36,34 +38,40 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function tags() {
+    public function tags()
+    {
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
-    } 
+    }
 
-    public function images() {
+    public function images()
+    {
         return $this->hasMany(PostImage::class);
     }
 
-    public static function rules($id = 0, $extrafields = [])  {
+    public static function rules($id = 0, $extrafields = [])
+    {
         return array_merge(
             [
-                'title' => 'required|max:512',
+                'title' => 'required|max:512|unique:posts,title' . ($id ? ",$id" : ''),
                 'info' => 'required|min:25',
                 'content' => 'required|min:100',
                 'category_id' => 'required',
                 'tags' => 'required'
-            ], $extrafields);
+            ],
+            $extrafields
+        );
     }
 
-    public function isPublished() {
+    public function isPublished()
+    {
         if ($this->published) {
             return self::PUBLISHED;
         }
         return self::NOT_PUBLISHED;
     }
 }
-

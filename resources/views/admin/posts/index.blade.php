@@ -32,20 +32,31 @@
                         <a class="btn btn-primary float-right btn-sm" href="{{ route('post.create')}}">Create New Post</a>
                     </div>
                     <div class="card-body">
-                        <table id="posts-table" class="table table-striped responsive" width="100%">
+                        <table id="posts-table" class="table table-striped responsive table-condensed" width="100%">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th width="10%">#</th>
                                     <th>Image</th>
-                                    <th width="30%">Title</th>
+                                    <th width="40%">Title</th>
                                     <th>Category</th>
                                     <th>Status</th>
-                                    <th>Upload</th>
+                                    <th>Publish/<br>Unpublish</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Image</th>
+                                    <th width="40%">Title</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Publish/<br>Unpublish</th>
+                                    <th>Action</th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
 
@@ -87,12 +98,11 @@
             },
             {
                 data: function(data) {
-                    if(data.published == 1) {
-                        return "Published";
+                    if (data.published == 1) {
+                        return "<b>Published</b>";
                     }
-                    return "Not Published";
-                },
-                searchable: "true",
+                    return "<b>Not Published</b>";
+                }
             },
             {
                 data: 'upload'
@@ -100,7 +110,17 @@
             {
                 data: 'action',
             }
-        ]
+        ],
+        initComplete: function() {
+            this.api().columns().every(function() {
+                var column = this;
+                var input = document.createElement("input");
+                $(input).appendTo($(column.footer()).empty())
+                    .on('change', function() {
+                        column.search($(this).val(), false, false, true).draw();
+                    });
+            });
+        }
     });
 </script>
 @include('admin.includes.toastr')

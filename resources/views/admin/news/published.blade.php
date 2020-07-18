@@ -39,8 +39,7 @@
                                     <th>#</th>
                                     <th>Featured</th>
                                     <th>Title</th>
-                                    <th>Edit</th>
-                                    <th>Delete</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -89,10 +88,7 @@
                     data: 'title',
                 },
                 {
-                    data: 'edit',
-                },
-                {
-                    data: 'delete'
+                    data: 'action'
                 }
             ]
         });

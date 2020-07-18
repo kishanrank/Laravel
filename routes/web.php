@@ -45,6 +45,8 @@ Route::group(
         Route::get('/categories/export', 'CategoriesController@export')->name('categories.export');
         Route::resource('categories', 'CategoriesController');
 
+        Route::get('/news/published', 'NewsController@published')->name('news.published');
+        Route::get('/news/trashed', 'NewsController@trashed')->name('news.trashed');
         Route::resource('news', 'NewsController');
 
         Route::get('/tags/export', 'TagsController@export')->name('tags.export');
@@ -60,7 +62,9 @@ Route::group(
         Route::get('/post/edit/{post}', 'PostsController@edit')->name('post.edit');
         Route::put('/post/update/{post}', 'PostsController@update')->name('post.update');
 
-        Route::get('/trashed/posts', 'PostsController@trashed')->name('trashed.post');
+        Route::get('/posts/published', 'PostsController@published')->name('posts.published');
+
+        Route::get('/posts/trashed', 'PostsController@trashed')->name('posts.trashed');
         Route::get('/post/kill/{post}', 'PostsController@kill')->name('post.kill');
         Route::get('/post/restore/{post}', 'PostsController@restore')->name('post.restore');
 

@@ -41,12 +41,15 @@
 </div>
 @endsection
 
+
 @section('content')
 <div class="col-md-9">
+    <div class="addthis_inline_share_toolbox"></div>
+    <br>
     <div class="section-row">
         <div class="main-post">
             <figure class="figure-img">
-                <img class="img-responsive" src="{{ $post->featured }}"  width="720" height="380" alt="">
+                <img class="img-responsive" src="{{ $post->featured }}" width="720" height="380" alt="">
                 <figcaption></figcaption>
             </figure>
             {!! $post->info !!}
@@ -62,7 +65,7 @@
             {!! $post->content !!}
 
             <!-- Tags releted to posts -->
-            <br><br>
+            <br>
             <div class="aside-widget">
                 <div class="tags-widget">
                     <ul>
@@ -74,14 +77,14 @@
                 </div>
             </div>
         </div>
-        <!-- share post in social media -->
+        <!-- share post in social media
         <div class="post-shares sticky-shares">
             <a href="https://www.facebook.com/sharer/sharer.php?u={{route('post.single', ['slug' => $post->slug])}}" class="share-facebook" target="_blank"><i class="fa fa-facebook"></i></a>
             <a href="https://twitter.com/intent/tweet?url={{route('post.single', ['slug' => $post->slug])}}&text={{ $post->title}}" class="share-twitter" target="_blank"><i class="fa fa-twitter"></i></a>
             <a href="http://www.linkedin.com/shareArticle?mini=true&url={{route('post.single', ['slug' => $post->slug])}}&title={{$post->title}}" class="share-linkedin" target="_blank"><i class="fa fa-linkedin"></i></a>
             <a href="mailto:info@example.com?&subject={{$post->title}}&body={{route('post.single', ['slug' => $post->slug])}}" class="share-envelope" target="_blank"><i class="fa fa-envelope"></i></a>
             <a href="https://pinterest.com/pin/create/button/?url={{route('post.single', ['slug' => $post->slug])}}&media={{$post->featured}}&description={{$post->title}}" class="share-pinterest" target="_blank"><i class="fa fa-pinterest"></i></a>
-        </div>
+        </div> -->
     </div>
 
     <div class="section-row">
@@ -128,6 +131,6 @@
 
 @section('rightsidebar')
 <div class="col-md-3">
-    @include('includes.rightsidebar')
+    @include('front.includes.rightsidebar')
 </div>
 @endsection

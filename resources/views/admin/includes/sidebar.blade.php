@@ -54,8 +54,8 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item has-treeview {{ (request()->is('admin/post*')) || (request()->is('admin/trashed/posts*')) ? 'menu-open' : '' }}">
-                    <a href="#" class="nav-link {{ (request()->is('admin/post*')) || (request()->is('admin/trashed/posts*'))  ? 'active' : '' }}">
+                <li class="nav-item has-treeview {{ (request()->is('admin/post*')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('admin/post*'))  ? 'active' : '' }}">
                         <i class="nav-icon fas fa-clone"></i>
                         <p>
                             Blog Posts
@@ -65,6 +65,14 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('posts') }}" class="nav-link {{ (request()->is('admin/posts')) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    All Posts
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('posts.published') }}" class="nav-link {{ (request()->is('admin/posts/published')) ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>
                                     Published Posts
@@ -80,7 +88,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('trashed.post')}}" class="nav-link {{ (request()->is('admin/trashed/posts*')) ? 'active' : '' }}">
+                            <a href="{{ route('posts.trashed')}}" class="nav-link {{ (request()->is('admin/posts/trashed')) ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>
                                     Trashed Post
@@ -103,6 +111,14 @@
                             <a href="{{ route('news.index') }}" class="nav-link {{ (request()->is('admin/news')) ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>
+                                    All News
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('news.published') }}" class="nav-link {{ (request()->is('admin/news/published')) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
                                     Published News
                                 </p>
                             </a>
@@ -116,7 +132,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('trashed.post')}}" class="nav-link {{ (request()->is('admin/trashed/news')) ? 'active' : '' }}">
+                            <a href="{{ route('news.trashed')}}" class="nav-link {{ (request()->is('admin/news/trashed')) ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>
                                     Trashed News

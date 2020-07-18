@@ -16,9 +16,10 @@
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('admin.home') }}">Home </a>
+                            <a href="{{ route('admin.home') }}">Home</a>
+                             / <a href="{{ route('posts') }}"> Posts</a>
                         </li>
-                        <li class="breadcrumb-item">Posts</li>
+                        <li class="breadcrumb-item">Published</li>
                     </ol>
                 </div>
             </div>
@@ -37,11 +38,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Image</th>
-                                    <th width="30%">Title</th>
+                                    <th width="50%">Title</th>
                                     <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Upload</th>
-                                    <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -71,7 +70,7 @@
         serverSide: true,
         responsive: true,
         ajax: {
-            url: "{{ route('posts') }}",
+            url: "{{ route('posts.published') }}",
         },
         columns: [{
                 data: 'id',
@@ -84,21 +83,6 @@
             },
             {
                 data: 'name',
-            },
-            {
-                data: function(data) {
-                    if(data.published == 1) {
-                        return "Published";
-                    }
-                    return "Not Published";
-                },
-                searchable: "true",
-            },
-            {
-                data: 'upload'
-            },
-            {
-                data: 'action',
             }
         ]
     });

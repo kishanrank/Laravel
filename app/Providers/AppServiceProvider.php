@@ -27,8 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer(['includes.header', 'includes.footer', 'front.index'], HeaderComposer::class);
-        View::composer(['includes.rightsidebar', 'front.index'], SideWidgetComposer::class);
-        View::composer(['front.index', 'includes.rightsidebar'], MostReadComposer::class);
+        View::composer(['front.includes.header', 'front.includes.footer', 'front.index'], HeaderComposer::class);
+        View::composer(['front.includes.rightsidebar', 'front.index'], SideWidgetComposer::class);
+        View::composer(['front.index', 'front.includes.rightsidebar'], MostReadComposer::class);
     }
 }

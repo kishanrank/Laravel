@@ -18,9 +18,9 @@ class Category extends Model
         $this->attributes['name'] = ucfirst($value);
     }
 
-    public static function rules() {
+    public static function rules($id = 0) {
         return [
-            'name' => 'required|unique:categories,name', 
+            'name' => 'required|unique:categories,name'. ($id ? ",$id" : ''), 
             'description' => 'required'
         ];
     }

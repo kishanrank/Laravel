@@ -11,44 +11,42 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Posts</h1>
+                    <h1>Tech News</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
-                            <a href="{{ route('admin.home') }}">Home </a>
+                            <a href="{{ route('admin.home') }}">Home</a>
+                             / <a href="{{ route('news.index') }}">Tech News</a>
                         </li>
-                        <li class="breadcrumb-item">Posts</li>
+                        <li class="breadcrumb-item">Published</li>
                     </ol>
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
+        </div>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header font-weight-bold">
-                        <a class="btn btn-primary float-right btn-sm" href="{{ route('post.create')}}">Create New Post</a>
+                <div class="card-header font-weight-bold">
+                        <a class="btn btn-primary float-right btn-sm" href="{{ route('news.create')}}">Create New News</a>
                     </div>
                     <div class="card-body">
-                        <table id="posts-table" class="table table-striped responsive" width="100%">
+                        <table id="news-table" class="table table-striped responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Image</th>
-                                    <th width="30%">Title</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Upload</th>
-                                    <th>Action</th>
+                                    <th>Featured</th>
+                                    <th>Title</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -65,43 +63,39 @@
 <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-    $('#posts-table').DataTable({
-        processing: true,
-        serverSide: true,
-        responsive: true,
-        ajax: {
-            url: "{{ route('posts') }}",
-        },
-        columns: [{
-                data: 'id',
-            },
-            {
-                data: 'featured',
-            },
-            {
-                data: 'title',
-            },
-            {
-                data: 'name',
-            },
-            {
-                data: function(data) {
-                    if(data.published == 1) {
-                        return "Published";
-                    }
-                    return "Not Published";
-                },
-                searchable: "true",
-            },
-            {
-                data: 'upload'
-            },
-            {
-                data: 'action',
+<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
-        ]
+        });
+
+        $('#news-table').DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: {
+                url: "{{ route('news.published') }}",
+            },
+            columns: [{
+                    data: 'id',
+                },
+                {
+                    data: 'featured',
+                },
+                {
+                    data: 'title',
+                },
+                {
+                    data: 'edit',
+                },
+                {
+                    data: 'delete'
+                }
+            ]
+        });
     });
 </script>
-@include('admin.includes.toastr')
 @endsection

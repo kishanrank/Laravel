@@ -11,7 +11,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Categories</h1>
+                    <h1>Category</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('admin.home') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">Category</li>
+                    </ol>
                 </div>
             </div>
         </div>
@@ -129,8 +137,7 @@
 <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
 <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
-
+@include('admin.includes.toastr')
 <script>
     $(document).ready(function() {
         $.ajaxSetup({

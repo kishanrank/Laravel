@@ -118,4 +118,13 @@ class Handler extends ExceptionHandler
     // {
     //     return $this->errorMessageResponse('Unauthenticated', 200); // 422
     // }
+
+    // protected function convertExceptionToResponse(Exception $e)
+	// {
+	// 	$debug = config('app.debug', false);
+		
+	// 	return $debug
+	// 		? (new SymfonyDisplayer($debug))->createResponse($e)
+	// 		: response()->view('errors.default', ['exception' => $e], 500);
+	// }
 }

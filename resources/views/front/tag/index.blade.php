@@ -69,7 +69,7 @@
                 </a>
             </div>
         </div>
-        {{ $posts->links('includes.pagination') }}
+        {{ $posts->links('front.includes.pagination') }}
 
     </div>
 </div>

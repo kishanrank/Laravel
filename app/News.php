@@ -18,4 +18,14 @@ class News extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public static function rules($id = 0, $extrafield = []) {
+    	return array_merge([
+    		'title' => 'required|unique:news,title' . ($id ? ",$id" : ''),
+    		'info' => 'required|min:20',
+    		'content' => 'required|min:100',
+    		'meta_title' => 'required',
+    		'meta_description' => 'required' 
+    	], $extrafield);
+    }
 }

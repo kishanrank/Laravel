@@ -12,7 +12,15 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Users</h1>
+                    <h1>User</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('admin.home') }}">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">User</li>
+                    </ol>
                 </div>
             </div>
         </div><!-- /.container-fluid -->
@@ -193,7 +201,7 @@
                     }
                     return "No";
                 },
-                searchable: "false",
+                searchable: "true",
                 orderable: "false"
             },
             {
@@ -203,7 +211,7 @@
                     }
                     return "User";
                 },
-                searchable: "false",
+                searchable: "true",
                 orderable: "false"
             },
             {
@@ -216,17 +224,17 @@
                     return '<button type="button" name="make_admin" id="' + data.id + '" class="btn btn-secondary btn-sm mr-3 make-admin">Make Admin</button>';
 
                 },
-                searchable: "false",
+                searchable: "true",
                 orderable: "false"
             },
             {
                 data: function(data) {
                     if (data.admin == 1 && data.id == 1) {
-                        return '<button type="button" disabled name="super_admin" id="' + data.id + '" class="btn btn-danger btn-sm mr-3 super-admin">Delete</button>';
+                        return '<button type="button" disabled name="super_admin" id="' + data.id + '" class="btn btn-danger btn-sm mr-3 super-admin"><i class="fa fa-trash"></i></button>';
                     }
-                    return '<button type="button" name="delete-user" id="' + data.id + '" class="btn btn-danger btn-sm mr-3 delete-user">Delete</button>';
+                    return '<button type="button" name="delete-user" id="' + data.id + '" class="btn btn-danger btn-sm mr-3 delete-user"><i class="fa fa-trash"></i></button>';
                 },
-                searchable: "false",
+                searchable: "true",
                 orderable: "false"
             }
         ]

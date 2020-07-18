@@ -72,13 +72,13 @@
         </div>
         @endif
 
-        {{ $posts->links('includes.pagination') }}
+        {{ $posts->links('front.includes.pagination') }}
     </div>
 </div>
 @endsection
 
 @section('rightsidebar')
 <div class="col-md-3">
-    @include('includes.rightsidebar')
+    @include('front.includes.rightsidebar')
 </div>
 @endsection

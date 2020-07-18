@@ -22,8 +22,10 @@ class CreatePostsTable extends Migration
             $table->text('content'); 
             $table->integer('category_id');
             $table->string('featured');
+            $table->boolean('published')->default(0);
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
+            $table->timestamp('published_at')->default(NULL)->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');

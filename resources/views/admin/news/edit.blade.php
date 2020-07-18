@@ -10,6 +10,15 @@
                 <div class="col-sm-6">
                     <h1>Tech News</h1>
                 </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('admin.home') }}">Home</a>
+                             / <a href="{{ route('news.index') }}">Tech News</a>
+                        </li>
+                        <li class="breadcrumb-item">Edit</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </section>
@@ -18,8 +27,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <strong>Create new News</strong>
-                        <a class="btn btn-success float-right btn-sm" href="{{ route('news.index')}}">View All News</a>
+                        <strong>Edit News :- </strong>@if($news){{ $news->title}}@endif
                     </div>
 
                     <br>

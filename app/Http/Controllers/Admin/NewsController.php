@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponserController;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
@@ -35,6 +36,53 @@ class NewsController extends ResponserController
         return view('admin.news.index');
     }
 
+    public function published(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = News::latest()->get();
+            return DataTables::of($data)
+                ->addColumn('edit', function ($data) {
+                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('news.edit', $data->id) . '">Edit</a>';
+                })
+                ->addColumn('delete', function ($data) {
+                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('news.destroy', $data->id) . '">Delete</a>';
+                })
+                ->addColumn('featured', function ($data) {
+                    $url = asset($data->featured);
+                    return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '" />';
+                })
+                ->rawColumns(['edit', 'delete', 'featured'])
+                ->make(true);
+        }
+        return view('admin.news.published');
+    }
+
+    public function trashed(Request $request) 
+    {
+        if ($request->ajax()) {
+            $data = DB::table('posts')
+                ->join('categories', 'posts.category_id', '=', 'categories.id')
+                ->select('posts.featured', 'posts.title', 'posts.id', 'posts.deleted_at', 'categories.name')
+                ->whereNotNull('posts.deleted_at')->get();
+
+            return DataTables::of($data)
+                ->addColumn('restore', function ($data) {
+                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.restore', $data->id) . '">Restore</a>';
+                })
+                ->addColumn('delete', function ($data) {
+                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.kill', $data->id) . '">Permanent Delete</a>';
+                })
+                ->addColumn('featured', function ($data) {
+                    $url = asset($data->featured);
+                    return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
+                })
+                ->rawColumns(['restore', 'delete', 'featured'])
+                ->make(true);
+        }
+        return view('admin.news.trashed');
+    }
+
+
     public function create()
     {
         return view('admin.news.create',);
@@ -42,7 +90,7 @@ class NewsController extends ResponserController
 
     public function store(Request $request)
     {
-        $this->validateNewsData();
+        $this->validate($request, News::rules(0, ['featured' => 'required|image'])); // 0== id not required
 
         if ($request->hasFile('featured')) {
             $file = $request->file('featured');
@@ -89,7 +137,7 @@ class NewsController extends ResponserController
 
     public function update(Request $request, $id)
     {
-        $this->validateNewsData();
+        $this->validate($request, News::rules($id));
 
         $news = News::findOrFail($id);
 
@@ -125,14 +173,7 @@ class NewsController extends ResponserController
         return redirect()->route('news.index')->with('error', 'News successfully deleted.');
     }
 
-    protected function validateNewsData()
-    {
-        return request()->validate(
-            [
-                'title' => 'required',
-                'info' => 'required',
-                'content' => 'required'
-            ]
-        );
+    public function show($id) {
+
     }
 }

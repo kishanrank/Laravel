@@ -58,9 +58,7 @@
                 </a>
             </div>
         </div>
-
-        {{ $posts->links('includes.pagination') }}
-
+        {{ $posts->links('front.includes.pagination') }}
     </div>
 </div>
 <!-- /post -->
@@ -68,6 +66,6 @@
 
 @section('rightsidebar')
 <div class="col-md-3">
-    @include('includes.rightsidebar')
+    @include('front.includes.rightsidebar')
 </div>
 @endsection

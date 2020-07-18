@@ -21,8 +21,10 @@ class CreateNewsTable extends Migration
             $table->text('info');
             $table->string('featured');
             $table->text('content');
+            $table->boolean('published')->default(0);
             $table->text('meta_title')->nullable();
             $table->text('meta_description')->nullable();
+            $table->timestamp('published_at')->default(NULL)->nullable();
             $table->softDeletes();
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

@@ -66,13 +66,13 @@
             </strong>
         </div>
         @endforelse
-        {{ $allNews->links('includes.pagination') }}
+        {{ $allNews->links('front.includes.pagination') }}
     </div>
 </div>
 @endsection
 
 @section('rightsidebar')
 <div class="col-md-3">
-    @include('includes.rightsidebar')
+    @include('front.includes.rightsidebar')
 </div>
 @endsection

@@ -10,6 +10,15 @@
                 <div class="col-sm-6">
                     <h1>Posts</h1>
                 </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('admin.home') }}">Home</a>
+                             / <a href="{{ route('posts') }}"> Posts</a>
+                        </li>
+                        <li class="breadcrumb-item">Edit</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </section>
@@ -117,7 +126,7 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="meta-title">Meta Title <sup class="text-danger">*</sup> </label>
-                                        <input type="text" id="meta-title" name="meta_title" class="form-control @error('meta_title') is-invalid @enderror">
+                                        <input type="text" id="meta-title" name="meta_title" class="form-control @error('meta_title') is-invalid @enderror" value="{{ $post->meta_title }}">
                                         @error('meta_title')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -125,7 +134,7 @@
 
                                     <div class="form-group">
                                         <label for="meta-description">Meta Description <sup class="text-danger">*</sup> </label>
-                                        <input type="text" id="meta-description" name="meta_description" class="form-control @error('meta_description') is-invalid @enderror">
+                                        <input type="text" id="meta-description" name="meta_description" class="form-control @error('meta_description') is-invalid @enderror" value="{{ $post->meta_description }}">
                                         @error('meta_description')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror

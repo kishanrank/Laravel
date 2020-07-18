@@ -11,11 +11,14 @@ class Post extends Model
 
     protected $table = 'posts';
 
+    const PUBLISHED = 1;
+    const NOT_PUBLISHED = 0;
+
     protected $fillable = [
         'user_id', 'title', 'info', 'content', 'category_id', 'featured', 'slug', 'meta_title', 'meta_description'
     ];
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'published_at'];
 
     protected $hidden = ['pivot'];
     // protected $with = ['tags'];
@@ -43,6 +46,24 @@ class Post extends Model
 
     public function images() {
         return $this->hasMany(PostImage::class);
+    }
+
+    public static function rules($id = 0, $extrafields = [])  {
+        return array_merge(
+            [
+                'title' => 'required|max:512',
+                'info' => 'required|min:25',
+                'content' => 'required|min:100',
+                'category_id' => 'required',
+                'tags' => 'required'
+            ], $extrafields);
+    }
+
+    public function isPublished() {
+        if ($this->published) {
+            return self::PUBLISHED;
+        }
+        return self::NOT_PUBLISHED;
     }
 }
 

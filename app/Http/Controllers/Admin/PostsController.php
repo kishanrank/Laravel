@@ -23,25 +23,71 @@ class PostsController extends ResponserController
         if ($request->ajax()) {
             $data = DB::table('posts')
                 ->join('categories', 'posts.category_id', '=', 'categories.id')
-                ->select('posts.featured', 'posts.title', 'posts.id', 'categories.name')
+                ->select('posts.featured', 'posts.title', 'posts.id', 'posts.published', 'categories.name')
                 ->where('deleted_at', null)
                 ->get();
 
             return DataTables::of($data)
-                ->addColumn('edit', function ($data) {
-                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.edit', $data->id) . '">Edit</a>';
-                })
-                ->addColumn('delete', function ($data) {
-                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.delete', $data->id) . '">Delete</a>';
+                ->addColumn('action', function ($data) {
+                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.edit', $data->id) . '"><i class="fa fa-edit"></i></a><a class="btn btn-danger btn-sm mr-3"  href="' . route('post.delete', $data->id) . '"><i class="fa fa-trash"></i></a>';
                 })
                 ->addColumn('featured', function ($data) {
                     $url = asset($data->featured);
                     return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
                 })
-                ->rawColumns(['edit', 'delete', 'featured'])
+                ->addColumn('upload', function ($data) {
+                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.edit', $data->id) . '"><i class="fa fa-upload">Publish</i></a>';
+                })
+                ->rawColumns(['action', 'upload', 'featured'])
                 ->make(true);
         }
         return view('admin.posts.index');
+    }
+
+    public function trashed(Request $request) 
+    {
+        if ($request->ajax()) {
+            $data = DB::table('posts')
+                ->join('categories', 'posts.category_id', '=', 'categories.id')
+                ->select('posts.featured', 'posts.title', 'posts.id', 'posts.deleted_at', 'categories.name')
+                ->whereNotNull('posts.deleted_at')->get();
+
+            return DataTables::of($data)
+                ->addColumn('restore', function ($data) {
+                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.restore', $data->id) . '">Restore</a>';
+                })
+                ->addColumn('delete', function ($data) {
+                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.kill', $data->id) . '">Permanent Delete</a>';
+                })
+                ->addColumn('featured', function ($data) {
+                    $url = asset($data->featured);
+                    return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
+                })
+                ->rawColumns(['restore', 'delete', 'featured'])
+                ->make(true);
+        }
+        return view('admin.posts.trashed');
+    }
+
+    public function published(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('posts')
+                ->join('categories', 'posts.category_id', '=', 'categories.id')
+                ->select('posts.featured', 'posts.title', 'posts.id', 'categories.name')
+                ->where('deleted_at', null)
+                ->where('published', '=', Post::PUBLISHED)
+                ->get();
+
+            return DataTables::of($data)
+                ->addColumn('featured', function ($data) {
+                    $url = asset($data->featured);
+                    return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
+                })
+                ->rawColumns(['featured'])
+                ->make(true);
+        }
+        return view('admin.posts.published');
     }
 
     public function create()
@@ -49,14 +95,20 @@ class PostsController extends ResponserController
         $categories = Category::all();
         $tags = Tag::all();
         if ($categories->count() == 0 || $tags->count() == 0) {
-            return redirect(route('categories.index'))->with('error', 'Please add Category and Tags first.');
+            $notification = array(
+            'message' => 'Please add Category and Tags first.',
+            'alert-type' => 'error'
+        );
+        // View::make('posts.index')->withPosts($posts);
+        return redirect()->route('categories.index')->with($notification);
         }
         return view('admin.posts.create', ['categories' => $categories, 'tags' => $tags]);
     }
 
     public function store(Request $request)
     {
-        $this->validatePost();
+        $this->validate($request, Post::rules(0, ['featured' => 'required'])); 
+        //dimensions:max_width=4096,max_height=4096
         $featured = $request->featured;
         $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
         $featured->move('uploads/posts/featured', $featured_new_name);
@@ -68,7 +120,9 @@ class PostsController extends ResponserController
             'content' => $request->content,
             'featured' => 'uploads/posts/featured/' . $featured_new_name,
             'category_id' => $request->category_id,
-            'slug' => Str::slug($request->title, '-')
+            'slug' => Str::slug($request->title, '-'),
+            'meta_title' => $request->meta_title,
+            'meta_description' => $request->meta_description
         ]);
 
         $post->tags()->attach($request->tags);
@@ -94,13 +148,12 @@ class PostsController extends ResponserController
             }
         }
         
-        event(new NewPostEvent($post));
+        // event(new NewPostEvent($post));
 
         $notification = array(
             'message' => 'Post Saved Successfully.',
             'alert-type' => 'success'
         );
-        // event(new NewPostEvent($post));
         return redirect()->route('posts')->with($notification);
     }
 
@@ -120,13 +173,7 @@ class PostsController extends ResponserController
 
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'info' => 'required',
-            'category_id' => 'required',
-            'tags' => 'required'
-        ]);
+        $this->validate($request, Post::rules($id));
         $post = Post::findOrFail($id);
         if ($request->hasFile('featured')) {
             $featured = $request->featured;
@@ -145,6 +192,8 @@ class PostsController extends ResponserController
         $post->slug = Str::slug($request->title, '-');
         $post->content = $request->content;
         $post->category_id = $request->category_id;
+        $post->meta_title = $request->meta_title;
+        $post->meta_description = $request->meta_description;
         $post->save();
         $post->tags()->sync($request->tags);
 
@@ -181,6 +230,15 @@ class PostsController extends ResponserController
         );
         return redirect()->route('posts')->with($notification);
     }
+
+    public function publishPost($id) {
+
+    }
+
+    public function unPublishPost($id) {
+
+    }
+
     
     public function destroy($id) //simple softdelete
     {
@@ -200,31 +258,6 @@ class PostsController extends ResponserController
             );
             return redirect()->route('posts')->with($notification);
         }
-    }
-
-    public function trashed(Request $request) 
-    {
-        if ($request->ajax()) {
-            $data = DB::table('posts')
-                ->join('categories', 'posts.category_id', '=', 'categories.id')
-                ->select('posts.featured', 'posts.title', 'posts.id', 'posts.deleted_at', 'categories.name')
-                ->whereNotNull('posts.deleted_at')->get();
-
-            return DataTables::of($data)
-                ->addColumn('restore', function ($data) {
-                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.restore', $data->id) . '">Restore</a>';
-                })
-                ->addColumn('delete', function ($data) {
-                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.kill', $data->id) . '">Permanent Delete</a>';
-                })
-                ->addColumn('featured', function ($data) {
-                    $url = asset($data->featured);
-                    return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
-                })
-                ->rawColumns(['restore', 'delete', 'featured'])
-                ->make(true);
-        }
-        return view('admin.posts.trashed');
     }
 
     public function kill($id) //forcedelete
@@ -270,19 +303,5 @@ class PostsController extends ResponserController
             'alert-type' => 'success'
         );
         return redirect()->back()->with($notification);
-    }
-
-    protected function validatePost()
-    {
-        return request()->validate(
-            [
-                'title' => 'required|max:255',
-                'featured' => 'required|image',
-                'info' => 'required',
-                'content' => 'required',
-                'category_id' => 'required',
-                'tags' => 'required'
-            ]
-        );
     }
 }

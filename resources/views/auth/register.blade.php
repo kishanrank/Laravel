@@ -72,7 +72,7 @@
                     </div>
                 </form>
 
-                <div class="social-auth-links text-center">
+                <!-- <div class="social-auth-links text-center">
                     <p>- OR -</p>
                     <a href="#" class="btn btn-block btn-primary">
                         <i class="fab fa-facebook mr-2"></i>
@@ -83,7 +83,7 @@
                         Sign up using Google+
                     </a>
                 </div>
-
+ -->
                 <a href="{{ route('login')}}" class="text-center">Already have a Account??</a>
             </div>
             <!-- /.form-box -->

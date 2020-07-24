@@ -35,25 +35,25 @@
                             <div class="card">
                                 <div class="card-body" style="background-color:lightgray">
                                     <h5 class="card-title">Total Users</h5>
-                                    <h1 class="card-text">50</h1>
+                                    <h1 class="card-text">--</h1>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-body" style="background-color:lightgray">
                                     <h5 class="card-title">This Month Users</h5>
-                                    <h1 class="card-text">50</h1>
+                                    <h1 class="card-text">--</h1>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-body bordered" style="background-color:lightgray">
                                     <h5 class="card-title">Active Users</h5>
-                                    <h1 class="card-text">50</h1>
+                                    <h1 class="card-text">--</h1>
                                 </div>
                             </div>
                             <div class="card">
                                 <div class="card-body" style="background-color:lightgray">
                                     <h5 class="card-title">User Growth</h5>
-                                    <h1 class="card-text">100%</h1>
+                                    <h1 class="card-text">--</h1>
                                 </div>
                             </div>
                         </div>

@@ -302,7 +302,6 @@
 
         $('#import_form').on('submit', function(event) {
             event.preventDefault();
-            console.log(new FormData(this));
             $.ajax({
                 url: "{{ route('categories.saveimport')}}",
                 method: 'POST',

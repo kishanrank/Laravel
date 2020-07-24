@@ -166,6 +166,11 @@ class PostsController extends ResponserController
             'meta_description' => $request->meta_description
         ]);
 
+//         auth()->user()->posts()->create([
+// 'title' => request()->input('title'),
+// 'post_text' => request()->input('post_text'),
+// ]);
+
         $post->tags()->attach($request->tags);
 
         if ($request->hasFile('images')) {

@@ -40,8 +40,7 @@
 @section('content')
 <div class="col-md-9">
     <div class="row">
-        @if($posts)
-        @foreach($posts as $post)
+        @forelse($posts as $post)
         <div class="col-md-12">
             <div class="post post-row">
                 <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{$post->featured}}" width="200px" height="180px" alt="{{ $post->title}}"></a>
@@ -55,8 +54,14 @@
                 </div>
             </div>
         </div>
-        @endforeach
+        @empty
         <!-- if there is post found then ad displays -->
+        <div class="col-md-12 text-center">
+            <strong>
+                <h2>Sorry, No post found for this category</h2>
+            </strong>
+        </div>
+        @endforelse
         <div class="col-md-12">
             <div class="section-row">
                 <a href="#">
@@ -64,13 +69,6 @@
                 </a>
             </div>
         </div>
-        @else
-        <div class="col-md-12 text-center">
-            <strong>
-                <h2>Sorry, No post found for this category</h2>
-            </strong>
-        </div>
-        @endif
 
         {{ $posts->links('front.includes.pagination') }}
     </div>

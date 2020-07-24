@@ -14,7 +14,7 @@ class HomeController extends ResponserController
         $first_post = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at', 'desc')->get()->first();
         $second_post = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at', 'desc')->skip(1)->take(1)->get()->first();
         $news_post = News::orderBy('created_at', 'desc')->paginate(4);
-        $first_line_recent_posts = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at  ', 'desc')->skip(2)->take(3)->get();
+        $first_line_recent_posts = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at', 'desc')->skip(2)->take(3)->get();
         $second_line_recent_post = Post::whereNull('deleted_at')->wherePublished(1)->orderBy('created_at', 'desc')->skip(5)->take(3)->get();
         return view('front.index', [
             'first_post' => $first_post,

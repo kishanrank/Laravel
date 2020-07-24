@@ -96,9 +96,7 @@ class Handler extends ExceptionHandler
 
 
         if ($exception instanceof QueryException) {
-            if ((!request()->is('admin*'))) {
                 return response()->view('errors.500'); // 500 Final code
-            }
         }
 
         // if(config('app.debug')) {

@@ -95,9 +95,9 @@ class Handler extends ExceptionHandler
         // }
 
 
-        if ($exception instanceof QueryException) {
-                return response()->view('errors.500'); // 500 Final code
-        }
+        // if ($exception instanceof QueryException) {
+        //         return response()->view('errors.500'); // 500 Final code
+        // }
 
         // if(config('app.debug')) {
         return parent::render($request, $exception);

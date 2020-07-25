@@ -15,16 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
 
     use RegistersUsers;
 
@@ -45,12 +35,12 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
+    public function showRegistrationForm()
+    {
+        return response()->view('errors.404');
+        // return view('auth.register');
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -89,7 +79,7 @@ class RegisterController extends Controller
         $this->guard()->logout();
 
         // $url = route('activate.account', ['code' => $code->code]);
-        event(new ActivationCodeEvent($user));
+        // event(new ActivationCodeEvent($user));
         // Notification::send($user, new AccountActivation($url));
         $notification = array(
             'message' => 'Thank you for Registering with us. please verify your account to get access.', 

@@ -24,14 +24,32 @@ Route::group(['namespace' => 'Front'], function () {
 Route::get('/activate/{code}', 'ActivationCodeController@activation')->name('activate.account');
 Route::get('/resend/code', 'ActivationCodeController@resend')->name('resend.code');
 
+//Admin Auth Routes
+Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
+
+    Route::namespace('Auth')->group(function () {
+        //Login Routes
+        Route::get('/login', 'LoginController@showLoginForm')->name('login');
+        Route::post('/login', 'LoginController@login')->name('postlogin');
+        Route::post('/logout', 'LoginController@logout')->name('logout');
+        //Forgot Password Routes
+        Route::get('/password/reset', 'ForgotPasswordController@showLinkRequestForm')->name('password.request');
+        Route::post('/password/email', 'ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+        //Reset Password Routes
+        Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
+        Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
+    });
+    Route::get('/home', 'HomeController@index')->name('home')->middleware('auth:admin');
+});
+//Admin Auth Routes End
+
 Route::group(
     [
         'prefix' => 'admin',
         'namespace' => 'Admin',
-        'middleware' => ['auth', 'admin']
+        'middleware' => ['auth:admin']
     ],
     function () {
-        Route::get('/home', 'HomeController@index')->name('admin.home');
         Route::get('/users', 'UsersController@index')->name('users.index');
         Route::post('/users/export', 'UsersController@export')->name('users.export');
         Route::post('/users/store', 'UsersController@store')->name('users.store');
@@ -79,8 +97,8 @@ Route::group(
         Route::get('/post/kill/{post}', 'PostsController@kill')->name('post.kill');
         Route::get('/post/restore/{post}', 'PostsController@restore')->name('post.restore');
 
-        Route::get('/user/profile', 'ProfileController@index')->name('user.profile');
-        Route::put('/user/profile/update', 'ProfileController@update')->name('user.profile.update');
+        Route::get('/account/profile', 'ProfileController@index')->name('user.profile');
+        Route::put('/account/profile/update', 'ProfileController@update')->name('user.profile.update');
 
         Route::get('/settings', 'SettingController@index')->name('settings');
         Route::put('/settings/update', 'SettingController@update')->name('settings.update');

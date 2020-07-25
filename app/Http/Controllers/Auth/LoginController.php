@@ -10,17 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
-    |
-    */
-
     use AuthenticatesUsers;
 
     /**
@@ -40,28 +29,6 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
-    // public function login(Request $request)
-    // {   
-    //     $input = $request->all();
-   
-    //     $this->validate($request, [
-    //         'email' => 'required|email',
-    //         'password' => 'required',
-    //     ]);
-   
-    //     if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password'])))
-    //     {
-    //         if (auth()->user()->admin == 1) {
-    //             return redirect()->route('admin.home');
-    //         }else{
-    //             return redirect()->route('login');
-    //         }
-    //     }else{
-    //         return redirect()->route('login')
-    //             ->with('error','Email-Address And Password Are Wrong.');
-    //     }    
-    // }
 
     protected function authenticated(Request $request, $user)
     {

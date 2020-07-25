@@ -1,6 +1,4 @@
 @extends('layouts.app')
-
-
 @section('content')
 <div class="content-wrapper">
     <section class="content-header">
@@ -58,17 +56,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="name">Facebook Profile</label>
-                                <input type="text" name="facebook" class="form-control @error('facebook') is-invalid @enderror" value="{{ $user->profile->facebook }}">
-                                @error('facebook')
+                                <label for="name">LinkedIn Profile</label>
+                                <input type="text" name="linkedin" class="form-control @error('linkedin') is-invalid @enderror" value="{{ $user->profile->linkedin }}">
+                                @error('linkedin')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="form-group">
-                                <label for="name">Youtube Profile</label>
-                                <input type="text" name="youtube" class="form-control @error('youtube') is-invalid @enderror" value="{{ $user->profile->youtube }}">
-                                @error('youtube')
+                                <label for="name">Github Profile</label>
+                                <input type="text" name="github" class="form-control @error('github') is-invalid @enderror" value="{{ $user->profile->github }}">
+                                @error('github')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -88,7 +86,6 @@
                                     </button>
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -96,9 +93,7 @@
         </div>
     </section>
 </div>
-
 @endsection
-
 @section('script')
 @include('admin.includes.toastr')
 @endsection

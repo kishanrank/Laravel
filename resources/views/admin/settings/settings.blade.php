@@ -25,6 +25,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        @if($settings)
                         <form method="post" id="setting_form">
                             {{ csrf_field() }}
                             @method('PUT')
@@ -32,7 +33,7 @@
                             <div class="form-group">
                                 <label for="name">Site Name</label>
                                 <input type="text" name="site_name" class="form-control" value="{{ $settings->site_name }}">
-                                
+
                             </div>
 
                             <div class="form-group">
@@ -58,6 +59,11 @@
                                 </div>
                             </div>
                         </form>
+                        @else
+                        <div  class="text-center">
+                            <strong>No settings found right now, Please try after sometime.</strong>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -80,7 +86,7 @@
             dataType: "json",
             success: function(data) {
                 if (data.error) {
-                        toastr.error(data.error);
+                    toastr.error(data.error);
                 }
                 if (data.success) {
                     toastr.success(data.success);

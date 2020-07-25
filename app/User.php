@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\ActivationCode;
 use App\Models\Profile;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;

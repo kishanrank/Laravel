@@ -9,7 +9,7 @@
                 icon: 'success',
                 title: '{!! Session::get("message") !!}',
                 showConfirmButton: true,
-                timer: 3000
+                timer: 5000
             })
             break;
         case 'error':

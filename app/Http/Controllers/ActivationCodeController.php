@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Notification;
 class ActivationCodeController extends Controller
 {
     public function activation(ActivationCode $code)
-    { 
+    {
         $code->user()->update([
             'active' => true,
             'email_verified_at' => now()
@@ -37,7 +37,7 @@ class ActivationCodeController extends Controller
         event(new ActivationCodeEvent($user));
         // Notification::send($user, new AccountActivation($url));
         $notification = array(
-            'message' => 'Email verification link resend successfully.', 
+            'message' => 'Email verification link resend successfully.',
             'alert-type' => 'success'
         );
         return redirect('/login')->with($notification);

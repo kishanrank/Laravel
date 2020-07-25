@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Tag;
+use App\Models\Tag;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 

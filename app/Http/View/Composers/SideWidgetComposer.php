@@ -2,9 +2,8 @@
 
 namespace App\Http\View\Composers;
 
-use App\Category;
-use App\Setting;
-use App\Tag;
+use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\View\View;
 
 class SideWidgetComposer

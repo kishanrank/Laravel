@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\News;
+use App\Models\News;
 use App\Http\Controllers\ResponserController;
-use Illuminate\Http\Request;
 
 class NewsController extends ResponserController
 {

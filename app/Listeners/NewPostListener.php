@@ -4,7 +4,7 @@ namespace App\Listeners;
 
 use App\Events\NewPostEvent;
 use App\Notifications\NewPost;
-use App\Subscriber;
+use App\Models\Subscriber;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Carbon;

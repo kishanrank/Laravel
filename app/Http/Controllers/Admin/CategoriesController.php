@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
+use App\Models\Category;
 use App\Exports\CategoryExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\ResponserController;
 use App\Imports\CategoryImport;
-use App\Post;
+use App\Models\Post;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Yajra\DataTables\Facades\DataTables;

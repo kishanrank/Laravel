@@ -2,8 +2,8 @@
 
 namespace App\Http\View\Composers;
 
-use App\Category;
-use App\Setting;
+use App\Models\Category;
+use App\Models\Setting;
 use Illuminate\View\View;
 
 class HeaderComposer

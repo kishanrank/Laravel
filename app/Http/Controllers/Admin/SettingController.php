@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Setting;
+use App\Models\Setting;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\ResponserController;
 use Illuminate\Support\Facades\Validator;
 

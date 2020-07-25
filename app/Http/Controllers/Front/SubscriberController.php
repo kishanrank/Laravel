@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Subscriber;
+use App\Models\Subscriber;
 use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;
 

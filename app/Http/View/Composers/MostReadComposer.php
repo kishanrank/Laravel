@@ -2,7 +2,7 @@
 
 namespace App\Http\View\Composers;
 
-use App\Post;
+use App\Models\Post;
 use Illuminate\View\View;
 
 class MostReadComposer

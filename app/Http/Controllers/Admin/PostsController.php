@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Category;
-use App\Post;
-use App\Tag;
-use App\PostImage;
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Tag;
+use App\Models\PostImage;
 use App\Events\NewPostEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

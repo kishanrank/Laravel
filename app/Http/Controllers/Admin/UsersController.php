@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\UsersExport;
-use App\Profile;
+use App\Models\Profile;
 use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;

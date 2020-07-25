@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Post;
-use App\News;
+use App\Models\Post;
+use App\Models\News;
 use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;
 

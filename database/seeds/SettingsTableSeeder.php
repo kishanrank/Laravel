@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Setting;
 use Illuminate\Database\Seeder;
 
 class SettingsTableSeeder extends Seeder
@@ -11,7 +12,7 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        \App\Setting::create([
+        Setting::create([
             'site_name' => "K. M. R@NK's Blog",
             'address' => 'Shree Recidency, Rajkot',
             'contact_number' => '91 96871 10300',

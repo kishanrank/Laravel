@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-use App\Post;
+use App\Models\Post;
 use App\Http\Controllers\ResponserController;
 
 class SinglePostController extends ResponserController

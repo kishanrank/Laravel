@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ActivationCode;
+use App\Models\ActivationCode;
 use App\Events\ActivationCodeEvent;
 use App\Notifications\UserVerified;
 use App\User;

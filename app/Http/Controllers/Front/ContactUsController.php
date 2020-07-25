@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\ContactUs;
+use App\Models\ContactUs;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;

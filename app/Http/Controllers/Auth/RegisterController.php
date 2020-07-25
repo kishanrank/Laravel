@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Events\ActivationCodeEvent;
 use App\Http\Controllers\Controller;
-use App\Profile;
+use App\Models\Profile;
 use App\User;
 use Illuminate\Support\Str;
 use App\Providers\RouteServiceProvider;

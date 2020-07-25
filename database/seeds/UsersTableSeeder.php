@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\ActivationCode;
+use App\Models\Profile;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 class UsersTableSeeder extends Seeder
@@ -19,7 +21,7 @@ class UsersTableSeeder extends Seeder
             'active' => 1
         ]);
 
-        App\Profile::create([
+        Profile::create([
             'user_id' => $user->id,
             'avatar' => 'uploads/avatars/admin.jpg',
             'about' => ' Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sunt, optio. Explicabo doloremque vel officiis adipisci velit, perferendis omnis. Molestiae recusandae repudiandae quaerat eum ipsa dignissimos modi animi in laborum veniam!',
@@ -28,7 +30,7 @@ class UsersTableSeeder extends Seeder
             'twitter' => 'https://www.youtube.com/',
         ]);
 
-        $code = App\ActivationCode::create([
+        $code = ActivationCode::create([
             'user_id' => $user->id,
             'code' => Str::random(128)
         ]);

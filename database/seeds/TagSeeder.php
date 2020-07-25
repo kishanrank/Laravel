@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -15,7 +16,7 @@ class TagSeeder extends Seeder
         $tagArray = ['Laravel', 'Magento', 'Angular', 'Node', 'Vue'];
 
         foreach ($tagArray as $tag) {
-        	\App\Tag::create([
+        	Tag::create([
 	            'tag' => $tag,
 	            'slug' => Str::slug($tag, '-')
         ]);

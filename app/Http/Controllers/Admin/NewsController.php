@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\News;
+use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Http\Controllers\ResponserController;

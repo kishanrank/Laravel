@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-use App\Tag;
+use App\Models\Tag;
 use App\Http\Controllers\ResponserController;
 
 class PostByTagController extends ResponserController

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\SubscriberExport;
-use App\Subscriber;
+use App\Models\Subscriber;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ResponserController;

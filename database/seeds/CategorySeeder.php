@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 class CategorySeeder extends Seeder
@@ -14,7 +15,7 @@ class CategorySeeder extends Seeder
         $categoryArray = ['Laravel', 'Magento', 'Angular', 'Node', 'Vue'];
 
         foreach ($categoryArray as $category) {
-        	\App\Category::create([
+        	Category::create([
 	            'name' => $category,
 	            'slug' => Str::slug($category, '-')
         ]);

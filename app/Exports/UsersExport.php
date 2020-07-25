@@ -8,7 +8,6 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class UsersExport implements FromCollection, WithHeadings
 {
-
     public $start;
     public $end;
 

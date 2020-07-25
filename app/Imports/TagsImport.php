@@ -2,8 +2,7 @@
 
 namespace App\Imports;
 
-use App\Tag;
-use Exception;
+use App\Models\Tag;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 

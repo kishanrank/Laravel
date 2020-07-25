@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\ContactUs;
+use App\Models\ContactUs;
 use App\Http\Controllers\ResponserController;
 use Illuminate\Http\Request;
 

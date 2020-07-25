@@ -2,8 +2,8 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Category;
-use App\Post;
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 

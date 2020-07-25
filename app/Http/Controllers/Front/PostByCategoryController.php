@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Category;
+use App\Models\Category;
 use App\Http\Controllers\ResponserController;
-use App\Post;
+use App\Models\Post;
 
 class PostByCategoryController extends ResponserController
 {

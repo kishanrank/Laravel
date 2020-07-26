@@ -31,7 +31,7 @@ class AdminUserSeeder extends Seeder
             'twitter' => 'https://www.youtube.com/',
         ]);
 
-        $code = AdminActivationCode::create([
+        AdminActivationCode::create([
             'admin_id' => $admin->id,
             'code' => Str::random(128)
         ]);

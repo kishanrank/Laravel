@@ -18,7 +18,7 @@ class Post extends Model
     const POST_IMAGES_PATH = 'uploads/posts/images/';
 
     protected $fillable = [
-        'user_id', 'title', 'info', 'content', 'category_id', 'featured', 'slug', 'meta_title', 'meta_description'
+        'admin_id', 'title', 'info', 'content', 'category_id', 'featured', 'slug', 'meta_title', 'meta_description'
     ];
 
     protected $dates = ['deleted_at', 'published_at'];
@@ -44,9 +44,9 @@ class Post extends Model
         return $this->belongsToMany(Tag::class)->withTimestamps();
     }
 
-    public function user()
+    public function admin()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Admin::class);
     }
 
     public function images()

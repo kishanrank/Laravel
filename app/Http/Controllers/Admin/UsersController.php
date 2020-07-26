@@ -21,7 +21,7 @@ class UsersController extends ResponserController
         if ($request->ajax()) {
             $data = DB::table('users')
                 ->join('profiles', 'users.id', '=', 'profiles.user_id')
-                ->select('users.id', 'users.name', 'users.email', 'users.active', 'users.admin', 'profiles.avatar')
+                ->select('users.id', 'users.name', 'users.email', 'users.active', 'profiles.avatar')
                 ->get();
 
             return DataTables::of($data)
@@ -29,7 +29,10 @@ class UsersController extends ResponserController
                     $url = asset($data->avatar);
                     return '<img src="' . $url . '"  width="50" height="50" alt="' . $data->name . '" />';
                 })
-                ->rawColumns(['avatar'])
+                ->addColumn('delete', function ($data) {
+                    return '<button type="button" name="delete-user" id="' . $data->id . '" class="btn btn-danger btn-sm mr-3 delete-user"><i class="fa fa-trash"></i></button>';
+                })
+                ->rawColumns(['avatar', 'delete'])
                 ->make(true);
         }
         return view('admin.users.index');
@@ -46,7 +49,7 @@ class UsersController extends ResponserController
         if ($error->fails()) {
             return $this->errorMessageResponse($error->errors()->all(), 422);
         }
-        
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -114,17 +117,17 @@ class UsersController extends ResponserController
 
     public function destroy($id)
     {
-        $loggedUserId = Auth::user()->id;
+        // $loggedUserId = Auth::user()->id;
 
-        if ($id == 1) {
-            return $this->errorMessageResponse("HAHAHA, You can not delete Super admin, so please don't try it.", 400);
-        }
+        // if ($id == 1) {
+        //     return $this->errorMessageResponse("HAHAHA, You can not delete Super admin, so please don't try it.", 400);
+        // }
 
         $user = User::findOrFail($id);
-        
-        if ($id == $loggedUserId) {
-            return $this->errorMessageResponse('You can not delete self account.', 422);
-        }
+
+        // if ($id == $loggedUserId) {
+        //     return $this->errorMessageResponse('You can not delete self account.', 422);
+        // }
 
         $user->profile->delete();
 

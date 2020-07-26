@@ -18,7 +18,7 @@ class News extends Model
 
     protected $dates = ['deleted_at', 'published_at'];
 
-    protected $fillable = ['user_id', 'title', 'info', 'featured', 'content', 'slug', 'meta_title', 'meta_descrption'];
+    protected $fillable = ['admin_id', 'title', 'info', 'featured', 'content', 'slug', 'meta_title', 'meta_descrption'];
 
     public function user() {
         return $this->belongsTo(User::class);

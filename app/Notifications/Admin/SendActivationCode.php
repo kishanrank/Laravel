@@ -1,24 +1,25 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Admin;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class UserVerified extends Notification implements ShouldQueue
+class SendActivationCode extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    public $url;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($url)
     {
-        //
+        $this->url = $url;
     }
 
     /**
@@ -41,8 +42,12 @@ class UserVerified extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Verification successfull')
-            ->line('Your account has been verified successfully, Now you can login to your account!!')
+            ->subject('Activate Your Admin Account')
+            ->line('Welcome to our Website')
+            ->line('Please verify your account by visiting this link,')
+            ->line($this->url)
+            ->line('If you are not able to open the link then click below button.')
+            ->action('Verify Account', url($this->url))
             ->line('Thank you for using our application!');
     }
 }

@@ -88,9 +88,7 @@
                                     <th>Image</th>
                                     <th>Name</th>
                                     <th>Email</th>
-                                    <th>Activated</th>
-                                    <th>Role</th>
-                                    <th>Action</th>
+                                    <th>Status</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
@@ -195,47 +193,10 @@
                 data: 'email',
             },
             {
-                data: function(data) {
-                    if (data.active == 1) {
-                        return "Yes";
-                    }
-                    return "No";
-                },
-                searchable: "true",
-                orderable: "false"
+                data: 'status'
             },
             {
-                data: function(data) {
-                    if (data.admin == 1) {
-                        return "Admin";
-                    }
-                    return "User";
-                },
-                searchable: "true",
-                orderable: "false"
-            },
-            {
-                data: function(data) {
-                    if (data.admin == 1 && data.id == 1) {
-                        return '<button type="button" disabled name="super_admin" id="' + data.id + '" class="btn btn-success btn-sm mr-3 super-admin">Super Admin</button>';
-                    } else if (data.admin == 1) {
-                        return '<button type="button" name="removeadmin" id="' + data.id + '" class="btn btn-success btn-sm mr-3 remove-admin">Remove Permission</button>';
-                    }
-                    return '<button type="button" name="make_admin" id="' + data.id + '" class="btn btn-secondary btn-sm mr-3 make-admin">Make Admin</button>';
-
-                },
-                searchable: "true",
-                orderable: "false"
-            },
-            {
-                data: function(data) {
-                    if (data.admin == 1 && data.id == 1) {
-                        return '<button type="button" disabled name="super_admin" id="' + data.id + '" class="btn btn-danger btn-sm mr-3 super-admin"><i class="fa fa-trash"></i></button>';
-                    }
-                    return '<button type="button" name="delete-user" id="' + data.id + '" class="btn btn-danger btn-sm mr-3 delete-user"><i class="fa fa-trash"></i></button>';
-                },
-                searchable: "true",
-                orderable: "false"
+                data: 'delete',
             }
         ]
     });
@@ -255,44 +216,6 @@
                     toastr.success(data.success);
                     $('#confirmModal').modal('hide');
                     $('#user-table').DataTable().ajax.reload();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                var message = JSON.parse(jqXHR.responseText);
-                toastr.error(message.error);
-            }
-        });
-    });
-
-
-    $(document).on('click', '.make-admin', function() {
-        var user_id = $(this).attr('id');
-        $.ajax({
-            url: "users/makeadmin/" + user_id,
-            method: 'GET',
-            success: function(data) {
-                if (data.success) {
-                    $('#user-table').DataTable().ajax.reload();
-                    toastr.success(data.success);
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                var message = JSON.parse(jqXHR.responseText);
-                toastr.error(message.error);
-            }
-
-        });
-    });
-
-    $(document).on('click', '.remove-admin', function() {
-        var user_id = $(this).attr('id');
-        $.ajax({
-            url: "users/removeadmin/" + user_id,
-            method: 'GET',
-            success: function(data) {
-                if (data.success) {
-                    $('#user-table').DataTable().ajax.reload();
-                    toastr.success(data.success);
                 }
             },
             error: function(jqXHR, textStatus, errorThrown) {
@@ -344,8 +267,12 @@
 </script>
 <script>
     $(function() {
-        $("#date_from").datepicker();
-        $("#date_to").datepicker();
+        $("#date_from").datepicker({
+            maxDate: -1
+        });
+        $("#date_to").datepicker({
+            maxDate: -1
+        });
     });
 </script>
 @endsection

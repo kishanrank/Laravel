@@ -97,7 +97,7 @@ class PostsController extends ResponserController
 
     public function publishPost($id)
     {
-        if (Auth::user()->id != 1) {
+        if (Auth::guard('admin')->user()->id != 1) {
             return redirect()->route('posts')->with($this->setNotification('You do not have permission to publish post.', 'error'));
         }
 
@@ -117,7 +117,7 @@ class PostsController extends ResponserController
 
     public function unPublishPost($id)
     {
-        if (Auth::user()->id != 1) {
+        if (Auth::guard('admin')->user()->id != 1) {
             return redirect()->route('posts')->with($this->setNotification('You do not have permission to publish post.', 'error'));
         }
 
@@ -155,7 +155,7 @@ class PostsController extends ResponserController
         $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);
 
         $post = Post::create([
-            'user_id' => Auth::user()->id,
+            'admin_id' => Auth::guard('admin')->user()->id,
             'title' => $request->title,
             'info' => $request->info,
             'content' => $request->content,
@@ -166,10 +166,10 @@ class PostsController extends ResponserController
             'meta_description' => $request->meta_description
         ]);
 
-//         auth()->user()->posts()->create([
-// 'title' => request()->input('title'),
-// 'post_text' => request()->input('post_text'),
-// ]);
+        //         auth()->user()->posts()->create([
+        // 'title' => request()->input('title'),
+        // 'post_text' => request()->input('post_text'),
+        // ]);
 
         $post->tags()->attach($request->tags);
 
@@ -230,7 +230,7 @@ class PostsController extends ResponserController
             $post->featured = Post::POST_FEATURED_PATH . $featured_new_name;
         }
 
-        $post->user_id = Auth::user()->id;
+        $post->admin_id = Auth::guard('admin')->user()->id;
         $post->title = $request->title;
         $post->info = $request->info;
         $post->slug = Str::slug($request->title, '-');

@@ -74,5 +74,5 @@
 </div>
 @endsection
 @section('script')
-    @include('auth.includes.sweetalert')
+    @include('admin.auth.includes.sweetalert')
 @endsection

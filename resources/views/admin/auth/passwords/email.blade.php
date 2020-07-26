@@ -10,11 +10,6 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
 
-                @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
                 <form method="POST" action="{{ route('admin.password.email') }}">
                     @csrf
                     <div class="input-group mb-3">
@@ -26,13 +21,13 @@
                         </div>
                     </div>
                     @error('email')
-                        <p class="text-danger">{{ $message }}</p>
+                    <p class="text-danger">{{ $message }}</p>
                     @enderror
                     <div class="row">
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary btn-block">Send Password Reset Link</button>
                         </div>
-                    <!-- /.col -->
+                        <!-- /.col -->
                     </div>
                 </form>
 
@@ -45,5 +40,5 @@
 </div>
 @endsection
 @section('script')
-    @include('auth.includes.sweetalert')
+@include('admin.auth.includes.sweetalert')
 @endsection

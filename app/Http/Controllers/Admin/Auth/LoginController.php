@@ -100,7 +100,7 @@ class LoginController extends Controller
         if (!$admin->isAdminActivated()) {
             Auth::guard('admin')->logout();
             $notification = array(
-                'message' => 'Your account is not activated yet please activate first.',
+                'message' => 'Your account is not activated yet please activate first. </br> Need a link? <a class="resend-link" href="' . route('admin.resend.code') . '?email=' . $admin->email . '">Resend code</a>',
                 'alert-type' => 'error'
             );
             return redirect('/admin/login')->with($notification);

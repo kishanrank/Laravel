@@ -79,7 +79,7 @@ class NewsController extends ResponserController
 
     public function publishNews($id)
     {
-        if (Auth::user()->id != 1) {
+        if (Auth::guard('admin')->user()->id != 1) {
             return redirect()->route('news.index')->with($this->setNotification('You do not have permission to publish news.', 'error'));
         }
 
@@ -98,7 +98,7 @@ class NewsController extends ResponserController
 
     public function unPublishNews($id)
     {
-        if (Auth::user()->id != 1) {
+        if (Auth::guard('admin')->user()->id != 1) {
             return redirect()->route('news.index')->with($this->setNotification('You do not have permission to publish news.', 'error'));
         }
 
@@ -145,7 +145,7 @@ class NewsController extends ResponserController
         }
 
         $news = News::create([
-            'user_id' => Auth::user()->id,
+            'admin_id' => Auth::guard('admin')->user()->id,
             'title' => $request->title,
             'info' => $request->info,
             'content' => $request->content,
@@ -187,7 +187,7 @@ class NewsController extends ResponserController
             $news->featured = News::NEWS_FEATURED_PATH . $featured_new_name;
         }
 
-        $news->user_id = Auth::user()->id;
+        $news->admin_id = Auth::guard('admin')->user()->id;
         $news->title = $request->title;
         $news->content = $request->content;
         $news->meta_title = $request->meta_title;

@@ -24,6 +24,10 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\NewPostEvent' => [
             'App\Listeners\NewPostListener'
         ],
+        'App\Events\Admin\ActivationCodeEvent' => [
+            'App\Listeners\Admin\ActivationCodeListener'
+        ],
+
     ];
 
     /**

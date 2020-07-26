@@ -15,7 +15,7 @@ class SettingsTableSeeder extends Seeder
         Setting::create([
             'site_name' => "K. M. R@NK's Blog",
             'address' => 'Shree Recidency, Rajkot',
-            'contact_number' => '91 96871 10300',
+            'contact_number' => '+91 96871 10300',
             'contact_email' => 'kmrank111@gmail.com'
         ]);
     }

@@ -23,7 +23,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'admin', 'active'
+        'name', 'email', 'password', 'active'
     ];
 
     protected $table = 'users';
@@ -59,13 +59,6 @@ class User extends Authenticatable
 
     public function userActivationCode() {
         return $this->hasOne(ActivationCode::class);
-    }
-
-    public function isAdmin() {
-        if ($this->admin) {
-            return self::ADMIN;
-        }
-        return self::NOT_ADMIN;
     }
 
     public function getId()

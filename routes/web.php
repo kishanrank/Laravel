@@ -38,6 +38,9 @@ Route::prefix('/admin')->name('admin.')->namespace('Admin')->group(function () {
         //Reset Password Routes
         Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
         Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
+        // admin account activation
+        Route::get('/activate/{code}', 'ActivationController@activation')->name('activate.account');
+        Route::get('/resend/code', 'ActivationController@resend')->name('resend.code');
     });
     Route::get('/home', 'HomeController@index')->name('home')->middleware('auth:admin');
 });

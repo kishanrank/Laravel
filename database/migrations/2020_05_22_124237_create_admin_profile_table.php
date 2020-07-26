@@ -11,8 +11,8 @@ class CreateAdminProfileTable extends Migration
     {
         Schema::create('admin_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('avatar')->nullable();
             $table->bigInteger('admin_id')->unsigned()->index();
+            $table->string('avatar')->nullable();
             $table->text('about')->nullable();
             $table->string('linkedin')->nullable();
             $table->string('github')->nullable();

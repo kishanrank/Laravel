@@ -12,7 +12,7 @@ $factory->define(Post::class, function (Faker $faker) {
     $slug = Str::slug($title, '-');
     
     return [
-        'user_id' => 1,
+        'admin_id' => 1,
         'title' => $title,
         'slug' => $slug,
         'info' => $faker->paragraph(2),

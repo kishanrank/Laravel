@@ -12,6 +12,8 @@ class Admin extends Authenticatable
     use Notifiable;
 
     const REDIRECT_TO = 'admin/home';
+    const REDIRECT_TO_AFTER_RESET_PASSWORD = 'admin/login';
+
 
     protected $table = 'admins';
 

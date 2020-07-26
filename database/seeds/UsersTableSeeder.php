@@ -17,7 +17,6 @@ class UsersTableSeeder extends Seeder
             'name' => 'Kishan Rank',
             'email' => 'kmrank111@gmail.com',
             'password' => bcrypt('114599@kishan'),
-            'admin' => 1,
             'active' => 1
         ]);
 
@@ -30,7 +29,7 @@ class UsersTableSeeder extends Seeder
             'twitter' => 'https://www.youtube.com/',
         ]);
 
-        $code = ActivationCode::create([
+        ActivationCode::create([
             'user_id' => $user->id,
             'code' => Str::random(128)
         ]);

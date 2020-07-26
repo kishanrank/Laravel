@@ -63,18 +63,18 @@
                     </div>
 
                     <div class="card-body">
-                            <table id="subscriber-table" class="table table-striped responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Id</th>
-                                        <th>Email</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                        <table id="subscriber-table" class="table table-striped table-bordered responsive" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Id</th>
+                                    <th>Email</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div id="confirmModal" class="modal fade" role="dialog">

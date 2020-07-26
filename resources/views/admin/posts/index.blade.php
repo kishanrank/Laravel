@@ -32,7 +32,7 @@
                         <a class="btn btn-primary float-right btn-sm" href="{{ route('post.create')}}">Create New Post</a>
                     </div>
                     <div class="card-body">
-                        <table id="posts-table" class="table table-striped responsive table-condensed" width="100%">
+                        <table id="posts-table" class="table table-striped table-bordered responsive table-condensed" width="100%">
                             <thead>
                                 <tr>
                                     <th width="10%">#</th>

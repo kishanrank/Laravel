@@ -29,23 +29,38 @@ class Admin extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function profile() {
+    public function profile()
+    {
         return $this->hasOne(AdminProfile::class);
     }
 
-    public function isAdminActivated() {  /// during login check
-        if($this->active) {
+    public function isAdminActivated()
+    {  /// during login check
+        if ($this->active) {
             return true;
         }
         return false;
     }
 
-    public function adminActivationCode() {
+    public function adminActivationCode()
+    {
         return $this->hasOne(AdminActivationCode::class);
     }
 
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPassword($token));
+    }
+
+    public static function rules($id = 0, $extrafields = [])
+    {
+
+        return array_merge(
+            [
+                'name' => 'required',
+                'email' => 'required|unique:admins,email' . ($id ? ",$id" : ''),
+            ],
+            $extrafields
+        );
     }
 }

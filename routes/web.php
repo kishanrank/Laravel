@@ -57,8 +57,8 @@ Route::group(
         Route::post('/users/export', 'UsersController@export')->name('users.export');
         Route::post('/users/store', 'UsersController@store')->name('users.store');
         Route::delete('/users/destroy/{user}', 'UsersController@destroy')->name('users.destroy');
-        Route::get('/users/makeadmin/{user}', 'UsersController@makeadmin')->name('users.makeadmin');
-        Route::get('/users/removeadmin/{user}', 'UsersController@removeadmin')->name('user.removeadmin');
+
+        Route::resource('admins', 'AdminController');
 
         Route::post('/categories/massdelete', 'CategoriesController@massDelete')->name('categories.massdelete');
         Route::post('/categories/savecsv', 'CategoriesController@savecsv')->name('categories.savecsv');

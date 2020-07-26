@@ -30,7 +30,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="trashed-news-table" class="table table-striped responsive" width="100%">
+                        <table id="trashed-news-table" class="table table-striped table-bordered responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>

@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="card-body">
-                        <table id="tag-table" class="table table-hover responsive" width="100%">
+                        <table id="tag-table" class="table table-hover table-bordered responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -47,7 +47,6 @@
                                 </tr>
                             </thead>
                         </table>
-
                     </div>
 
                     <div id="tagModal" class="modal fade" role="dialog">
@@ -66,7 +65,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-4">Tag Description : </label>
-                                            <textarea name="description" id="description" class="form-control" ></textarea>
+                                            <textarea name="description" id="description" class="form-control"></textarea>
                                         </div>
                                 </div>
                                 <br />
@@ -92,7 +91,7 @@
                                         @csrf
                                         <div class="form-group">
                                             <label class="control-label col-md-4">Choose File : </label>
-                                            <input type="file" name="import" id="import" class="form-control"/>
+                                            <input type="file" name="import" id="import" class="form-control" />
                                             <div>*Only CSV files are allowed to upload.</div>
                                         </div>
                                 </div>
@@ -240,7 +239,7 @@
                         $('#tagModal').modal('hide');
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     var message = JSON.parse(jqXHR.responseText);
                     toastr.error(message.error);
                 }

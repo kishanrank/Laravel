@@ -17,7 +17,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
                             <a href="{{ route('admin.home') }}">Home</a>
-                             / <a href="{{ route('posts') }}"> Posts</a>
+                            / <a href="{{ route('posts') }}"> Posts</a>
                         </li>
                         <li class="breadcrumb-item">Published</li>
                     </ol>
@@ -33,21 +33,19 @@
                         <a class="btn btn-primary float-right btn-sm" href="{{ route('post.create')}}">Create New Post</a>
                     </div>
                     <div class="card-body">
-                        <table id="posts-table" class="table table-striped responsive" width="100%">
+                        <table id="posts-table" class="table table-striped table-bordered responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Image</th>
                                     <th width="50%">Title</th>
                                     <th>Category</th>
-
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>

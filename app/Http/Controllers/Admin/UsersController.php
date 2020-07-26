@@ -35,7 +35,7 @@ class UsersController extends ResponserController
                 ->rawColumns(['avatar', 'delete'])
                 ->make(true);
         }
-        return view('admin.users.index');
+        return view('admin.peoples.users.index');
     }
 
     public function store(Request $request)
@@ -66,45 +66,6 @@ class UsersController extends ResponserController
         ]);
 
         return $this->successMessageResponse('User created successfully.', 200);
-    }
-
-    public function makeadmin($id)
-    {
-        if ((!$user = User::find($id))) {
-            return $this->errorMessageResponse('Unable to change permission right now.', 404);
-        }
-
-        if (!$user->active) {
-            return $this->errorMessageResponse('User has not activated his/her account yet.', 403);
-        }
-
-        $user->admin = User::ADMIN;
-
-
-        if ($user->save()) {
-            return $this->successMessageResponse('Successfully changed user permission.', 200);
-        }
-        return $this->errorMessageResponse('Unable to change permission right now.', 404);
-    }
-
-    public function removeadmin($id)
-    {
-        if (!($user = User::find($id))) {
-            return $this->errorMessageResponse('Unable to change permission right now.', 404);
-        }
-
-        $loggedUserId = Auth::user()->id;
-
-        if ($loggedUserId == $id) {
-            return $this->errorMessageResponse('You can not change your own premission', 422);
-        }
-
-        $user->admin = User::NOT_ADMIN;
-
-        if ($user->save()) {
-            return $this->successMessageResponse('Successfully changed user permission.', 200);
-        }
-        return $this->errorMessageResponse('Unable to change permission right now.', 404);
     }
 
     public function export(Request $request)

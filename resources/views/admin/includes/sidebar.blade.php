@@ -30,14 +30,33 @@
                         </p>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="{{ route('users.index')}}" class="nav-link {{ (request()->is('admin/users*')) ? 'active' : '' }}">
+
+                <li class="nav-item has-treeview {{ (request()->is('admin/users')) || (request()->is('admin/admins')) ? 'menu-open' : '' }}">
+                    <a href="#" class="nav-link {{ (request()->is('admin/users')) || (request()->is('admin/admins')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
-                            Users
+                            People
+                            <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('users.index') }}" class="nav-link {{ (request()->is('admin/users')) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Users
+                                </p>
+                            </a>
+                            <a href="{{ route('admins.index') }}" class="nav-link {{ (request()->is('admin/admins')) ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>
+                                    Admins
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
+
                 <li class="nav-item">
                     <a href="{{ route('categories.index') }}" class="nav-link {{ (request()->is('admin/categories*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-list"></i>

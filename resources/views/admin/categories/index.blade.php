@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="card-body">
-                        <table id="category-table" class="table table-hover responsive" width="100%">
+                        <table id="category-table" class="table table-hover table-bordered responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -46,6 +46,8 @@
                                     <th>Action</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                            </tbody>
                         </table>
                     </div>
 
@@ -65,7 +67,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="control-label col-md-6">Category Description : </label>
-                                            <textarea name="description" id="description" class="form-control" ></textarea>
+                                            <textarea name="description" id="description" class="form-control"></textarea>
                                         </div>
                                 </div>
                                 <br />
@@ -212,7 +214,7 @@
                         $('#categoryModal').modal('hide');
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     var message = JSON.parse(jqXHR.responseText);
                     toastr.error(message.error);
                 }
@@ -286,8 +288,8 @@
                         $('#category-table').DataTable().ajax.reload();
                         $('#confirmModal').modal('hide');
                     }
-                }, 
-                error: function (jqXHR, textStatus, errorThrown) {
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
                     var message = JSON.parse(jqXHR.responseText);
                     toastr.error(message.error);
                     $('#confirmModal').modal('hide');
@@ -318,7 +320,7 @@
                         $('#importModal').modal('hide');
                     }
                 },
-                error: function (jqXHR, textStatus, errorThrown) {
+                error: function(jqXHR, textStatus, errorThrown) {
                     var message = JSON.parse(jqXHR.responseText);
                     toastr.error(message.error);
                 }

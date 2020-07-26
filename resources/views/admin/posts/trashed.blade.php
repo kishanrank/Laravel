@@ -17,7 +17,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
                             <a href="{{ route('admin.home') }}">Home</a>
-                             / <a href="{{ route('posts') }}"> Posts</a>
+                            / <a href="{{ route('posts') }}"> Posts</a>
                         </li>
                         <li class="breadcrumb-item">Trashed</li>
                     </ol>
@@ -30,7 +30,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <table id="trashed-post-table" class="table table-striped responsive" width="100%">
+                        <table id="trashed-post-table" class="table table-striped table-bordered responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>

@@ -28,11 +28,11 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                <div class="card-header font-weight-bold">
+                    <div class="card-header font-weight-bold">
                         <a class="btn btn-primary float-right btn-sm" href="{{ route('news.create')}}">Create New News</a>
                     </div>
                     <div class="card-body">
-                        <table id="news-table" class="table table-striped responsive" width="100%">
+                        <table id="news-table" class="table table-striped table-bordered responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -101,7 +101,7 @@
                 {
                     data: 'action',
                 },
-                
+
             ]
         });
     });

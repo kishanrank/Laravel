@@ -12,7 +12,7 @@ class ProfileController extends ResponserController
 
     public function index()
     {
-        return view('admin.users.profile', ['user' => Auth::guard('admin')->user()]);
+        return view('admin.peoples.admins.profile', ['user' => Auth::guard('admin')->user()]);
     }
 
     public function update(Request $request)
@@ -41,7 +41,10 @@ class ProfileController extends ResponserController
         $admin->profile->github = $request->github;
         $admin->profile->about = $request->about;
         if ($request->has('password')) {
-            $admin->password = bcrypt($request->password);
+            $password = trim($request->password);
+            if ($password != null) {
+                $admin->password = bcrypt($password);
+            }
         }
 
         $admin->save();

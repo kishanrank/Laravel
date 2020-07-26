@@ -81,7 +81,7 @@
                         <button type="button" name="create_user" data-dismiss="modal" id="create_user" class="btn btn-success float-right btn-sm  ml-2">Add</button>
                     </div>
                     <div class="card-body">
-                        <table id="user-table" class="table table-hover" width="100%">
+                        <table id="user-table" class="table table-hover table-bordered responsive" width="100%">
                             <thead>
                                 <tr>
                                     <th>#</th>

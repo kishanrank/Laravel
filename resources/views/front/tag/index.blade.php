@@ -38,7 +38,7 @@
 @endsection
 
 @section('content')
-<div class="col-md-9">
+<div class="col-md-8">
     <div class="row">
         <!-- all post related to category -->
         @forelse($posts as $post)
@@ -76,7 +76,7 @@
 @endsection
 
 @section('rightsidebar')
-<div class="col-md-3">
+<div class="col-md-4">
     @include('front.includes.rightsidebar')
 </div>
 @endsection

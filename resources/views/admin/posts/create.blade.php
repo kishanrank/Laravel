@@ -14,7 +14,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
                             <a href="{{ route('admin.home') }}">Home</a>
-                             / <a href="{{ route('posts') }}"> Posts</a>
+                            / <a href="{{ route('posts') }}"> Posts</a>
                         </li>
                         <li class="breadcrumb-item">Create</li>
                     </ol>
@@ -60,12 +60,17 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+
                                     <div class="form-group">
                                         <label for="tags"> Select Tags <sup class="text-danger">*</sup></label><br>
                                         @foreach($tags as $tag)
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}"> {{ $tag->tag }}
-                                        </label>
+                                        @if($loop->index % 5 == 0)
+                                        <br />
+                                        @endif
+                                        <div class="checkboxes">
+                                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}"><label> {{ $tag->tag }}</label>
+                                        </div>
+
                                         @endforeach
 
                                         @error('tags')
@@ -76,7 +81,7 @@
                                     <div class="form-group">
                                         <label for="featured">Featured Image <sup class="text-danger">*</sup> </label>
                                         <input type="file" name="featured" class="form-control @error('featured') is-invalid @enderror">
-                                        <span class="text-danger">Note<sup >*</sup> : Please upload image files less then 200kb.</span>
+                                        <span class="text-danger">Note<sup>*</sup> : Please upload image files less then 200kb.</span>
                                         @error('featured')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -91,9 +96,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="images"> Images  (Optional)</label>
+                                        <label for="images"> Images (Optional)</label>
                                         <input type="file" multiple name="images[]" class="form-control @error('images') is-invalid @enderror">
-                                        <span class="text-danger">Note<sup >*</sup> : Please upload image files less then 200kb.</span>
+                                        <span class="text-danger">Note<sup>*</sup> : Please upload image files less then 200kb.</span>
                                         @error('images')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror

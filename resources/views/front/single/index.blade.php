@@ -32,7 +32,7 @@
             <div class="col-md-10">
                 <div class="post-meta">
                     <a class="post-category cat-2" href="{{ route('posts.by.category', ['categoryslug' => $post->category->slug])}}">{{ $post->category->name}}</a>
-                    <span class="post-date">{{ $post->created_at->toFormattedDateString() }} By {{ $post->user->name}}</span>
+                    <span class="post-date">{{ $post->created_at->toFormattedDateString() }} By {{ $post->admin->name}}</span>
                 </div>
                 <h1 class="text-dark">{{ $post->title}}</h1>
             </div>
@@ -43,9 +43,16 @@
 
 
 @section('content')
-<div class="col-md-9">
-    <div class="addthis_inline_share_toolbox"></div>
-    <br>
+<div class="col-md-8">
+    <div class="text-center">
+        <div>
+            <strong>
+                <p>Share this post</p>
+            </strong>
+        </div>
+        <div class="addthis_inline_share_toolbox"></div>
+    </div>
+    <br />
     <div class="section-row">
         <div class="main-post">
             <figure class="figure-img">
@@ -63,9 +70,8 @@
 
             @endif
             {!! $post->content !!}
-
             <!-- Tags releted to posts -->
-            <br>
+            <br><br>
             <div class="aside-widget">
                 <div class="tags-widget">
                     <ul>
@@ -85,6 +91,15 @@
             <a href="mailto:info@example.com?&subject={{$post->title}}&body={{route('post.single', ['slug' => $post->slug])}}" class="share-envelope" target="_blank"><i class="fa fa-envelope"></i></a>
             <a href="https://pinterest.com/pin/create/button/?url={{route('post.single', ['slug' => $post->slug])}}&media={{$post->featured}}&description={{$post->title}}" class="share-pinterest" target="_blank"><i class="fa fa-pinterest"></i></a>
         </div> -->
+    </div>
+
+    <div class="text-center">
+        <div>
+            <strong>
+                <p>Share this post</p>
+            </strong>
+        </div>
+        <div class="addthis_inline_share_toolbox"></div>
     </div>
 
     <div class="section-row">
@@ -109,13 +124,13 @@
         <div class="post-author">
             <div class="media">
                 <div class="media-left">
-                    <img class="media-object" src="{{asset($post->user->profile->avatar)}}" alt="">
+                    <img class="media-object" src="{{asset($post->admin->profile->avatar)}}" alt="{{ $post->admin->name }}">
                 </div>
                 <div class="media-body">
                     <div class="media-heading">
-                        <h3>{{$post->user->name }}</h3>
+                        <h3>{{ $post->admin->name }}</h3>
                     </div>
-                    <p>{{ $post->user->profile->about}}</p>
+                    <p>{{ $post->admin->profile->about}}</p>
                     <ul class="author-social">
                         <li><a href="https://www.linkedin.com/in/kishanrank/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
                         <li><a href="https://github.com/kishanrank" target="_blank"><i class="fa fa-github"></i></a></li>
@@ -130,7 +145,7 @@
 @endsection
 
 @section('rightsidebar')
-<div class="col-md-3">
+<div class="col-md-4">
     @include('front.includes.rightsidebar')
 </div>
 @endsection

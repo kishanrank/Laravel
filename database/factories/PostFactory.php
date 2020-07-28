@@ -19,5 +19,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'content' => $faker->paragraph(5),
         'category_id' => implode(Category::all()->random(1)->pluck('id')->toArray()),
         'featured' => 'uploads/posts/featured/image1.png',
+        'published' => Post::NOT_PUBLISHED
     ];
 });

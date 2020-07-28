@@ -535,7 +535,24 @@ textarea.input {
 }
 
 .post {
-    margin-bottom: 40px
+    margin-bottom: 40px;
+}
+
+.post-most-read {
+    margin-bottom: 4px;
+}
+
+/* .post-most-read .post-body p {
+    margin-bottom: 6px;
+    /* text-decoration: underline; */
+/* } */
+
+.most-read-aside-widget {
+    margin-bottom: 40px;
+    border: 1px solid gray;
+    padding: 10px;
+    border-radius: 2%;
+    background-color: rgb(250, 250, 250);
 }
 
 .post .post-img {
@@ -941,13 +958,13 @@ textarea.input {
 }
 
 #footer {
-    padding-bottom: 40px;
+    /* padding-bottom: 40px; */
     margin-top: 40px
 }
 
 #footer .container {
     padding-top: 80px;
-    border-top: 1px solid #f4f4f9
+    border-top: 1px solid gray
 }
 
 .footer-widget {
@@ -961,7 +978,7 @@ textarea.input {
 }
 
 .footer-widget a {
-    color: #a7b3c6;
+    color: #8cabdf;
     -webkit-transition: .2s color;
     transition: .2s color
 }

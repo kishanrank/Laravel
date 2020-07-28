@@ -47,6 +47,21 @@
     box-sizing: border-box
 }
 
+.checkboxes {
+    /* text-align: center; */
+    display: inline-block;
+}
+
+.checkboxes input {
+    margin: 0px 5px 0px px;
+}
+
+.checkboxes label {
+    margin: 0px 20px 0px 3px;
+    width: 125px;
+    display: inline-block;
+}
+
 html {
     font-family: sans-serif;
     line-height: 1.15;

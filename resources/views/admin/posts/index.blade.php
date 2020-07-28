@@ -32,7 +32,7 @@
                         <a class="btn btn-primary float-right btn-sm" href="{{ route('post.create')}}">Create New Post</a>
                     </div>
                     <div class="card-body">
-                        <table id="posts-table" class="table table-striped table-bordered responsive table-condensed" width="100%">
+                        <table id="posts-table" class="table table-striped table-bordered rounded responsive table-condensed" width="100%">
                             <thead>
                                 <tr>
                                     <th width="10%">#</th>
@@ -46,7 +46,7 @@
                             </thead>
                             <tbody>
                             </tbody>
-                            <tfoot>
+                            <!-- <tfoot>
                                 <tr>
                                     <th>#</th>
                                     <th>Image</th>
@@ -56,7 +56,7 @@
                                     <th>Publish/<br>Unpublish</th>
                                     <th>Action</th>
                                 </tr>
-                            </tfoot>
+                            </tfoot> -->
                         </table>
                     </div>
 
@@ -97,12 +97,7 @@
                 data: 'name',
             },
             {
-                data: function(data) {
-                    if (data.published == 1) {
-                        return "<b>Published</b>";
-                    }
-                    return "<b>Not Published</b>";
-                }
+               data: 'status'
             },
             {
                 data: 'upload'
@@ -111,16 +106,16 @@
                 data: 'action',
             }
         ],
-        initComplete: function() {
-            this.api().columns().every(function() {
-                var column = this;
-                var input = document.createElement("input");
-                $(input).appendTo($(column.footer()).empty())
-                    .on('change', function() {
-                        column.search($(this).val(), false, false, true).draw();
-                    });
-            });
-        }
+        // initComplete: function() {
+        //     this.api().columns().every(function() {
+        //         var column = this;
+        //         var input = document.createElement("input");
+        //         $(input).appendTo($(column.footer()).empty())
+        //             .on('change', function() {
+        //                 column.search($(this).val(), false, false, true).draw();
+        //             });
+        //     });
+        // }
     });
 </script>
 @include('admin.includes.toastr')

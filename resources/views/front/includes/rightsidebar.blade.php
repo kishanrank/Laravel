@@ -6,16 +6,16 @@
 <!-- /ad -->
 
 <!-- post widget -->
-<div class="aside-widget">
-    <div class="section-title">
+<div class="most-read-aside-widget">
+    <div class="text-center">
         <h2>Most Read</h2>
     </div>
 
     @foreach($mostReadPosts as $post)
-    <div class="post post-widget">
-        <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a>
+    <div class="post-most-read post-widget">
+        <!-- <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a> -->
         <div class="post-body">
-            <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{$post->title}}</a></h3>
+            <p class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}"><i class="fa fa-chevron-right">&nbsp</i>{{$post->title}}</a></p>
         </div>
     </div>
     @endforeach

@@ -31,11 +31,17 @@ class PostsController extends ResponserController
 
             return DataTables::of($data)
                 ->addColumn('action', function ($data) {
-                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.edit', $data->id) . '"><i class="fa fa-edit"></i></a><a class="btn btn-danger btn-sm mr-3"  href="' . route('post.delete', $data->id) . '"><i class="fa fa-trash"></i></a>';
+                    return '<a class="btn btn-primary btn-xs"  href="' . route('post.edit', $data->id) . '"><i class="fa fa-edit"></i></a><a class="btn btn-danger btn-xs"  href="' . route('post.delete', $data->id) . '"><i class="fa fa-trash"></i></a>';
                 })
                 ->addColumn('featured', function ($data) {
                     $url = asset($data->featured);
                     return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
+                })
+                ->addColumn('status', function ($data) {
+                    if ($data->published) {
+                        return '<label class="badge badge-success">Published</label>'; 
+                    }
+                    return '<label class="badge badge-danger">Not Published</label>';
                 })
                 ->addColumn('upload', function ($data) {
                     if ($data->published == 0) {
@@ -43,7 +49,7 @@ class PostsController extends ResponserController
                     }
                     return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.make.unpublished', $data->id) . '"><i class="fa fa-undo"> Un Publish</i></a>';
                 })
-                ->rawColumns(['action', 'upload', 'featured'])
+                ->rawColumns(['action', 'status', 'upload', 'featured'])
                 ->make(true);
         }
         return view('admin.posts.index');
@@ -136,8 +142,8 @@ class PostsController extends ResponserController
 
     public function create()
     {
-        $categories = Category::all();
-        $tags = Tag::all();
+        $categories = Category::orderBy('name', 'ASC')->get();
+        $tags = Tag::orderBy('tag', 'ASC')->get();
 
         if ($categories->count() == 0 || $tags->count() == 0) {
             // View::make('posts.index')->withPosts($posts);
@@ -204,8 +210,8 @@ class PostsController extends ResponserController
             return redirect(route('posts'))->with($this->setNotification('Data not found.', 'error'));
         }
 
-        $categories = Category::all();
-        $tags = Tag::all();
+        $categories = Category::orderBy('name', 'ASC')->get();
+        $tags = Tag::orderBy('tag', 'ASC')->get();
 
         if ($categories->count() == 0 || $tags->count() == 0) {
             return redirect(route('categories.index'))->with('error', 'Please add Category and Tags first.');

@@ -36,7 +36,7 @@
 @endsection
 
 @section('content')
-<div class="col-md-9">
+<div class="col-md-8">
 <div class="section-row sticky-container">
     <div class="main-post">
         <figure class="figure-img">
@@ -88,7 +88,7 @@
 @endsection
 
 @section('rightsidebar')
-<div class="col-md-3">
+<div class="col-md-4">
     @include('front.includes.rightsidebar')
 </div>
 @endsection

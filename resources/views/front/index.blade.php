@@ -5,208 +5,103 @@
 @endsection
 
 @section('meta')
-    <!-- post meta tag -->
-    <meta name="subject" content="K.M.R@NK">
-    <meta name="description" content="K.M.R@NK"/>
+<!-- post meta tag -->
+<meta name="subject" content="K.M.R@NK">
+<meta name="description" content="K.M.R@NK" />
 @endsection
 @section('content')
 
 <div class="col-md-12">
     <div class="row">
         @if($first_post)
-            <div class="col-md-6">
-                <div class="post post-thumb">
-                    <a class="post-img" href="{{ route('post.single', ['slug' => $first_post->slug])}}"><img src="{{$first_post->featured}}" height="310px" alt="{{ $first_post->title }}"></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-1" href="{{route('posts.by.category', ['categoryslug' => $first_post->category->slug])}}">{{ $first_post->category->name}}</a>
-                            <span class="post-date">{{ $first_post->created_at->toFormattedDateString() }}</span>
-                        </div>
-                        <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $first_post->slug])}}">{{ $first_post->title}}</a></h3>
+        <div class="col-md-6">
+            <div class="post post-thumb">
+                <a class="post-img" href="{{ route('post.single', ['slug' => $first_post->slug])}}"><img src="{{$first_post->featured}}" height="310px" alt="{{ $first_post->title }}"></a>
+                <div class="post-body">
+                    <div class="post-meta">
+                        <a class="post-category cat-1" href="{{route('posts.by.category', ['categoryslug' => $first_post->category->slug])}}">{{ $first_post->category->name}}</a>
+                        <span class="post-date">{{ $first_post->created_at->toFormattedDateString() }}</span>
                     </div>
+                    <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $first_post->slug])}}">{{ $first_post->title}}</a></h3>
                 </div>
             </div>
+        </div>
         @endif
 
         @if($second_post)
-            <div class="col-md-6">
-                <div class="post post-thumb">
-                    <a class="post-img" href="{{ route('post.single', ['slug' => $second_post->slug])}}"><img src="{{$second_post->featured}}" height="310px" alt="{{ $first_post->title }}"></a>
-                    <div class="post-body">
-                        <div class="post-meta">
-                            <a class="post-category cat-3" href="{{route('posts.by.category', ['categoryslug' => $second_post->category->slug])}}">{{ $second_post->category->name}}</a>
-                            <span class="post-date">{{ $second_post->created_at->toFormattedDateString() }}</span>
-                        </div>
-                        <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $second_post->slug])}}">{{ $second_post->title}}</a></h3>
+        <div class="col-md-6">
+            <div class="post post-thumb">
+                <a class="post-img" href="{{ route('post.single', ['slug' => $second_post->slug])}}"><img src="{{$second_post->featured}}" height="310px" alt="{{ $first_post->title }}"></a>
+                <div class="post-body">
+                    <div class="post-meta">
+                        <a class="post-category cat-3" href="{{route('posts.by.category', ['categoryslug' => $second_post->category->slug])}}">{{ $second_post->category->name}}</a>
+                        <span class="post-date">{{ $second_post->created_at->toFormattedDateString() }}</span>
                     </div>
+                    <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $second_post->slug])}}">{{ $second_post->title}}</a></h3>
                 </div>
             </div>
+        </div>
         @endif
     </div>
 
     <div class="row">
-        <div class="col-md-12">
-            <div class="section-title">
-                <h2>Recent Posts</h2>
-            </div>
-        </div>
-
-        <!-- post -->
-        @forelse($first_line_recent_posts as $post)
-        <div class="col-md-4">
-            <div class="post">
-                <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a>
-                <div class="post-body">
-                    <div class="post-meta">
-                        <a class="post-category cat-1" href="{{ route('posts.by.category', ['categoryslug' => $post->category->slug]) }}">{{ $post->category->name}}</a>
-                        <span class="post-date">{{$post->created_at->toFormattedDateString()}}</span>
-                    </div>
-                    <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h3>
-                </div>
-            </div>
-        </div>
-        @empty
-        <div class="col-md-12">
-            <h4>No recent posts found. come back after some time.</h4>
-        </div>
-        @endforelse
-        <!-- /post -->
-
-        <div class="clearfix visible-md visible-lg"></div>
-
-        @forelse($second_line_recent_posts as $post)
-        <div class="col-md-4">
-            <div class="post">
-                <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a>
-                <div class="post-body">
-                    <div class="post-meta">
-                        <a class="post-category cat-1" href="{{ route('posts.by.category', ['categoryslug' => $post->category->slug]) }}">{{ $post->category->name}}</a>
-                        <span class="post-date">{{$post->created_at->toFormattedDateString()}}</span>
-                    </div>
-                    <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{ $post->title}}</a></h3>
-                </div>
-            </div>
-        </div>
-        @empty
-        <div class="col-md-12">
-            <h4>No recent posts found. come back after some time.</h4>
-        </div>
-        @endforelse
-        <!-- /post -->
-    </div>
-
-    <div class="row">
-    <!-- BIG POST -->
         <div class="col-md-8">
             <div class="row">
-                <!-- post -->
                 <div class="col-md-12">
-                    <div class="post post-thumb">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-2.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-3" href="category.html">Jquery</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-                        </div>
+                    <div class="section-title">
+                        <h2>Recent Post</h2>
                     </div>
                 </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="col-md-6">
-                    <div class="post">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-3.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-4" href="category.html">Css</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">CSS Float: A Tutorial</a></h3>
+                @forelse ($recent_posts as $post)
+                <div class="post post-row">
+                    <a class="post-img" href="blog-post.html"><img src="{{$second_post->featured}}" width="200px" height="180px" alt=""></a>
+                    <div class="post-body">
+                        <div class="post-meta">
+                            <a class="post-category cat-2" href="{{route('posts.by.category', ['categoryslug' => $second_post->category->slug])}}">{{ $post->category->name}}</a>
+                            <span class="post-date">{{ $post->published_at->toFormattedDateString() }}</span>
                         </div>
+                        <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $second_post->slug])}}">{{ $post->title }}</a></h3>
+                        <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',180,' ...') }}</p>
                     </div>
                 </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="col-md-6">
-                    <div class="post">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-2.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-1" href="category.html">Web Design</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Tell-A-Tool: Guide To Web Design And Development Tools</a></h3>
-                        </div>
-                    </div>
+                @empty
+                <div class="col-md-12 text-center">
+                    <strong>
+                        <h2>Sorry, No Recent post found</h2>
+                    </strong>
                 </div>
-                <!-- /post -->
-
-                <div class="clearfix visible-md visible-lg"></div>
-
-                <!-- post -->
-                <div class="col-md-6">
-                    <div class="post">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-2.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-2" href="category.html">JavaScript</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Chrome Extension Protects Against JavaScript-Based CPU Side-Channel Attacks</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- /post -->
-
-                <!-- post -->
-                <div class="col-md-6">
-                    <div class="post">
-                        <a class="post-img" href="blog-post.html"><img src="{{asset('app/img/post-5.jpg')}}" alt=""></a>
-                        <div class="post-body">
-                            <div class="post-meta">
-                                <a class="post-category cat-3" href="category.html">Jquery</a>
-                                <span class="post-date">March 27, 2018</span>
-                            </div>
-                            <h3 class="post-title"><a href="blog-post.html">Ask HN: Does Anybody Still Use JQuery?</a></h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- /post -->
+                @endforelse
             </div>
         </div>
-
         <div class="col-md-4">
             <!--  MOST READ POST-->
-            <div class="aside-widget">
-                <div class="section-title">
+            <div class="most-read-aside-widget">
+                <div class="text-center">
                     <h2>Most Read</h2>
                 </div>
 
                 @foreach($mostReadPosts as $post)
-                    <div class="post post-widget">
-                        <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a>
-                        <div class="post-body">
-                            <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}">{{$post->title}}</a></h3>
-                        </div>
+                <div class="post-most-read post-widget">
+                    <!-- <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a> -->
+                    <div class="post-body">
+                        <p class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}"><i class="fa fa-chevron-right">&nbsp;</i>{{$post->title}}</a></p>
                     </div>
-                @endforeach 
+                </div>
+                @endforeach
             </div>
             <br>
             <!-- /post widget -->
 
             <!-- post widget -->
-            <div class="aside-widget">
-                <div>
+            <div class="most-read-aside-widget">
+                <div class="text-center">
                     <h2>Latest News</h2>
                 </div>
                 @forelse($news_post as $news)
-                <div class="post post-widget">
-                    <a class="post-img" href="{{ route('news.single', ['slug' => $news->slug]) }}"><img src="{{asset($news->featured)}}" alt=""></a>
+                <div class="post-most-read post-widget">
+                    <!-- <a class="post-img" href="{{ route('news.single', ['slug' => $news->slug]) }}"><img src="{{asset($news->featured)}}" alt=""></a> -->
                     <div class="post-body">
-                        <h3 class="post-title"><a href="{{ route('news.single', ['slug' => $news->slug]) }}">{{ $news->title }}</a></h3>
+                        <p class="post-title"><a href="{{ route('news.single', ['slug' => $news->slug]) }}"><i class="fa fa-chevron-right">&nbsp;</i>{{ $news->title }}</a></p>
                         <h5 class="">{{ $news->created_at->toFormattedDateString() }}</h5>
                     </div>
                 </div>
@@ -216,7 +111,7 @@
                         <h5>Sorry, No News found.</h5>
                     </strong>
                 </div>
-                @endforelse   
+                @endforelse
             </div>
             <!-- /post widget -->
 

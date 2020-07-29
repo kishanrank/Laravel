@@ -22,9 +22,9 @@
     @yield('meta')
 
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:700%7CNunito:300,600" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="{{asset('app/css/bootstrap.min.css')}}" />
-    <link rel="stylesheet" href="{{asset('app/css/font-awesome.min.css')}}">
-    <link type="text/css" rel="stylesheet" href="{{asset('app/css/style.css')}}" />
+    <link type="text/css" rel="stylesheet" href="{{asset('front/app/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" href="{{asset('front/app/css/font-awesome.min.css')}}">
+    <link type="text/css" rel="stylesheet" href="{{asset('front/app/css/style.css')}}" />
     <link rel="icon" href="{{asset('favicon-96x96.png') }}" sizes="96x96" type="image/png">
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -56,22 +56,15 @@
     </div>
     <!-- Footer -->
     @include('front.includes.footer')
-    <!-- /Footer -->
 
-    <!-- jQuery Plugins -->
-    <script src="{{asset('app/js/jquery.min.js')}}"></script>
-    <script src="{{asset('app/js/bootstrap.min.js')}}"></script>
-    <script src="{{asset('app/js/main.js')}}"></script>
+    <script src="{{asset('front/app/js/jquery.min.js')}}"></script>
+    <script src="{{asset('front/app/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('front/app/js/main.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
     <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f11a94773158da0"></script>
     @yield('scripts')
-    <!-- Ajax for header -->
     @include('front.includes.scripts.header')
-    <!-- Ajax for header -->
-
-    <!-- Ajax for footer -->
     @include('front.includes.scripts.footer')
-    <!-- Ajax for footer -->
 </body>
 
 </html>

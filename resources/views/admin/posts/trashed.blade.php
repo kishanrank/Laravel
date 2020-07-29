@@ -84,9 +84,13 @@
             },
             {
                 data: 'restore',
+                searchable: false,
+                orderable: false
             },
             {
                 data: 'delete',
+                searchable: false,
+                orderable: false
             }
         ]
     });

@@ -100,6 +100,8 @@
                 },
                 {
                     data: 'action',
+                    searchable: false,
+                    orderable: false
                 },
 
             ]

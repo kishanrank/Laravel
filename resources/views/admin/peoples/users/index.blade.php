@@ -197,6 +197,8 @@
             },
             {
                 data: 'delete',
+                searchable: false,
+                orderable: false
             }
         ]
     });

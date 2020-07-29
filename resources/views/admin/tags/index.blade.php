@@ -156,23 +156,20 @@
             },
             columns: [{
                     data: 'checkbox',
-                    name: 'checkbox',
                 },
                 {
                     data: 'id',
-                    name: 'id'
                 },
                 {
                     data: 'tag',
-                    name: 'tag'
                 },
                 {
                     data: 'slug',
-                    name: 'slug'
                 },
                 {
                     data: 'action',
-                    name: 'action'
+                    searchable: false,
+                    orderable: false
                 }
             ]
         });

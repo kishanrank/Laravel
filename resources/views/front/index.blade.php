@@ -118,7 +118,7 @@
             <!-- ad -->
             <div class="aside-widget text-center">
                 <a href="#" style="display: inline-block;margin: auto;">
-                    <img class="img-responsive" src="{{asset('app/img/ad-1.jpg')}}" alt="">
+                    <img class="img-responsive" src="{{asset('front/app/img/ad-1.jpg')}}" alt="">
                 </a>
             </div>
             <!-- /ad -->
@@ -129,7 +129,7 @@
 <div class="col-md-12">
     <div class="section-row container">
         <a href="#" style="display: inline-block;margin: auto;">
-            <img class="img-responsive" src="{{asset('app/img/ad-2.jpg')}}" alt="">
+            <img class="img-responsive" src="{{asset('front/app/img/ad-2.jpg')}}" alt="">
         </a>
     </div>
 
@@ -164,7 +164,7 @@
             <!-- ad  poster -->
             <div class="aside-widget text-center">
                 <a href="#" style="display: inline-block;margin: auto;">
-                    <img class="img-responsive" src="{{asset('app/img/ad-1.jpg')}}" alt="">
+                    <img class="img-responsive" src="{{asset('front/app/img/ad-1.jpg')}}" alt="">
                 </a>
             </div>
             <!-- /ad -->

@@ -17,7 +17,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
                             <a href="{{ route('admin.home') }}">Home</a>
-                             / <a href="{{ route('news.index') }}">Tech News</a>
+                            / <a href="{{ route('news.index') }}">Tech News</a>
                         </li>
                         <li class="breadcrumb-item">Published</li>
                     </ol>
@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                <div class="card-header font-weight-bold">
+                    <div class="card-header font-weight-bold">
                         <a class="btn btn-primary float-right btn-sm" href="{{ route('news.create')}}">Create New News</a>
                     </div>
                     <div class="card-body">
@@ -88,7 +88,9 @@
                     data: 'title',
                 },
                 {
-                    data: 'action'
+                    data: 'action',
+                    searchable: false,
+                    orderable: false
                 }
             ]
         });

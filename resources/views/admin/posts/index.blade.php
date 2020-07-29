@@ -100,10 +100,14 @@
                data: 'status'
             },
             {
-                data: 'upload'
+                data: 'upload',
+                searchable: false,
+                orderable: false
             },
             {
                 data: 'action',
+                searchable: false,
+                orderable: false
             }
         ],
         // initComplete: function() {

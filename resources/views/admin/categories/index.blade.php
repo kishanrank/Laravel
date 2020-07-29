@@ -157,6 +157,8 @@
             },
             columns: [{
                     data: 'checkbox',
+                    searchable: false,
+                    orderable: false
                 },
                 {
                     data: 'id',
@@ -169,6 +171,8 @@
                 },
                 {
                     data: 'action',
+                    searchable: false,
+                    orderable: false
                 }
             ]
         });

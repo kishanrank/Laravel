@@ -17,7 +17,7 @@
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
                             <a href="{{ route('admin.home') }}">Home</a>
-                             / <a href="{{ route('news.index') }}">Tech News</a>
+                            / <a href="{{ route('news.index') }}">Tech News</a>
                         </li>
                         <li class="breadcrumb-item">Trashed</li>
                     </ol>
@@ -80,9 +80,13 @@
             },
             {
                 data: 'restore',
+                searchable: false,
+                orderable: false
             },
             {
                 data: 'delete',
+                searchable: false,
+                orderable: false
             }
         ]
     });

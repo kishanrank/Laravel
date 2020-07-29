@@ -12,8 +12,6 @@ class User extends Authenticatable
 {
     use Notifiable;
     
-    const NOT_ADMIN = 0;
-    const ADMIN = 1;
     const NOT_VERIFIED = 0;
     const VERIFIED = 1;
 

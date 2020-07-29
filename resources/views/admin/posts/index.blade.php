@@ -35,8 +35,8 @@
                         <table id="posts-table" class="table table-striped table-bordered rounded responsive table-condensed" width="100%">
                             <thead>
                                 <tr>
-                                    <th width="10%">#</th>
-                                    <th>Image</th>
+                                    <th>#</th>
+                                    <th width="8%">Image</th>
                                     <th width="40%">Title</th>
                                     <th>Category</th>
                                     <th>Status</th>

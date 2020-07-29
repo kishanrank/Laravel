@@ -41,13 +41,13 @@ class PostsController extends ResponserController
                     if ($data->published) {
                         return '<label class="badge badge-success">Published</label>'; 
                     }
-                    return '<label class="badge badge-danger">Not Published</label>';
+                    return '<label class="badge badge-danger">Draft</label>';
                 })
                 ->addColumn('upload', function ($data) {
                     if ($data->published == 0) {
-                        return '<a class="btn btn-success btn-sm mr-3"  href="' . route('post.make.published', $data->id) . '"><i class="fas fa-share-square"> Publish</i></a>';
+                        return '<a class="btn btn-success btn-xs"  href="' . route('post.make.published', $data->id) . '"><i class="fas fa-share-square"> Publish</i></a>';
                     }
-                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.make.unpublished', $data->id) . '"><i class="fa fa-undo"> Un Publish</i></a>';
+                    return '<a class="btn btn-danger btn-xs"  href="' . route('post.make.unpublished', $data->id) . '"><i class="fa fa-undo"> Un Publish</i></a>';
                 })
                 ->rawColumns(['action', 'status', 'upload', 'featured'])
                 ->make(true);
@@ -65,10 +65,10 @@ class PostsController extends ResponserController
 
             return DataTables::of($data)
                 ->addColumn('restore', function ($data) {
-                    return '<a class="btn btn-primary btn-sm mr-3"  href="' . route('post.restore', $data->id) . '">Restore</a>';
+                    return '<a class="btn btn-primary btn-xs"  href="' . route('post.restore', $data->id) . '">Restore</a>';
                 })
                 ->addColumn('delete', function ($data) {
-                    return '<a class="btn btn-danger btn-sm mr-3"  href="' . route('post.kill', $data->id) . '">Permanent Delete</a>';
+                    return '<a class="btn btn-danger btn-xs"  href="' . route('post.kill', $data->id) . '">Permanent Delete</a>';
                 })
                 ->addColumn('featured', function ($data) {
                     $url = asset($data->featured);
@@ -124,19 +124,19 @@ class PostsController extends ResponserController
     public function unPublishPost($id)
     {
         if (Auth::guard('admin')->user()->id != 1) {
-            return redirect()->route('posts')->with($this->setNotification('You do not have permission to publish post.', 'error'));
+            return redirect()->route('posts')->with($this->setNotification('You do not have permission to un-publish post.', 'error'));
         }
 
         $post = Post::findOrFail($id);
         if (!$post->id) {
-            return redirect(route('posts'))->with($this->setNotification('You do not have permission to publish post.', 'error'));
+            return redirect(route('posts'))->with($this->setNotification('You do not have permission to un-publish post.', 'error'));
         }
 
         $post->published = Post::NOT_PUBLISHED;
         $post->published_at = NULL;
 
         if ($post->save()) {
-            return redirect()->route('posts')->with($this->setNotification('Post has been successfully published.', 'success'));
+            return redirect()->route('posts')->with($this->setNotification('Post has been successfully un-published.', 'success'));
         }
     }
 

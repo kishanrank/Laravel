@@ -41,8 +41,8 @@ class NewPost extends Notification implements ShouldQueue
         // markdown('admin.notification.newpost', ['title' => $this->title, 'url' => "www.google.com"]);
 
         return (new MailMessage)
-            ->subject('Hey user, New post availabe')
-            ->greeting('Hello', 'Subscriber')
+            ->subject('Hey there, New post availabe')
+            ->greeting('Hello')
             ->line('There is a new post , hope you will like it')
             ->line('Post title : ' . $this->title) //Send with post title
             ->action('Read Post', url(route('post.single', ['slug' => $this->post->slug]))) //Send with post url

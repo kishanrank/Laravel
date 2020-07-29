@@ -54,13 +54,13 @@
                 </div>
                 @forelse ($recent_posts as $post)
                 <div class="post post-row">
-                    <a class="post-img" href="blog-post.html"><img src="{{$second_post->featured}}" width="200px" height="180px" alt=""></a>
+                    <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug])}}"><img src="{{$post->featured}}" width="200px" height="180px" alt=""></a>
                     <div class="post-body">
                         <div class="post-meta">
-                            <a class="post-category cat-2" href="{{route('posts.by.category', ['categoryslug' => $second_post->category->slug])}}">{{ $post->category->name}}</a>
+                            <a class="post-category cat-2" href="{{route('posts.by.category', ['categoryslug' => $post->category->slug])}}">{{ $post->category->name}}</a>
                             <span class="post-date">{{ $post->published_at->toFormattedDateString() }}</span>
                         </div>
-                        <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $second_post->slug])}}">{{ $post->title }}</a></h3>
+                        <h3 class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug])}}">{{ $post->title }}</a></h3>
                         <p>{{ \Illuminate\Support\Str::limit(strip_tags($post->content) ?? '',180,' ...') }}</p>
                     </div>
                 </div>

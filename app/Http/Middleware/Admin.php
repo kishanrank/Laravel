@@ -24,6 +24,6 @@ class Admin
             'message' => 'You do not have permission to access this url, please contact admin.',
             'alert-type' => 'error'
         );
-        return redirect('/login')->with($notification);
+        return redirect('/admin/login')->with($notification);
     }
 }

@@ -26,5 +26,9 @@ class Category extends Model
             'name' => 'required|unique:categories,name' . ($id ? ",$id" : ''),
             'description' => 'required'
         ];
+        // $request->validate([
+        //     'email' => 'required|email|unique:users,email,'.$user->id,
+        //           or   'required|email|unique:users,email,'.$this->user->id,
+        // ]);
     }
 }

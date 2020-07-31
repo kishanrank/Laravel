@@ -155,7 +155,7 @@ class PostsController extends ResponserController
     public function store(Request $request)
     {
         $this->validate($request, Post::rules(0, ['featured' => 'required']));
-        //dimensions:max_width=4096,max_height=4096
+        //dimensions:max_width=4096,max_height=4096, // 'mimes:jpeg,bmp,png'
         $featured = $request->featured;
         $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
         $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);

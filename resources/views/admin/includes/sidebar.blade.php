@@ -1,8 +1,8 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="{{ route('admin.home') }}" class="brand-link">
-        <img src="{{ asset(Auth::guard('admin')->user()->profile->avatar)}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-        <span class="brand-text font-weight-light"><b>BlogApp</b></span>
+        <img src="{{ asset($setting['site_logo'])}}" alt="K. M. R@NK's Blog" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light"><b>{{ $setting['site_name'] }}</b></span>
     </a>
 
     <!-- Sidebar -->
@@ -10,7 +10,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset(Auth::guard('admin')->user()->profile->avatar)}}" class="img-circle elevation-2" alt="User Image">
+                <img src="{{ asset(Auth::guard('admin')->user()->profile->avatar)}}" class="rounded-circle" width="75px" height="50px" alt="Admin Image">
             </div>
             <div class="info">
                 <a>{{Auth::guard('admin')->user()->name}}</a>

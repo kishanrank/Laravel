@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         <strong> Create New Post</strong>
-                        <a class="btn btn-primary float-right btn-sm" href="{{ route('posts')}}">View Post</a>
+                        <a class="btn btn-primary float-right btn-sm" href="{{ route('posts')}}"><i class="fa fa-sm fa-arrow-left">&nbsp;</i> Back</a>
                     </div>
                     <br>
                     <form action="{{route('post.store')}}" method="post" enctype="multipart/form-data">

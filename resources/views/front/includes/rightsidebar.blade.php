@@ -11,14 +11,20 @@
         <h2>Most Read</h2>
     </div>
 
-    @foreach($mostReadPosts as $post)
+    @forelse($mostReadPosts as $post)
     <div class="post-most-read post-widget">
         <!-- <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug]) }}"><img src="{{ $post->featured }}" alt=""></a> -->
         <div class="post-body">
             <p class="post-title"><a href="{{ route('post.single', ['slug' => $post->slug]) }}"><i class="fa fa-chevron-right">&nbsp</i>{{$post->title}}</a></p>
         </div>
     </div>
-    @endforeach
+    @empty
+    <div>
+        <strong>
+            <h5 class="text-center">Sorry, No Post found.</h5>
+        </strong>
+    </div>
+    @endforelse
 </div>
 <!-- /post widget -->
 

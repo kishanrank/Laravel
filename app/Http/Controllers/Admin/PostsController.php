@@ -31,7 +31,7 @@ class PostsController extends ResponserController
 
             return DataTables::of($data)
                 ->addColumn('action', function ($data) {
-                    return '<a class="btn btn-primary btn-xs"  href="' . route('post.edit', $data->id) . '"><i class="fa fa-edit"></i></a><a class="btn btn-danger btn-xs"  href="' . route('post.delete', $data->id) . '"><i class="fa fa-trash"></i></a>';
+                    return '<a class="btn btn-primary btn-xs mr-3"  href="' . route('post.show', $data->id) . '"><i class="fa fa-eye"></i></a><a class="btn btn-primary btn-xs"  href="' . route('post.edit', $data->id) . '"><i class="fa fa-edit"></i></a><a class="btn btn-danger btn-xs ml-3"  href="' . route('post.delete', $data->id) . '"><i class="fa fa-trash"></i></a>';
                 })
                 ->addColumn('featured', function ($data) {
                     $url = asset($data->featured);
@@ -39,7 +39,7 @@ class PostsController extends ResponserController
                 })
                 ->addColumn('status', function ($data) {
                     if ($data->published) {
-                        return '<label class="badge badge-success">Published</label>'; 
+                        return '<label class="badge badge-success">Published</label>';
                     }
                     return '<label class="badge badge-danger">Draft</label>';
                 })
@@ -140,6 +140,10 @@ class PostsController extends ResponserController
         }
     }
 
+    public function show(Post $post) {
+        dd($post->featured);
+    }
+
     public function create()
     {
         $categories = Category::orderBy('name', 'ASC')->get();
@@ -172,7 +176,7 @@ class PostsController extends ResponserController
             'meta_description' => $request->meta_description
         ]);
 
-        //         auth()->user()->posts()->create([
+        //  auth()->user()->posts()->create([
         // 'title' => request()->input('title'),
         // 'post_text' => request()->input('post_text'),
         // ]);

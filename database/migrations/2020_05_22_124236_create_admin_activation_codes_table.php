@@ -14,7 +14,7 @@ class CreateAdminActivationCodesTable extends Migration
             $table->bigInteger('admin_id')->unsigned()->index();
             $table->string('code');
             $table->timestamps();
-            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

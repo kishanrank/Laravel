@@ -11,7 +11,7 @@ class SettingController extends ResponserController
 {
     public function index()
     {
-        return view('admin.settings.settings', ['settings' => Setting::first()]);
+        return view('admin.settings.settings', ['settings' => Setting::firstOrFail()]);
     }
 
     public function update(Request $request)

@@ -4,13 +4,14 @@
 
 use App\Models\Category;
 use App\Models\Post;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 
 $factory->define(Post::class, function (Faker $faker) {
     $title = $faker->unique()->paragraph(1);
     $slug = Str::slug($title, '-');
-    
+
     return [
         'admin_id' => 1,
         'title' => $title,
@@ -19,6 +20,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'content' => $faker->paragraph(5),
         'category_id' => implode(Category::all()->random(1)->pluck('id')->toArray()),
         'featured' => 'uploads/posts/featured/image1.png',
-        'published' => Post::NOT_PUBLISHED
+        'published' => Post::PUBLISHED,
+        'published_at' => Carbon::now()
     ];
 });

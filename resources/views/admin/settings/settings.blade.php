@@ -25,7 +25,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+
                         @if($settings)
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle" src="{{ asset($settings->site_logo) }}" alt="Blog Logo">
+                        </div>
                         <form method="post" id="setting_form">
                             {{ csrf_field() }}
                             @method('PUT')
@@ -60,7 +64,7 @@
                             </div>
                         </form>
                         @else
-                        <div  class="text-center">
+                        <div class="text-center">
                             <strong>No settings found right now, Please try after sometime.</strong>
                         </div>
                         @endif

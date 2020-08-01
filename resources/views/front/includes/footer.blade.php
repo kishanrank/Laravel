@@ -7,7 +7,7 @@
                 <div class="footer-widget">
                     <div class="footer-logo text-dark">
                         <div class="text-dark">
-                            <a href="/" class="logo" style="text-decoration: none">{{ $setting->site_name}}</a>
+                            <a href="/" class="logo" style="text-decoration: none">@if($setting) {{ $setting->site_name}} @else My Blog @endif</a>
                         </div>
                     </div>
                     <ul class="footer-nav">

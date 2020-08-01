@@ -27,7 +27,7 @@ class CreateNewsTable extends Migration
             $table->timestamp('published_at')->default(NULL)->nullable();
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade');
+            $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

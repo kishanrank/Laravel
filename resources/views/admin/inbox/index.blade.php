@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('stylesheet')
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
 @endsection
 
 @section('content')
@@ -30,7 +32,7 @@
                     <div class="card-header">
                         <h3 class="card-title">Inbox</h3>
 
-                        <div class="card-tools">
+                        <!-- <div class="card-tools">
                             <div class="input-group input-group-sm">
                                 <input type="text" class="form-control" placeholder="Search Mail">
                                 <div class="input-group-append">
@@ -39,28 +41,28 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <!-- /.card-tools -->
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body p-0">
+                    <div class="card-body">
                         <div class="table-responsive mailbox-messages">
-                            <table class="table table-hover table-striped">
+                            <table id="inbox-table" class="table table-hover responsive table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Title</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     @forelse($messages as $message)
                                     <tr>
-                                        <td>
-                                            <div class="icheck-primary">
-                                                <input type="checkbox" value="" id="check15">
-                                                <label for="check15"></label>
-                                            </div>
-                                        </td>
-                                        <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
                                         <td class="mailbox-name" data-id="{{ $message->id }}"><a>{{ $message->name }}</a></td>
                                         <td class="mailbox-subject" data-id="{{ $message->id }}"><b>{{ $message->subject }}</b> -
                                             {{ \Illuminate\Support\Str::limit($message->message, 30) }}
                                         </td>
-                                        <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td>
+                                        <!-- <td class="mailbox-attachment"><i class="fas fa-paperclip"></i></td> -->
                                         <td class="mailbox-date">{{$message->created_at->toFormattedDateString()}}</td>
                                     </tr>
                                     @empty
@@ -113,14 +115,22 @@
 </div>
 @endsection
 
+
 @section('script')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
-
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     $(document).ready(function() {
+        $('#inbox-table').DataTable({
+            responsive: true,
+        });
         $('*[data-id]').on('click', function() {
             // window.location = $(this).data("href");
             var getIdFromRow = $(event.target).closest('td').data('id');
@@ -142,4 +152,5 @@
         });
     });
 </script>
+@include('admin.includes.toastr')
 @endsection

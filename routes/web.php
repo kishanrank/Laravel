@@ -87,6 +87,7 @@ Route::group(
         Route::resource('tags', 'TagsController');
 
         Route::get('/post/create', 'PostsController@create')->name('post.create');
+        Route::get('/post/show/{post}', 'PostsController@show')->name('post.show');
         Route::get('/posts', 'PostsController@index')->name('posts');
         Route::post('/post/store', 'PostsController@store')->name('post.store');
         Route::get('/post/delete/{post}', 'PostsController@destroy')->name('post.delete');

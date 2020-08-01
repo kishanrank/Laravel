@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\View\Composers\AdminSideBarComposer;
 use App\Http\View\Composers\HeaderComposer;
 use App\Http\View\Composers\MostReadComposer;
 use App\Http\View\Composers\SideWidgetComposer;
@@ -30,5 +31,6 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['front.includes.header', 'front.includes.footer', 'front.index'], HeaderComposer::class);
         View::composer(['front.includes.rightsidebar', 'front.index'], SideWidgetComposer::class);
         View::composer(['front.index', 'front.includes.rightsidebar'], MostReadComposer::class);
+        View::composer(['admin.includes.sidebar'], AdminSideBarComposer::class);
     }
 }

@@ -25,13 +25,16 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="text-center">
+                            <img class="rounded-circle" src="{{ asset($admin->profile->avatar) }}" width="150px" height="150px" alt="Blog Logo">
+                        </div>
                         <form action="{{route('user.profile.update')}}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             @method('PUT')
 
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $user->name }}">
+                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ $admin->name }}">
                                 @error('name')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -39,7 +42,7 @@
 
                             <div class="form-group">
                                 <label for="name">Email</label>
-                                <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ $user->email }}">
+                                <input type="text" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ $admin->email }}">
                                 @error('email')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -57,7 +60,7 @@
 
                             <div class="form-group">
                                 <label for="name">LinkedIn Profile</label>
-                                <input type="text" name="linkedin" class="form-control @error('linkedin') is-invalid @enderror" value="{{ $user->profile->linkedin }}">
+                                <input type="text" name="linkedin" class="form-control @error('linkedin') is-invalid @enderror" value="{{ $admin->profile->linkedin }}">
                                 @error('linkedin')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -65,7 +68,7 @@
 
                             <div class="form-group">
                                 <label for="name">Github Profile</label>
-                                <input type="text" name="github" class="form-control @error('github') is-invalid @enderror" value="{{ $user->profile->github }}">
+                                <input type="text" name="github" class="form-control @error('github') is-invalid @enderror" value="{{ $admin->profile->github }}">
                                 @error('github')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -73,7 +76,7 @@
 
                             <div class="form-group">
                                 <label for="name">About You</label>
-                                <textarea name="about" id="about" cols="5" rows="5" class="form-control @error('about') is-invalid @enderror">{{ $user->profile->about }}</textarea>
+                                <textarea name="about" id="about" cols="5" rows="5" class="form-control @error('about') is-invalid @enderror">{{ $admin->profile->about }}</textarea>
                                 @error('about')
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror

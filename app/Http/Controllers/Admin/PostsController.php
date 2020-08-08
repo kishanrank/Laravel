@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
+use Intervention\Image\Facades\Image;
 
 class PostsController extends ResponserController
 {
@@ -140,7 +141,8 @@ class PostsController extends ResponserController
         }
     }
 
-    public function show(Post $post) {
+    public function show(Post $post)
+    {
         dd($post->featured);
     }
 
@@ -162,7 +164,10 @@ class PostsController extends ResponserController
         //dimensions:max_width=4096,max_height=4096, // 'mimes:jpeg,bmp,png'
         $featured = $request->featured;
         $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
-        $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);
+        $img = Image::make($featured->getRealPath());
+        $featured_save_path = public_path(Post::POST_FEATURED_PATH);
+        $img->resize(750, 450)->save($featured_save_path . '/' . $featured_new_name);
+        // $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);
 
         $post = Post::create([
             'admin_id' => Auth::guard('admin')->user()->id,
@@ -203,7 +208,6 @@ class PostsController extends ResponserController
                 }
             }
         }
-        // event(new NewPostEvent($post));
         return redirect()->route('posts')->with($this->setNotification('Post Saved Successfully.', 'success'));
     }
 
@@ -236,7 +240,10 @@ class PostsController extends ResponserController
                 File::delete($path);
             }
             $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
-            $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);
+            $img = Image::make($featured->getRealPath());
+            $featured_save_path = public_path(Post::POST_FEATURED_PATH);
+            $img->resize(800, 450)->save($featured_save_path . '/' . $featured_new_name);
+            // $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);
             $post->featured = Post::POST_FEATURED_PATH . $featured_new_name;
         }
 

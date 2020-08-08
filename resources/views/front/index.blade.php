@@ -16,7 +16,7 @@
         @if($first_post)
         <div class="col-md-6">
             <div class="post post-thumb">
-                <a class="post-img" href="{{ route('post.single', ['slug' => $first_post->slug])}}"><img src="{{$first_post->featured}}" height="310px" alt="{{ $first_post->title }}"></a>
+                <a class="post-img" href="{{ route('post.single', ['slug' => $first_post->slug])}}"><img src="{{$first_post->featured}}" width="750px" height="310px" alt="{{ $first_post->title }}"></a>
                 <div class="post-body">
                     <div class="post-meta">
                         <a class="post-category cat-1" href="{{route('posts.by.category', ['categoryslug' => $first_post->category->slug])}}">{{ $first_post->category->name}}</a>
@@ -54,7 +54,7 @@
                 </div>
                 @forelse ($recent_posts as $post)
                 <div class="post post-row">
-                    <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug])}}"><img src="{{$post->featured}}" width="200px" height="180px" alt=""></a>
+                    <a class="post-img" href="{{ route('post.single', ['slug' => $post->slug])}}"><img src="{{$post->featured}}" width="220px" height="170px" alt=""></a>
                     <div class="post-body">
                         <div class="post-meta">
                             <a class="post-category cat-2" href="{{route('posts.by.category', ['categoryslug' => $post->category->slug])}}">{{ $post->category->name}}</a>

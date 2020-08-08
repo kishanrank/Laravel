@@ -39,7 +39,7 @@
     <div class="section-row">
         <div class="main-post">
             <figure class="figure-img">
-                <img class="img-responsive" src="{{ $post->featured }}" width="720" height="380" alt="">
+                <img class="img-responsive" src="{{ $post->featured }}" alt="">
                 <figcaption></figcaption>
             </figure>
             {!! $post->info !!}

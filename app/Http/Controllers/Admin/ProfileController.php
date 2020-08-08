@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ResponserController;
 use App\Models\Admin;
 use Illuminate\Support\Facades\File;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends ResponserController
 {
@@ -36,10 +37,11 @@ class ProfileController extends ResponserController
             if (File::exists($old_path)) {
                 File::delete($old_path);
             }
-            $avatar_new_name = strtolower(str_replace(' ', '_', $admin->name) .'_'. $avatar->getClientOriginalName());
-            $avatar->move('uploads/avatars', $avatar_new_name);
+            $avatar_save_path = public_path('/uploads/avatars');
+            $img = Image::make($avatar->getRealPath());
+            $avatar_new_name = strtolower(str_replace(' ', '_', $admin->name) . '_' . $avatar->getClientOriginalName());
+            $img->resize(350, 350)->save($avatar_save_path . '/' . $avatar_new_name);
             $admin->profile->avatar = 'uploads/avatars/' . $avatar_new_name;
-            // $user->profile->save();
         }
 
         $admin->name = $request->name;

@@ -110,7 +110,7 @@
 @endsection
 
 @section('script')
-<script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+<script src="{{ URL::asset('js/admin/ckeditor/ckeditor.js') }}"></script>
 <script>
     CKEDITOR.replace('content');
     CKEDITOR.replace('info');

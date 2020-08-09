@@ -1,4 +1,4 @@
-<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/toastr/toastr.min.js')}}"></script>
 <script>
     $('#setting_form').on('submit', function(event) {
         event.preventDefault();

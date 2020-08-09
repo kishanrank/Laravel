@@ -18616,7 +18616,7 @@ html.maximized-card {
 .login-page, .register-page {
     -ms-flex-align: center;
     align-items: center;
-    background-image: url("../img/wallpaper.jpg");
+    background-image: url("../../../../img/admin/img/wallpaper.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-color: var(--white);

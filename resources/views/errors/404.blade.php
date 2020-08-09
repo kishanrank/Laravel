@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Oops some error has been occured. we are trying to solve.</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400,700" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <!-- <link type="text/css" rel="stylesheet" href="css/style.css" /> -->
     <link rel="icon" href="{{asset('favicon-96x96.png') }}" sizes="96x96" type="image/png">
     <style>
         * {

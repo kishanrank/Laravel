@@ -1,4 +1,4 @@
-<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
+<script src="{{ URL::asset('plugins/toastr/toastr.min.js')}}"></script>
 <script>
     @if(Session::has('message'))
     var type = "{{ Session::get('alert-type', 'info') }}";

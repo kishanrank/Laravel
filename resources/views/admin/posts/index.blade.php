@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('stylesheet')
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+@include('admin.includes.css.datatable')
 @endsection
 
 @section('content')
@@ -40,7 +39,7 @@
                                     <th>Title</th>
                                     <th>Category</th>
                                     <th>Status</th>
-                                    <th>Publish/<br>Unpublish</th>
+                                    <th>Publish/Unpublish</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -68,69 +67,5 @@
 @endsection
 
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-    $(document).ready(function() {
-        $('#posts-table thead tr').clone(true).appendTo('#posts-table thead');
-        $('#posts-table tfoot tr').remove();
-        $('#posts-table thead tr:eq(1) th').each(function(i) {
-            var title = $(this).text();
-            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-
-            $('input', this).on('keyup change', function() {
-                if (table.column(i).search() !== this.value) {
-                    table
-                        .column(i)
-                        .search(this.value)
-                        .draw();
-                }
-            });
-        });
-
-        var table = $('#posts-table').DataTable({
-            processing: true,
-            serverSide: true,
-            orderCellsTop: true,
-            scrollX: true,
-            ajax: {
-                url: "{{ route('posts') }}",
-            },
-            columns: [{
-                    data: 'id',
-                },
-                {
-                    data: 'featured',
-                },
-                {
-                    data: 'title',
-                },
-                {
-                    data: 'name',
-                },
-                {
-                    data: 'status'
-                },
-                {
-                    data: 'upload',
-                    searchable: false,
-                    orderable: false
-                },
-                {
-                    data: 'action',
-                    searchable: false,
-                    orderable: false
-                }
-            ],
-        });
-    });
-</script>
-@include('admin.includes.toastr')
+@include('admin.posts.ajax.index')
 @endsection

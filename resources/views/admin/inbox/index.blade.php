@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('stylesheet')
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+@include('admin.includes.css.datatable')
 @endsection
 
 @section('content')
@@ -114,43 +113,6 @@
     </section>
 </div>
 @endsection
-
-
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/fixedheader/3.1.7/js/dataTables.fixedHeader.min.js"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#inbox-table').DataTable({
-            responsive: true,
-        });
-        $('*[data-id]').on('click', function() {
-            // window.location = $(this).data("href");
-            var getIdFromRow = $(event.target).closest('td').data('id');
-            $.ajax({
-                'url': 'inbox/id/' + getIdFromRow,
-                'method': 'GET',
-                'success': function(data) {
-                    $('#name').text(data.result.name);
-                    $('#email').text(data.result.email);
-                    $('#messageModalLongTitle').text(data.result.subject);
-                    $('#message').text(data.result.message);
-                    $('#messageModal').modal('show');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    var message = JSON.parse(jqXHR.responseText);
-                    toastr.error(message.error);
-                }
-            })
-        });
-    });
-</script>
-@include('admin.includes.toastr')
+@include('admin.inbox.ajax.index')
 @endsection

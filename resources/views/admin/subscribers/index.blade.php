@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('stylesheet')
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+@include('admin.includes.css.datatable')
 @endsection
 
 @section('content')
@@ -102,102 +101,5 @@
 
 @endsection
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
-
-<script>
-    $(document).ready(function() {
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $('#subscriber-table').DataTable({
-            processing: true,
-            serverSide: true,
-            responsive: true,
-            ajax: {
-                url: "{{ route('subscribers.index') }}",
-            },
-            columns: [{
-                    data: 'checkbox',
-                    searchable: false,
-                    orderable: false
-                },
-                {
-                    data: 'id',
-                },
-                {
-                    data: 'email',
-                },
-                {
-                    data: 'action',
-                    searchable: false,
-                    orderable: false
-                }
-            ]
-        });
-
-        $(document).on('click', '.delete', function() {
-            subscriber_id = $(this).attr('id');
-            $('#confirmModal').modal('show');
-            $('.modal-title').text('Confirmation!');
-            $('#ok_button').val('Delete');
-        });
-
-        var id = [];
-        $(document).on('click', '#bulk_delete', function() {
-            $('.subscriber_checkbox:checked').each(function() {
-                id.push($(this).val())
-            });
-            $('#confirmModal').modal('show');
-            $('#ok_button').val('MassDelete');
-        });
-
-        $('#ok_button').click(function() {
-            if ($('#ok_button').val() == 'Delete') {
-                action_url = "subscribers/" + subscriber_id;
-                method = "DELETE";
-                data = subscriber_id;
-            }
-
-            if ($('#ok_button').val() == 'MassDelete') {
-                action_url = "subscribers/massdelete";
-                method = "POST";
-                data = {
-                    id: id
-                };
-            }
-
-            $.ajax({
-                url: action_url,
-                method: method,
-                data: data,
-                beforeSend: function() {
-                    $('#ok_button').text('Deleting...');
-                },
-                success: function(data) {
-                    if (data.success) {
-                        toastr.success(data.success);
-                        $('#subscriber-table').DataTable().ajax.reload();
-                    }
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                    $('#confirmModal').modal('hide');
-                    $('#ok_button').text('OK');
-                }
-            })
-        });
-    });
-</script>
+@include('admin.subscribers.ajax.index')
 @endsection

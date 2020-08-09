@@ -31,7 +31,7 @@
                         <!-- small box -->
                         <div class="small-box bg-info">
                             <div class="inner">
-                                <h3>{{ $data['category'] }}</h3>
+                                <h3>{{ $data['category'] ?? '--' }}</h3>
                                 <p>Categories</p>
                             </div>
                             <div class="icon">
@@ -45,7 +45,7 @@
                         <!-- small box -->
                         <div class="small-box bg-success">
                             <div class="inner">
-                                <h3>{{ $data['tag'] }}</h3>
+                                <h3>{{ $data['tag'] ?? '--' }}</h3>
                                 <p>Tags</p>
                             </div>
                             <div class="icon">
@@ -59,7 +59,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>{{ $data['published_posts'] }}</h3>
+                                <h3>{{ $data['published_posts'] ?? '--' }}</h3>
                                 <p>Published Posts</p>
                             </div>
                             <div class="icon">
@@ -73,7 +73,7 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>{{ $data['subscribers'] }}</h3>
+                                <h3>{{ $data['subscribers'] ?? '--' }}</h3>
 
                                 <p>Subscriber</p>
                             </div>

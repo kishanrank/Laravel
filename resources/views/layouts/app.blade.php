@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>BlogApp</title>
-    @include('admin.includes.js-and-css.css')
+    @include('admin.includes.css.main')
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
@@ -20,8 +20,7 @@
             @yield('content')
         </div>
     </div>
-    @include('admin.includes.js-and-css.js')
-
+    @include('admin.includes.js.main')
 </body>
 
 </html>

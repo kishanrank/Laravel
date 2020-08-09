@@ -2,8 +2,7 @@
 
 @section('stylesheet')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-<link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
+@include('admin.includes.css.datatable')
 @endsection
 
 @section('content')
@@ -65,11 +64,11 @@
                             @csrf
                             <div class="form-group" id="from_date">
                                 <label for="date_from">Date From: </label>
-                                <input type="text" class="date-from" id="date_from" name="date_from" required placeholder="MM/DD/YYYY">
+                                <input type="text" class="date-from" id="date_from" name="date_from" required placeholder="MM/DD/YYYY" autocomplete="off">
                             </div>
                             <div class="form-group ml-3" id="to_date">
                                 <label for="date_to">Date To: </label>
-                                <input type="text" class="date-to" id="date_to" name="date_to" required placeholder="MM/DD/YYYY">
+                                <input type="text" class="date-to" id="date_to" name="date_to" required placeholder="MM/DD/YYYY" autocomplete="off">
                             </div>
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary btn-sm ml-3"><i class="fa fa-sm fa-file-export">&nbsp;</i>Export</button>
@@ -156,125 +155,5 @@
 @endsection
 
 @section('script')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="{{ asset('plugins/toastr/toastr.min.js')}}"></script>
-
-<script>
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $('#user-table').DataTable({
-        processing: true,
-        serverSide: true,
-        responsive: true,
-        ajax: {
-            url: "{{ route('users.index') }}",
-        },
-        columns: [{
-                data: 'id',
-            },
-            {
-                data: 'avatar',
-            },
-            {
-                data: 'name',
-            },
-            {
-                data: 'email',
-            },
-            {
-                data: 'status'
-            },
-            {
-                data: 'delete',
-                searchable: false,
-                orderable: false
-            }
-        ]
-    });
-
-    var user_id;
-    $(document).on('click', '.delete-user', function() {
-        user_id = $(this).attr('id');
-        $('#confirmModal').modal('show');
-    });
-
-    $('#ok_button').click(function() {
-        $.ajax({
-            url: "users/destroy/" + user_id,
-            method: 'DELETE',
-            success: function(data) {
-                if (data.success) {
-                    toastr.success(data.success);
-                    $('#confirmModal').modal('hide');
-                    $('#user-table').DataTable().ajax.reload();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                var message = JSON.parse(jqXHR.responseText);
-                toastr.error(message.error);
-            }
-        });
-    });
-
-    $('#create_user').click(function() {
-        $('.modal-title').text('Add New User');
-        $('#action_button').val('Add');
-        $('#action').val('Add');
-        $('#name').val('');
-        $('#email').val('');
-        $('#password').val('');
-        $('#userModal').modal('show');
-    });
-
-    $('#user_form').on('submit', function(event) {
-        event.preventDefault();
-        var action_url = '';
-        var method = '';
-
-        if ($('#action').val() == 'Add') {
-            action_url = "{{ route('users.store') }}";
-            method = "POST";
-        }
-
-        $.ajax({
-            url: action_url,
-            method: method,
-            data: $(this).serialize(),
-            dataType: "json",
-            success: function(data) {
-                if (data.success) {
-                    toastr.success(data.success);
-                    $('#user_form')[0].reset();
-                    $('#userModal').modal('hide');
-                    $('#user-table').DataTable().ajax.reload();
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                var message = JSON.parse(jqXHR.responseText);
-                toastr.error(message.error);
-            }
-        });
-    });
-</script>
-<script>
-    $(function() {
-        $("#date_from").datepicker({
-            maxDate: -1
-        });
-        $("#date_to").datepicker({
-            maxDate: -1
-        });
-    });
-</script>
+@include('admin.peoples.users.ajax.index')
 @endsection

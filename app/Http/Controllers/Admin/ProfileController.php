@@ -53,7 +53,7 @@ class ProfileController extends ResponserController
         $admin->save();
         $admin->profile->save();
 
-        return redirect(route('user.profile'))->with([
+        return redirect(route('admin.profile'))->with([
             'message' => 'Profile has been updated successfully.',
             'alert-type' => 'success'
         ]);

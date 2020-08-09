@@ -186,7 +186,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('user.profile')}}" class="nav-link {{ (request()->is('admin/user/profile*')) ? 'active' : '' }}">
+                    <a href="{{ route('admin.profile')}}" class="nav-link {{ (request()->is('admin/user/profile*')) ? 'active' : '' }}">
                         <i class="nav-icon fas fa-user-circle"></i>
                         <p>
                             My Profile

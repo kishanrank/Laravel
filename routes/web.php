@@ -58,9 +58,10 @@ Route::group(
         Route::post('/users/store', 'UsersController@store')->name('users.store');
         Route::delete('/users/destroy/{user}', 'UsersController@destroy')->name('users.destroy');
 
+        Route::get('/account/profile', 'ProfileController@index')->name('admin.profile');
         Route::post('/profile/password/update', 'ProfileController@updatePassword')->name('admin.password.update');
+        Route::put('/account/profile/update', 'ProfileController@update')->name('admin.profile.update');
         Route::resource('admins', 'AdminController');
-
 
         Route::post('/categories/massdelete', 'CategoriesController@massDelete')->name('categories.massdelete');
         Route::post('/categories/savecsv', 'CategoriesController@savecsv')->name('categories.savecsv');
@@ -102,9 +103,6 @@ Route::group(
         Route::get('/posts/trashed', 'PostsController@trashed')->name('posts.trashed');
         Route::get('/post/kill/{post}', 'PostsController@kill')->name('post.kill');
         Route::get('/post/restore/{post}', 'PostsController@restore')->name('post.restore');
-
-        Route::get('/account/profile', 'ProfileController@index')->name('user.profile');
-        Route::put('/account/profile/update', 'ProfileController@update')->name('user.profile.update');
 
         Route::get('/settings', 'SettingController@index')->name('settings');
         Route::put('/settings/update', 'SettingController@update')->name('settings.update');

@@ -79,7 +79,7 @@
                         <strong>Update Profile</strong>
                     </div>
                     <div class="card-body">
-                        <form action="{{route('user.profile.update')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('admin.profile.update')}}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             @method('PUT')
 

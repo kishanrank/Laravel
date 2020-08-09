@@ -29,10 +29,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header font-weight-bold">
-                        <button class="btn btn-danger btn-sm float-right" type="button" name="bulk_delete" id="bulk_delete">Delete</button>
-                        <button type="button" name="create_tag" data-dismiss="modal" id="create_tag" class="btn btn-success float-right btn-sm  mr-2">Add</button>
-                        <a href="{{route('tags.export')}}" class="btn btn-primary float-right btn-sm mr-2">Export</a>
-                        <button name="import_tag" id="import_tag" class="btn btn-primary float-right btn-sm mr-2">Import</button>
+                        <button class="btn btn-danger btn-sm float-right" type="button" name="bulk_delete" id="bulk_delete"><i class="fa fa-sm fa-trash">&nbsp;</i>Delete</button>
+                        <button type="button" name="create_tag" data-dismiss="modal" id="create_tag" class="btn btn-success float-right btn-sm  mr-2"><i class="fa fa-sm fa-plus">&nbsp;</i>Add</button>
+                        <a href="{{route('tags.export')}}" class="btn btn-primary float-right btn-sm mr-2"><i class="fa fa-sm fa-file-export">&nbsp;</i>Export</a>
+                        <button name="import_tag" id="import_tag" class="btn btn-primary float-right btn-sm mr-2"><i class="fa fa-sm fa-file-import">&nbsp;</i>Import</button>
                     </div>
 
                     <div class="card-body">

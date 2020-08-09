@@ -11,7 +11,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tech News</h1>
+                    <h1>All Tech News</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -29,7 +29,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header font-weight-bold">
-                        <a class="btn btn-primary float-right btn-sm" href="{{ route('news.create')}}">Create New News</a>
+                        <a class="btn btn-primary float-right btn-sm" href="{{ route('news.create')}}"><i class="fa fa-sm fa-plus">&nbsp;</i>Create New News</a>
                     </div>
                     <div class="card-body">
                         <table id="news-table" class="table table-striped table-bordered responsive" width="100%">

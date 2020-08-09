@@ -58,8 +58,8 @@
                     </div>
 
                     <div class="card-header">
-                        <button class="btn btn-danger btn-sm float-right" type="button" name="bulk_delete" id="bulk_delete">Delete</button>
-                        <a href="{{route('subscribers.export')}}" class="btn btn-primary float-right btn-sm mr-2">Export</a>
+                        <button class="btn btn-danger btn-sm float-right" type="button" name="bulk_delete" id="bulk_delete"><i class="fa fa-sm fa-trash">&nbsp;</i>Delete</button>
+                        <a href="{{route('subscribers.export')}}" class="btn btn-primary float-right btn-sm mr-2"><i class="fa fa-sm fa-file-export">&nbsp;</i>Export</a>
                     </div>
 
                     <div class="card-body">

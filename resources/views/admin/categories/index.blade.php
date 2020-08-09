@@ -29,10 +29,10 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <button class="btn btn-danger btn-sm float-right" type="button" name="bulk_delete" id="bulk_delete">Delete</button>
-                        <button type="button" name="create_category" data-dismiss="modal" id="create_category" class="btn btn-success float-right btn-sm  mr-2">Add</button>
-                        <button name="import_category" id="import_category" class="btn btn-success float-right btn-sm mr-2">Import</button>
-                        <a href="{{route('categories.export')}}" class="btn btn-primary float-right btn-sm mr-2">Export</a>
+                        <button class="btn btn-danger btn-sm float-right" type="button" name="bulk_delete" id="bulk_delete"><i class="fa fa-sm fa-trash">&nbsp;</i>Delete</button>
+                        <button type="button" name="create_category" data-dismiss="modal" id="create_category" class="btn btn-success float-right btn-sm  mr-2"><i class="fa fa-sm fa-plus">&nbsp;</i>Add</button>
+                        <a href="{{route('categories.export')}}" class="btn btn-primary float-right btn-sm mr-2"><i class="fa fa-sm fa-file-export">&nbsp;</i>Export</a>
+                        <button name="import_category" id="import_category" class="btn btn-primary float-right btn-sm mr-2"><i class="fa fa-sm fa-file-import">&nbsp;</i>Import</button>
                     </div>
 
                     <div class="card-body">

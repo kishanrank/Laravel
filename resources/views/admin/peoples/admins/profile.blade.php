@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Update Profile</h1>
+                    <h1>Profile</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -22,12 +22,63 @@
 
     <section class="content">
         <div class="row">
-            <div class="col-12">
+            <div class="col-md-4">
+                <!-- Profile Image -->
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-header bg-primary">
+                        <strong>General Information</strong>
+                    </div>
+                    <div class="card-body box-profile">
                         <div class="text-center">
                             <img class="rounded-circle" src="{{ asset($admin->profile->avatar) }}" width="150px" height="150px" alt="Blog Logo">
                         </div>
+                        <h3 class="profile-username text-center">{{ $admin->name }}</h3>
+                        <p class="text-muted text-center">{{ $admin->email }}</p>
+                        <div class="text-center">
+                            <button type="button" name="update_admin_password" data-dismiss="modal" id="update_admin_password" class="btn btn-primary btn-xs  mr-2">Change Password ?</button>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <div id="updateAdminPasswordModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Change Password</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" id="update_admin_password_form" class="form-horizontal">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Current Password :<sup class="text-danger">*</sup> </label>
+                                        <input type="password" name="current_password" id="current_password" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-6">New Password : <sup class="text-danger">*</sup></label>
+                                        <input type="password" name="password" id="password" class="form-control" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-md-6">Confirm Password : <sup class="text-danger">*</sup></label>
+                                        <input type="password" name="password_confirmation" id="password-confirm" class="form-control" />
+                                    </div>
+                            </div>
+                            <br />
+                            <div class="form-group text-center">
+                                <input type="submit" name="action_button" id="action_button" class="btn btn-primary" value="Update Password" />
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header bg-gray">
+                        <strong>Update Profile</strong>
+                    </div>
+                    <div class="card-body">
                         <form action="{{route('user.profile.update')}}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             @method('PUT')
@@ -48,10 +99,10 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="name">New Password</label>
                                 <input type="text" name="password" class="form-control">
-                            </div>
+                            </div> -->
 
                             <div class="form-group">
                                 <label for="name">Upload New Avatar</label>
@@ -98,5 +149,41 @@
 </div>
 @endsection
 @section('script')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 @include('admin.includes.toastr')
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#update_admin_password').click(function() {
+            $('.modal-title').text('Change Password');
+            $('#updateAdminPasswordModal').modal('show');
+        });
+
+        $('#update_admin_password_form').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "{{ route('admin.password.update')}}",
+                method: 'POST',
+                data: $(this).serialize(),
+                dataType: 'JSON',
+                success: function(data) {
+                    if (data.success) {
+                        toastr.success(data.success);
+                        $('#update_admin_password_form')[0].reset();
+                        $('#updateAdminPasswordModal').modal('hide');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    var message = JSON.parse(jqXHR.responseText);
+                    toastr.error(message.error);
+                }
+            });
+        });
+    });
+</script>
 @endsection

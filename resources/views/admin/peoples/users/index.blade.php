@@ -72,13 +72,13 @@
                                 <input type="text" class="date-to" id="date_to" name="date_to" required placeholder="MM/DD/YYYY">
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary btn-sm ml-3">Export</button>
+                                <button type="submit" class="btn btn-primary btn-sm ml-3"><i class="fa fa-sm fa-file-export">&nbsp;</i>Export</button>
                             </div>
                         </form>
                     </div>
 
                     <div class="card-header">
-                        <button type="button" name="create_user" data-dismiss="modal" id="create_user" class="btn btn-success float-right btn-sm  ml-2">Add</button>
+                        <button type="button" name="create_user" data-dismiss="modal" id="create_user" class="btn btn-success float-right btn-sm  ml-2"><i class="fa fa-sm fa-plus">&nbsp;</i>Add</button>
                     </div>
                     <div class="card-body">
                         <table id="user-table" class="table table-hover table-bordered responsive" width="100%">

@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Posts</h1>
+                    <h1>Edit Post</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         <strong> Edit Post :- {{ $post->title }}</strong>
-                        <a class="btn btn-primary float-right btn-sm" href="{{ route('posts')}}">View Post</a>
+                        <a class="btn btn-primary float-right btn-sm" href="{{ route('posts')}}"><i class="fa fa-sm fa-arrow-left">&nbsp;</i>Back</a>
                     </div>
                     <br>
                     <form action="{{route('post.update', ['post' => $post->id])}}" method="post" enctype="multipart/form-data">

@@ -8,7 +8,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tech News</h1>
+                    <h1>Create News</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -28,7 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         <strong>Create new News</strong>
-                        <a class="btn btn-success float-right btn-sm" href="{{ route('news.index')}}">View All News</a>
+                        <a class="btn btn-primary float-right btn-sm" href="{{ route('news.index')}}"><i class="fa fa-sm fa-arrow-left">&nbsp;</i>Back</a>
                     </div>
 
                     <br>

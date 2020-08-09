@@ -58,7 +58,9 @@ Route::group(
         Route::post('/users/store', 'UsersController@store')->name('users.store');
         Route::delete('/users/destroy/{user}', 'UsersController@destroy')->name('users.destroy');
 
+        Route::post('/profile/password/update', 'ProfileController@updatePassword')->name('admin.password.update');
         Route::resource('admins', 'AdminController');
+
 
         Route::post('/categories/massdelete', 'CategoriesController@massDelete')->name('categories.massdelete');
         Route::post('/categories/savecsv', 'CategoriesController@savecsv')->name('categories.savecsv');

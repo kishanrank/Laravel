@@ -31,7 +31,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <button type="button" name="create_admin" data-dismiss="modal" id="create_admin" class="btn btn-success float-right btn-sm  ml-2">Add</button>
+                        <button type="button" name="create_admin" data-dismiss="modal" id="create_admin" class="btn btn-success float-right btn-sm  ml-2"> <i class="fa fa-sm fa-plus">&nbsp;</i>Add</button>
                     </div>
                     <div class="card-body">
                         <table id="admin-table" class="table table-hover table-bordered responsive" width="100%">

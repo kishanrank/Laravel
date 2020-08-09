@@ -6,15 +6,16 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ResponserController;
 use App\Models\Admin;
+use App\Models\Profile;
+use App\Rules\MatchOldAdminPassword;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\Facades\Image;
 
 class ProfileController extends ResponserController
 {
-
     public function index()
     {
-
         return view('admin.peoples.admins.profile', ['admin' => Auth::guard('admin')->user()]);
     }
 
@@ -49,13 +50,6 @@ class ProfileController extends ResponserController
         $admin->profile->linkedin = $request->linkedin;
         $admin->profile->github = $request->github;
         $admin->profile->about = $request->about;
-        if ($request->has('password')) {
-            $password = trim($request->password);
-            if ($password != null) {
-                $admin->password = bcrypt($password);
-            }
-        }
-
         $admin->save();
         $admin->profile->save();
 
@@ -63,5 +57,23 @@ class ProfileController extends ResponserController
             'message' => 'Profile has been updated successfully.',
             'alert-type' => 'success'
         ]);
+    }
+
+    public function updatePassword(Request $request)
+    {
+        if ($request->ajax()) {
+            $error = Validator::make($request->all(), Profile::passwordChangeRules());
+            if ($error->fails()) {
+                return $this->errorMessageResponse($error->errors()->all(), 422);
+            }
+
+            $admin = Admin::findOrFail(Auth::guard('admin')->user()->id);
+
+            $admin->password = bcrypt($request->password);
+            if ($admin->save()) {
+                return $this->successMessageResponse('Password updated successfully.');
+            }
+            return $this->errorMessageResponse('Error in changing password.');
+        }
     }
 }

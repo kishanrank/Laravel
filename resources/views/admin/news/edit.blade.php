@@ -8,13 +8,13 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Tech News</h1>
+                    <h1>Edit News</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
                         <li class="breadcrumb-item">
                             <a href="{{ route('admin.home') }}">Home</a>
-                             / <a href="{{ route('news.index') }}">Tech News</a>
+                            / <a href="{{ route('news.index') }}">Tech News</a>
                         </li>
                         <li class="breadcrumb-item">Edit</li>
                     </ol>
@@ -28,6 +28,7 @@
                 <div class="card">
                     <div class="card-header">
                         <strong>Edit News :- </strong>@if($news){{ $news->title}}@endif
+                        <a class="btn btn-primary float-right btn-sm" href="{{ route('news.index')}}"><i class="fa fa-sm fa-arrow-left">&nbsp;</i>Back</a>
                     </div>
 
                     <br>

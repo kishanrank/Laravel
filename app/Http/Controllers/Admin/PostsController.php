@@ -6,12 +6,10 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\Tag;
 use App\Models\PostImage;
-use App\Events\NewPostEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Controllers\ResponserController;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -26,13 +24,14 @@ class PostsController extends ResponserController
         if ($request->ajax()) {
             $data = DB::table('posts')
                 ->join('categories', 'posts.category_id', '=', 'categories.id')
+                ->join('admins','posts.admin_id', '=', 'admins.id')
                 ->whereNull('posts.deleted_at')
-                ->select('posts.featured', 'posts.title', 'posts.id', 'posts.published', 'categories.name')
+                ->select('posts.featured', 'posts.title', 'posts.id', 'posts.published', 'posts.created_at', 'posts.published_at', 'categories.name', 'admins.name as auther')
                 ->get();
 
             return DataTables::of($data)
                 ->addColumn('action', function ($data) {
-                    return '<a class="btn btn-primary btn-xs mr-3"  href="' . route('post.show', $data->id) . '"><i class="fa fa-eye"></i></a><a class="btn btn-primary btn-xs"  href="' . route('post.edit', $data->id) . '"><i class="fa fa-edit"></i></a><a class="btn btn-danger btn-xs ml-3"  href="' . route('post.delete', $data->id) . '"><i class="fa fa-trash"></i></a>';
+                    return '<a class="btn btn-info btn-xs"  href="' . route('post.show', $data->id) . '"><i class="fa fa-eye"></i></a>&nbsp;<a class="btn btn-primary btn-xs"  href="' . route('post.edit', $data->id) . '"><i class="fa fa-edit"></i></a>&nbsp;<a class="btn btn-danger btn-xs"  href="' . route('post.delete', $data->id) . '"><i class="fa fa-trash"></i></a>';
                 })
                 ->addColumn('featured', function ($data) {
                     $url = asset($data->featured);
@@ -56,94 +55,9 @@ class PostsController extends ResponserController
         return view('admin.posts.index');
     }
 
-    public function trashed(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = DB::table('posts')
-                ->join('categories', 'posts.category_id', '=', 'categories.id')
-                ->select('posts.featured', 'posts.title', 'posts.id', 'posts.deleted_at', 'categories.name')
-                ->whereNotNull('posts.deleted_at')->get();
-
-            return DataTables::of($data)
-                ->addColumn('restore', function ($data) {
-                    return '<a class="btn btn-primary btn-xs"  href="' . route('post.restore', $data->id) . '">Restore</a>';
-                })
-                ->addColumn('delete', function ($data) {
-                    return '<a class="btn btn-danger btn-xs"  href="' . route('post.kill', $data->id) . '">Permanent Delete</a>';
-                })
-                ->addColumn('featured', function ($data) {
-                    $url = asset($data->featured);
-                    return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
-                })
-                ->rawColumns(['restore', 'delete', 'featured'])
-                ->make(true);
-        }
-        return view('admin.posts.trashed');
-    }
-
-    public function published(Request $request)
-    {
-        if ($request->ajax()) {
-            $data = DB::table('posts')
-                ->join('categories', 'posts.category_id', '=', 'categories.id')
-                ->select('posts.featured', 'posts.title', 'posts.id', 'categories.name')
-                ->where('deleted_at', null)
-                ->where('published', '=', Post::PUBLISHED)
-                ->get();
-
-            return DataTables::of($data)
-                ->addColumn('featured', function ($data) {
-                    $url = asset($data->featured);
-                    return '<img src="' . $url . '"  width="70" height="40" alt="' . $data->title . '"" />';
-                })
-                ->rawColumns(['featured'])
-                ->make(true);
-        }
-        return view('admin.posts.published');
-    }
-
-    public function publishPost($id)
-    {
-        if (Auth::guard('admin')->user()->id != 1) {
-            return redirect()->route('posts')->with($this->setNotification('You do not have permission to publish post.', 'error'));
-        }
-
-        $post = Post::findOrFail($id);
-        if (!$post->id) {
-            return redirect(route('posts'))->with($this->setNotification('No data found.', 'error'));
-        }
-
-        $post->published = Post::PUBLISHED;
-        $post->published_at = Carbon::now();
-
-        if ($post->save()) {
-            event(new NewPostEvent($post));
-            return redirect()->route('posts')->with($this->setNotification('Post has been successfully published.', 'success'));
-        }
-    }
-
-    public function unPublishPost($id)
-    {
-        if (Auth::guard('admin')->user()->id != 1) {
-            return redirect()->route('posts')->with($this->setNotification('You do not have permission to un-publish post.', 'error'));
-        }
-
-        $post = Post::findOrFail($id);
-        if (!$post->id) {
-            return redirect(route('posts'))->with($this->setNotification('You do not have permission to un-publish post.', 'error'));
-        }
-
-        $post->published = Post::NOT_PUBLISHED;
-        $post->published_at = NULL;
-
-        if ($post->save()) {
-            return redirect()->route('posts')->with($this->setNotification('Post has been successfully un-published.', 'success'));
-        }
-    }
-
     public function show(Post $post)
     {
-        dd($post->featured);
+        dd($post);
     }
 
     public function create()
@@ -298,36 +212,5 @@ class PostsController extends ResponserController
         if ($post->delete()) {
             return redirect()->route('posts')->with($this->setNotification('Post deleted Successfully.', 'success'));
         }
-    }
-
-    public function kill($id) //forcedelete
-    {
-        $post = Post::withTrashed()->where('id', $id)->first();
-        if (!$post) {
-            return redirect()->back()->with($this->setNotification('Error in deleting Post.', 'error'));
-        }
-
-        $imagesPath = public_path(Post::POST_IMAGES_PATH . $post->slug);
-
-        if ($imagesPath) {
-            File::deleteDirectory($imagesPath);
-        }
-
-        Storage::delete($post->featured);
-
-        $post->tags()->detach();
-        $post->forceDelete();
-
-        return redirect()->back()->with($this->setNotification('Post deleted permanently.', 'success'));
-    }
-
-    public function restore($id)
-    {
-        $post = Post::withTrashed()->where('id', $id)->first()->restore();
-
-        if ($post == null) {
-            return back()->with($this->setNotification('Error in restoring Post.', 'error'));
-        }
-        return redirect()->back()->with($this->setNotification('Post Restored successfully.', 'success'));
     }
 }

@@ -37,8 +37,10 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Image</th>
-                                    <th width="50%">Title</th>
+                                    <th width="30%">Title</th>
                                     <th>Category</th>
+                                    <th>Published At</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>

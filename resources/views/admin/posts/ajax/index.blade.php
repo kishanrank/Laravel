@@ -44,6 +44,15 @@
                     data: 'status'
                 },
                 {
+                    data: 'auther'
+                },
+                {
+                    data: 'created_at'
+                },
+                {
+                    data: 'published_at'
+                },
+                {
                     data: 'upload',
                     searchable: false,
                     orderable: false
@@ -56,7 +65,7 @@
             ],
             columnDefs: [{
                 'searchable': false,
-                'targets': [5, 6],
+                'targets': [8, 9],
             }, ]
         });
     });

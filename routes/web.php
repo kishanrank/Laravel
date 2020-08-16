@@ -76,12 +76,13 @@ Route::group(
         Route::get('/news/edit/{news}', 'NewsController@edit')->name('news.edit');
         Route::put('/news/update/{news}', 'NewsController@update')->name('news.update');
 
-        Route::get('/news/published', 'NewsController@published')->name('news.published');
-        Route::get('/news/trashed', 'NewsController@trashed')->name('news.trashed');
-        Route::get('/news/{id}/publish',  'NewsController@publishNews')->name('news.make.published');
-        Route::get('/news/{id}/unpublish',  'NewsController@unPublishNews')->name('news.make.unpublished');
-        Route::get('/news/{id}/kill', 'NewsController@kill')->name('news.kill');
-        Route::get('/news/{id}/restore', 'NewsController@restore')->name('news.restore');
+        Route::get('/news/published', 'News\PublishedController@published')->name('news.published');
+        Route::get('/news/{id}/publish',  'News\PublishedController@publishNews')->name('news.make.published');
+        Route::get('/news/{id}/unpublish',  'News\PublishedController@unPublishNews')->name('news.make.unpublished');
+
+        Route::get('/news/trashed', 'News\TrashedController@trashed')->name('news.trashed');
+        Route::get('/news/{id}/kill', 'News\TrashedController@kill')->name('news.kill');
+        Route::get('/news/{id}/restore', 'News\TrashedController@restore')->name('news.restore');
 
         Route::get('/tags/export', 'TagsController@export')->name('tags.export');
         Route::post('/tags/massdelete', 'TagsController@massDelete')->name('tags.massdelete');
@@ -97,12 +98,13 @@ Route::group(
         Route::get('/post/edit/{post}', 'PostsController@edit')->name('post.edit');
         Route::put('/post/update/{post}', 'PostsController@update')->name('post.update');
 
-        Route::get('/posts/published', 'PostsController@published')->name('posts.published');
-        Route::get('/posts/{id}/publish',  'PostsController@publishPost')->name('post.make.published');
-        Route::get('/posts/{id}/unpublish',  'PostsController@unPublishPost')->name('post.make.unpublished');
-        Route::get('/posts/trashed', 'PostsController@trashed')->name('posts.trashed');
-        Route::get('/post/kill/{post}', 'PostsController@kill')->name('post.kill');
-        Route::get('/post/restore/{post}', 'PostsController@restore')->name('post.restore');
+        Route::get('/posts/published', 'Post\PublishedController@published')->name('posts.published');
+        Route::get('/posts/{id}/publish',  'Post\PublishedController@publishPost')->name('post.make.published');
+        Route::get('/posts/{id}/unpublish',  'Post\PublishedController@unPublishPost')->name('post.make.unpublished');
+        
+        Route::get('/posts/trashed', 'Post\TrashedController@trashed')->name('posts.trashed');
+        Route::get('/post/kill/{post}', 'Post\TrashedController@kill')->name('post.kill');
+        Route::get('/post/restore/{post}', 'Post\TrashedController@restore')->name('post.restore');
 
         Route::get('/settings', 'SettingController@index')->name('settings');
         Route::put('/settings/update', 'SettingController@update')->name('settings.update');

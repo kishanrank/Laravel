@@ -35,10 +35,13 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Image</th>
+                                    <th>Featured</th>
                                     <th>Title</th>
                                     <th>Category</th>
                                     <th>Status</th>
+                                    <th>Created By</th>
+                                    <th>Created At</th>
+                                    <th>Published At</th>
                                     <th>Publish/Unpublish</th>
                                     <th>Action</th>
                                 </tr>
@@ -48,10 +51,13 @@
                             <tfoot>
                                 <tr>
                                     <th>#</th>
-                                    <th>Image</th>
+                                    <th>Featured</th>
                                     <th>Title</th>
                                     <th>Category</th>
                                     <th>Status</th>
+                                    <th>Created By</th>
+                                    <th>Created At</th>
+                                    <th>Published At</th>
                                     <th>Publish/<br>Unpublish</th>
                                     <th>Action</th>
                                 </tr>

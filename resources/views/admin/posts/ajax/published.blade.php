@@ -21,7 +21,15 @@
                 },
                 {
                     data: 'name',
-                }
+                },
+                {
+                    data: 'published_at',
+                },
+                {
+                    data: 'action',
+                    searchable: false,
+                    orderable: false
+                },
             ]
         });
     });

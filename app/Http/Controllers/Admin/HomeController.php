@@ -11,6 +11,7 @@ use App\Models\Tag;
 class HomeController extends ResponserController
 {
     public $data = [];
+    
     public function index()
     {
         $this->data['category'] = Category::all()->count();

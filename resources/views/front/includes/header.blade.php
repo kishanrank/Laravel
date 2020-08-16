@@ -5,7 +5,7 @@
     <!-- Main Nav -->
     <div class="container">
         <div class="nav-logo">
-            <h1><a href="/" class="logo" style="text-decoration: none">@if($setting) {{ $setting->site_name}} @else My Blog @endif</a></h1>
+            <h1><a href="{{ route('front.home')}}" class="logo" style="text-decoration: none">@if($setting) {{ $setting->site_name}} @else My Blog @endif</a></h1>
         </div>
     </div>
     <nav class="navbar navbar-default bg-primary">

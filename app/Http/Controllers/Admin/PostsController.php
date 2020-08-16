@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Http\Controllers\ResponserController;
+use App\Http\Requests\Admin\Post\StorePostRequest;
+use App\Http\Requests\Admin\Post\UpdatePostRequest;
+use App\Repositories\Admin\Posts\PostsRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -19,12 +22,19 @@ use Intervention\Image\Facades\Image;
 
 class PostsController extends ResponserController
 {
+    protected $postRepository;
+
+    public function __construct(PostsRepository $post)
+    {
+        $this->postRepository = $post;
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
             $data = DB::table('posts')
                 ->join('categories', 'posts.category_id', '=', 'categories.id')
-                ->join('admins','posts.admin_id', '=', 'admins.id')
+                ->join('admins', 'posts.admin_id', '=', 'admins.id')
                 ->whereNull('posts.deleted_at')
                 ->select('posts.featured', 'posts.title', 'posts.id', 'posts.published', 'posts.created_at', 'posts.published_at', 'categories.name', 'admins.name as auther')
                 ->get();
@@ -66,62 +76,15 @@ class PostsController extends ResponserController
         $tags = Tag::orderBy('tag', 'ASC')->get();
 
         if ($categories->count() == 0 || $tags->count() == 0) {
-            // View::make('posts.index')->withPosts($posts);
             return redirect()->route('categories.index')->with($this->setNotification('Please add Category and Tags first.', 'error'));
         }
         return view('admin.posts.create', ['categories' => $categories, 'tags' => $tags]);
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
-        $this->validate($request, Post::rules(0, ['featured' => 'required']));
-        //dimensions:max_width=4096,max_height=4096, // 'mimes:jpeg,bmp,png'
-        $featured = $request->featured;
-        $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
-        $img = Image::make($featured->getRealPath());
-        $featured_save_path = public_path(Post::POST_FEATURED_PATH);
-        $img->resize(750, 450)->save($featured_save_path . '/' . $featured_new_name);
-        // $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);
-
-        $post = Post::create([
-            'admin_id' => Auth::guard('admin')->user()->id,
-            'title' => $request->title,
-            'info' => $request->info,
-            'content' => $request->content,
-            'featured' => Post::POST_FEATURED_PATH . $featured_new_name,
-            'category_id' => $request->category_id,
-            'slug' => Str::slug($request->title, '-'),
-            'meta_title' => $request->meta_title,
-            'meta_description' => $request->meta_description
-        ]);
-
-        //  auth()->user()->posts()->create([
-        // 'title' => request()->input('title'),
-        // 'post_text' => request()->input('post_text'),
-        // ]);
-
-        $post->tags()->attach($request->tags);
-
-        if ($request->hasFile('images')) {
-            $slug = $post->slug;
-            $path =  public_path(Post::POST_IMAGES_PATH . $slug . '');
-            if (!File::isDirectory($path)) {
-                File::makeDirectory($path, 0777, true, true);
-            }
-            $images = $request->images;
-            foreach ($images as $image) {
-                $image_new_name = date("Y_m_d_h_i_s") . $image->getClientOriginalName();
-                $image->move(Post::POST_IMAGES_PATH . $slug . '', $image_new_name);
-                $imageName = Post::POST_IMAGES_PATH . $slug . '/' . $image_new_name;
-                $PostImages = PostImage::create([
-                    'post_id' => $post->id,
-                    'image' => $imageName
-                ]);
-                if (!$PostImages) {
-                    throw new ModelNotFoundException('Error in uploading images.');
-                }
-            }
-        }
+        $validatedPostData = $request->validated();
+        $this->postRepository->create($validatedPostData);
         return redirect()->route('posts')->with($this->setNotification('Post Saved Successfully.', 'success'));
     }
 
@@ -142,64 +105,68 @@ class PostsController extends ResponserController
         return view('admin.posts.edit', ['post' => $post, 'categories' => $categories, 'tags' => $tags]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $this->validate($request, Post::rules($id));
-        $post = Post::findOrFail($id);
+        $validatedPostData = $request->validated();
+        $this->postRepository->update($post, $validatedPostData);
 
-        if ($request->hasFile('featured')) {
-            $featured = $request->featured;
-            $path = public_path($post->featured);
-            if (File::exists($path)) {
-                File::delete($path);
-            }
-            $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
-            $img = Image::make($featured->getRealPath());
-            $featured_save_path = public_path(Post::POST_FEATURED_PATH);
-            $img->resize(800, 450)->save($featured_save_path . '/' . $featured_new_name);
-            // $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);
-            $post->featured = Post::POST_FEATURED_PATH . $featured_new_name;
-        }
-
-        $post->admin_id = Auth::guard('admin')->user()->id;
-        $post->title = $request->title;
-        $post->info = $request->info;
-        $post->slug = Str::slug($request->title, '-');
-        $post->content = $request->content;
-        $post->category_id = $request->category_id;
-        $post->meta_title = $request->meta_title;
-        $post->meta_description = $request->meta_description;
-        $post->save();
-        $post->tags()->sync($request->tags);
-
-        if ($request->hasFile('images')) {
-            $images = $request->images;
-            $slug = $post->slug;
-            $postImages = $post->images;
-            if ($postImages != null) {
-                foreach ($postImages as $postImage) {
-                    $postImage->delete();
-                }
-            }
-            $path = public_path(Post::POST_IMAGES_PATH . $slug . '');
-            if (File::isDirectory($path)) {
-                File::deleteDirectory($path);
-            }
-            File::makeDirectory($path, 0777, true, true);
-            foreach ($images as $image) {
-                $image_new_name = date("Y_m_d_h_i_s") . $image->getClientOriginalName();
-                $image->move(Post::POST_IMAGES_PATH . $slug . '', $image_new_name);
-                $imageName = Post::POST_IMAGES_PATH . $slug . '/' . $image_new_name;
-                $PostImages = PostImage::create([
-                    'post_id' => $post->id,
-                    'image' => $imageName
-                ]);
-                if (!$PostImages) {
-                    throw new ModelNotFoundException('Error in uploading images.');
-                }
-            }
-        }
         return redirect()->route('posts')->with($this->setNotification('Post Updated Successfully.', 'success'));
+        // $this->validate($request, Post::rules($id));
+        // $post = Post::findOrFail($id);
+
+        // if ($request->hasFile('featured')) {
+        //     $featured = $request->featured;
+        //     $path = public_path($post->featured);
+        //     if (File::exists($path)) {
+        //         File::delete($path);
+        //     }
+        //     $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
+        //     $img = Image::make($featured->getRealPath());
+        //     $featured_save_path = public_path(Post::POST_FEATURED_PATH);
+        //     $img->resize(800, 450)->save($featured_save_path . '/' . $featured_new_name);
+        //     // $featured->move(Post::POST_FEATURED_PATH, $featured_new_name);
+        //     $post->featured = Post::POST_FEATURED_PATH . $featured_new_name;
+        // }
+
+        // $post->admin_id = Auth::guard('admin')->user()->id;
+        // $post->title = $request->title;
+        // $post->info = $request->info;
+        // $post->slug = Str::slug($request->title, '-');
+        // $post->content = $request->content;
+        // $post->category_id = $request->category_id;
+        // $post->meta_title = $request->meta_title;
+        // $post->meta_description = $request->meta_description;
+        // $post->save();
+        // $post->tags()->sync($request->tags);
+
+        // if ($request->hasFile('images')) {
+        //     $images = $request->images;
+        //     $slug = $post->slug;
+        //     $postImages = $post->images;
+        //     if ($postImages != null) {
+        //         foreach ($postImages as $postImage) {
+        //             $postImage->delete();
+        //         }
+        //     }
+        //     $path = public_path(Post::POST_IMAGES_PATH . $slug . '');
+        //     if (File::isDirectory($path)) {
+        //         File::deleteDirectory($path);
+        //     }
+        //     File::makeDirectory($path, 0777, true, true);
+        //     foreach ($images as $image) {
+        //         $image_new_name = date("Y_m_d_h_i_s") . $image->getClientOriginalName();
+        //         $image->move(Post::POST_IMAGES_PATH . $slug . '', $image_new_name);
+        //         $imageName = Post::POST_IMAGES_PATH . $slug . '/' . $image_new_name;
+        //         $PostImages = PostImage::create([
+        //             'post_id' => $post->id,
+        //             'image' => $imageName
+        //         ]);
+        //         if (!$PostImages) {
+        //             throw new ModelNotFoundException('Error in uploading images.');
+        //         }
+        //     }
+        // }
+
     }
 
     public function destroy($id) //simple softdelete

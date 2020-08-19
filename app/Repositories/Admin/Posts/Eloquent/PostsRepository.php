@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repositories\Admin\Posts;
+namespace App\Repositories\Admin\Posts\Eloquent;
 
 use App\Models\Post;
 use App\Models\PostImage;
@@ -16,11 +16,11 @@ class PostsRepository extends BaseRepository
     public $multipleImages = [];
     public $oldDirPath;
 
-    public function create($validatedPostData)
+    public function store(array $validatedPostData)
     {
         $tagsArray = $this->returnTagsArray($validatedPostData);
         if (isset($validatedPostData['images'])) {
-            $this->returnPostImagedArray($validatedPostData);
+            $this->returnPostImagesArray($validatedPostData);
             unset($validatedPostData['images']);
         }
         unset($validatedPostData['tags']);
@@ -44,7 +44,7 @@ class PostsRepository extends BaseRepository
             $validatedPostData = $this->updateFeaturedImage($post, $validatedPostData);
         }
         if (isset($validatedPostData['images'])) {
-            $this->returnPostImagedArray($post, $validatedPostData);
+            $this->returnPostImagesArray($post, $validatedPostData);
             unset($validatedPostData['images']);
         }
         unset($validatedPostData['tags']);
@@ -66,7 +66,7 @@ class PostsRepository extends BaseRepository
         $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
         $img = Image::make($featured->getRealPath());
         $featured_save_path = public_path(Post::POST_FEATURED_PATH);
-        $img->resize(750, 450)->save($featured_save_path . '/' . $featured_new_name);
+        $img->resize(750, 450)->save($featured_save_path . DIRECTORY_SEPARATOR . $featured_new_name);
         $filename = Post::POST_FEATURED_PATH . $featured_new_name;
         $input = array_merge($validatedPostData, ['featured' => $filename]);
         return $input;
@@ -82,30 +82,32 @@ class PostsRepository extends BaseRepository
         $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
         $img = Image::make($featured->getRealPath());
         $featured_save_path = public_path(Post::POST_FEATURED_PATH);
-        $img->resize(750, 450)->save($featured_save_path . '/' . $featured_new_name);
+        $img->resize(750, 450)->save($featured_save_path . DIRECTORY_SEPARATOR . $featured_new_name);
         $filename = Post::POST_FEATURED_PATH . $featured_new_name;
         $input = array_merge($validatedPostData, ['featured' => $filename]);
         return $input;
     }
 
-    public function returnTagsArray($validatedPostData)
+    public function returnTagsArray(array $validatedPostData)
     {
         return $validatedPostData['tags'];
     }
 
-    public function returnPostImagedArray($post = null, $validatedPostData)
+    public function returnPostImagesArray($post = null, array $validatedPostData)
     {
         $this->multipleImages = $validatedPostData['images'];
-        $this->oldDirPath = public_path(Post::POST_IMAGES_PATH . $post->slug . '');
+        if ($post != null) {
+            $this->oldDirPath = public_path(Post::POST_IMAGES_PATH . $post->slug);
+        }
         return $this;
     }
 
-    public function postCreatedBy($validatedPostData)
+    public function postCreatedBy(array $validatedPostData)
     {
         return array_merge($validatedPostData, ['admin_id' => Auth::guard('admin')->user()->id]);
     }
 
-    public function generateSlug($validatedPostData)
+    public function generateSlug(array $validatedPostData)
     {
         return array_merge($validatedPostData, ['slug' => Str::slug($validatedPostData['title'], '-')]);
     }
@@ -119,8 +121,8 @@ class PostsRepository extends BaseRepository
         }
         foreach ($images as $image) {
             $image_new_name = date("Y_m_d_h_i_s") . $image->getClientOriginalName();
-            $image->move(Post::POST_IMAGES_PATH . $slug . '', $image_new_name);
-            $imageName = Post::POST_IMAGES_PATH . $slug . '/' . $image_new_name;
+            $image->move(Post::POST_IMAGES_PATH . $slug, $image_new_name);
+            $imageName = Post::POST_IMAGES_PATH . $slug . DIRECTORY_SEPARATOR . $image_new_name;
             $PostImages = PostImage::create([
                 'post_id' => $post->id,
                 'image' => $imageName
@@ -148,8 +150,8 @@ class PostsRepository extends BaseRepository
         File::makeDirectory($path, 0777, true, true);
         foreach ($images as $image) {
             $image_new_name = date("Y_m_d_h_i_s") . $image->getClientOriginalName();
-            $image->move(Post::POST_IMAGES_PATH . $slug . '', $image_new_name);
-            $imageName = Post::POST_IMAGES_PATH . $slug . '/' . $image_new_name;
+            $image->move(Post::POST_IMAGES_PATH . $slug, $image_new_name);
+            $imageName = Post::POST_IMAGES_PATH . $slug . DIRECTORY_SEPARATOR . $image_new_name;
             $PostImages = PostImage::create([
                 'post_id' => $post->id,
                 'image' => $imageName

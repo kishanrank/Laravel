@@ -22,8 +22,11 @@ class TagsExport implements FromCollection, WithHeadings
             'Id',
             'Tag',
             'Slug',
-            'created_at',
-            'updated_at'
+            'Description',
+            'Meta Title',
+            'Meta Description',
+            'Create At',
+            'Updated At'
         ];
     }
 }

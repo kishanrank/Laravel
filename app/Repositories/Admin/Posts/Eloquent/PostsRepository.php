@@ -2,19 +2,131 @@
 
 namespace App\Repositories\Admin\Posts\Eloquent;
 
+use App\Events\NewPostEvent;
 use App\Models\Post;
 use App\Models\PostImage;
-use App\Repositories\BaseRepository;
+use App\Repositories\Admin\Posts\PostRepositoryInterface;
+use App\Traits\Admin\Post\Attribute\PostAttributeTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
+use Yajra\DataTables\Facades\DataTables;
 
-class PostsRepository extends BaseRepository
+class PostsRepository implements PostRepositoryInterface
 {
+    use PostAttributeTrait;
+
     public $multipleImages = [];
     public $oldDirPath;
+    public $data;
+
+    public function all()
+    {
+        $data = DB::table('posts')
+            ->join('categories', 'posts.category_id', '=', 'categories.id')
+            ->join('admins', 'posts.admin_id', '=', 'admins.id')
+            ->whereNull('posts.deleted_at')
+            ->select('posts.featured', 'posts.title', 'posts.id', 'posts.published', 'posts.created_at', 'posts.published_at', 'categories.name', 'admins.name as auther')
+            ->get();
+
+        return DataTables::of($data)
+            ->addColumn('action', function ($data) {
+                return $this->getActionAttributes($data);
+            })
+            ->addColumn('featured', function ($data) {
+                return $this->getFeaturedAttribute($data);
+            })
+            ->addColumn('status', function ($data) {
+                return $this->getPostStatusAttribute($data);
+            })
+            ->addColumn('upload', function ($data) {
+                return $this->getPublishActionAttribute($data);
+            })
+            ->rawColumns(['action', 'status', 'upload', 'featured'])
+            ->make(true);
+    }
+
+    public function getAllPublishedPost()
+    {
+        $data = DB::table('posts')
+            ->join('categories', 'posts.category_id', '=', 'categories.id')
+            ->select('posts.featured', 'posts.title', 'posts.id', 'posts.published_at', 'categories.name')
+            ->where('posts.deleted_at', null)
+            ->where('posts.published', '=', Post::PUBLISHED)
+            ->orderBy('posts.published_at', 'asc')
+            ->get();
+
+        return DataTables::of($data)
+            ->addColumn('featured', function ($data) {
+                return $this->getFeaturedAttribute($data);
+            })
+            ->addColumn('action', function ($data) {
+                return $this->getUnpublishActionAttribute($data);
+            })
+            ->rawColumns(['featured', 'action'])
+            ->make(true);
+    }
+
+    public function getAllTrashedPost()
+    {
+        $data = DB::table('posts')
+            ->join('categories', 'posts.category_id', '=', 'categories.id')
+            ->select('posts.featured', 'posts.title', 'posts.id', 'posts.deleted_at', 'categories.name')
+            ->whereNotNull('posts.deleted_at')->get();
+
+        return DataTables::of($data)
+            ->addColumn('restore', function ($data) {
+                return $this->getRestoreActionAttribute($data);
+            })
+            ->addColumn('delete', function ($data) {
+                return $this->getKillActionAttribute($data);
+            })
+            ->addColumn('featured', function ($data) {
+                return $this->getFeaturedAttribute($data);
+            })
+            ->rawColumns(['restore', 'delete', 'featured'])
+            ->make(true);
+    }
+
+    public function kill($id)
+    {
+        $post = Post::withTrashed()->where('id', $id)->first();
+        if (!$post) {
+            return false;
+        }
+        $imagesPath = public_path(Post::POST_IMAGES_PATH . $post->slug);
+
+        if ($imagesPath) {
+            File::deleteDirectory($imagesPath);
+        }
+        Storage::delete($post->featured);
+
+        $post->tags()->detach();
+        $result = $post->forceDelete();
+        return $result;
+    }
+
+    public function restore($id)
+    {
+        $post = Post::withTrashed()->where('id', $id)->first()->restore();
+
+        return $post;
+    }
+
+    public function find($id)
+    {
+        return Post::find($id);
+    }
+
+    public function destroy($id)
+    {
+        return Post::find($id)->delete(); //returns boolean
+    }
 
     public function store(array $validatedPostData)
     {
@@ -161,5 +273,26 @@ class PostsRepository extends BaseRepository
             }
         }
         return true;
+    }
+
+    public function publishPost($id)
+    {
+        $post = Post::find($id);
+        $post->published = Post::PUBLISHED;
+        $post->published_at = Carbon::now();
+        $result = $post->save();
+        if ($result) {
+            event(new NewPostEvent($post));
+        }
+        return $result;
+    }
+
+    public function unPublishPost($id)
+    {
+        $post = Post::find($id);
+        $post->published = Post::NOT_PUBLISHED;
+        $post->published_at = NULL;
+        $result = $post->save();
+        return $result;
     }
 }

@@ -17,7 +17,7 @@ class TagsController extends ResponserController
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Tag::latest()->get();
+            $data = Tag::latest()->get(['id','tag', 'slug']);
             return DataTables::of($data)
                 ->addColumn('action', function ($data) {
                     $button = '<button type="button" name="edit" id="' . $data->id . '" class="edit btn btn-primary btn-sm mr-3"><i class="fa fa-edit"></i></button>';

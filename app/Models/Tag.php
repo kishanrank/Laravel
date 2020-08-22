@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
     protected $table = 'tags';
-    
+
     protected $fillable = ['tag', 'slug', 'description', 'meta_title', 'meta_description'];
 
     protected $hidden = ['pivot'];
@@ -22,9 +23,10 @@ class Tag extends Model
         $this->attributes['tag'] = ucfirst($value);
     }
 
-    public static function rules() {
+    public static function rules()
+    {
         return [
-            'tag' => 'required', 
+            'tag' => 'required',
             'description' => 'required'
         ];
     }

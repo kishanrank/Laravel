@@ -14,9 +14,10 @@ class CategoryExport implements FromCollection, WithHeadings
      */
     public function collection()
     {
-        // return Category::all();
         return DB::table('categories')
-            ->select('categories.*', DB::raw('DATE_FORMAT(categories.created_at, "%d-%b-%Y") as created_at'))->get();
+            ->select('id', 'name', 'slug', 'description', 'meta_title', 'meta_description', 'created_at', 'updated_at')
+            ->orderBy('id', 'asc')
+            ->get();
     }
 
     public function headings(): array
@@ -28,8 +29,8 @@ class CategoryExport implements FromCollection, WithHeadings
             'Description',
             'Meta Title',
             'Meta Description',
-            'created_at',
-            'updated_at'
+            'Created At',
+            'Updated At'
         ];
     }
 }

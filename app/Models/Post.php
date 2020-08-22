@@ -54,20 +54,6 @@ class Post extends Model
         return $this->hasMany(PostImage::class);
     }
 
-    public static function rules($id = 0, $extrafields = [])
-    {
-        return array_merge(
-            [
-                'title' => 'required|max:512|unique:posts,title' . ($id ? ",$id" : ''),
-                'info' => 'required|min:25',
-                'content' => 'required|min:100',
-                'category_id' => 'required',
-                'tags' => 'required'
-            ],
-            $extrafields
-        );
-    }
-
     public function isPublished()
     {
         if ($this->published) {

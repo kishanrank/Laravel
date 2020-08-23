@@ -16,10 +16,11 @@ class CategoryImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         $categories = Category::all()->pluck('name')->toArray();
-        if (!in_array($row['name'], $categories)){
+        if (!in_array($row['name'], $categories)) {
             return new Category([
                 'name' => $row['name'],
-                'slug' => $row['slug']
+                'slug' => $row['slug'],
+                'description' => $row['description']
             ]);
         }
         return;

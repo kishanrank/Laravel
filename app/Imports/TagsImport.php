@@ -19,7 +19,8 @@ class TagsImport implements ToModel, WithHeadingRow
         if (!in_array($row['tag'], $tags)){
             return new Tag([
                 'tag' => $row['tag'],
-                'slug' => $row['slug']
+                'slug' => $row['slug'],
+                'description' => $row['description']
             ]);
         }
         return;       

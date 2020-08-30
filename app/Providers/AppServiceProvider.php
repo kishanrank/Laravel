@@ -32,5 +32,13 @@ class AppServiceProvider extends ServiceProvider
         View::composer(['front.includes.rightsidebar', 'front.index'], SideWidgetComposer::class);
         View::composer(['front.index', 'front.includes.rightsidebar'], MostReadComposer::class);
         View::composer(['admin.includes.sidebar'], AdminSideBarComposer::class);
+
+        // DB::listen(function($query) {
+        //     Log::info(
+        //         $query->sql,
+        //         $query->bindings,
+        //         $query->time
+        //     );
+        // });
     }
 }

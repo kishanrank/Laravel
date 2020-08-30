@@ -20,8 +20,8 @@ class News extends Model
 
     protected $fillable = ['admin_id', 'title', 'info', 'featured', 'content', 'slug', 'meta_title', 'meta_descrption'];
 
-    public function user() {
-        return $this->belongsTo(User::class);
+    public function admin() {
+        return $this->belongsTo(Admin::class);
     }
 
     public static function rules($id = 0, $extrafield = []) {

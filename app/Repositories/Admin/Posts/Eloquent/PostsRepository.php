@@ -176,7 +176,7 @@ class PostsRepository implements PostRepositoryInterface
     {
         $featured = $validatedPostData['featured'];
         $featured_new_name = date("Y_m_d_h_i_s") . $featured->getClientOriginalName();
-        $img = Image::make($featured->getRealPath());
+        $img = Image::make($featured->getRealPath()); //Image::configure(array('driver' => 'imagick'));
         $featured_save_path = public_path(Post::POST_FEATURED_PATH);
         $img->resize(750, 450)->save($featured_save_path . DIRECTORY_SEPARATOR . $featured_new_name);
         $filename = Post::POST_FEATURED_PATH . $featured_new_name;

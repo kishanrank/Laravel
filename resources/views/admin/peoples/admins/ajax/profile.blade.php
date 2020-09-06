@@ -16,7 +16,7 @@
         $('#update_admin_password_form').on('submit', function(event) {
             event.preventDefault();
             $.ajax({
-                url: "{{ route('admin.password.update')}}",
+                url: "{{ route('admin.password.change')}}",
                 method: 'POST',
                 data: $(this).serialize(),
                 dataType: 'JSON',

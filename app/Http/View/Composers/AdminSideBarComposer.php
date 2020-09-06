@@ -2,7 +2,6 @@
 
 namespace App\Http\View\Composers;
 
-use App\Models\Category;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;

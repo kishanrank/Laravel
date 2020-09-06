@@ -63,6 +63,7 @@
                     orderable: false
                 }
             ],
+            "order":[[0, 'desc']],
             columnDefs: [{
                 'searchable': false,
                 'targets': [8, 9],

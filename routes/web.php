@@ -59,7 +59,7 @@ Route::group(
         Route::delete('/users/destroy/{user}', 'UsersController@destroy')->name('users.destroy');
 
         Route::get('/account/profile', 'ProfileController@index')->name('admin.profile');
-        Route::post('/profile/password/update', 'ProfileController@updatePassword')->name('admin.password.update');
+        Route::post('/profile/password/update', 'ProfileController@updatePassword')->name('admin.password.change');
         Route::put('/account/profile/update', 'ProfileController@update')->name('admin.profile.update');
         Route::resource('admins', 'AdminController');
 

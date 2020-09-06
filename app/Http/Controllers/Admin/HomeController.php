@@ -14,8 +14,8 @@ class HomeController extends ResponserController
     
     public function index()
     {
-        $this->data['category'] = Category::all()->count();
-        $this->data['tag'] = Tag::all()->count();
+        $this->data['category'] = Category::count();
+        $this->data['tag'] = Tag::count();
         $this->data['published_posts'] = Post::wherePublished(1)->whereNull('deleted_at')->count();
         $this->data['subscribers'] = Subscriber::all()->count();
         return view('admin.home', ['data' => $this->data]);

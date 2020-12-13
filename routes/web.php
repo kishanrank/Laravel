@@ -117,3 +117,7 @@ Route::group(
         Route::get('/inbox/id/{id}', 'InboxController@show')->name('inbox.show');
     }
 );
+
+Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth:admin']], function () {
+    \UniSharp\LaravelFilemanager\Lfm::routes();
+});

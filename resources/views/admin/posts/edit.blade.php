@@ -161,8 +161,16 @@
 @section('script')
 <script src="{{ URL::asset('js/admin/ckeditor/ckeditor.js') }}"></script>
 <script>
-    CKEDITOR.replace('content');
-    CKEDITOR.replace('info');
+  var options = {
+    filebrowserImageBrowseUrl: '/laravel-filemanager?type=Images',
+    filebrowserImageUploadUrl: '/laravel-filemanager/upload?type=Images&_token=',
+    filebrowserBrowseUrl: '/laravel-filemanager?type=Files',
+    filebrowserUploadUrl: '/laravel-filemanager/upload?type=Files&_token='
+  };
+</script>
+<script>
+    CKEDITOR.replace('content', options);
+    CKEDITOR.replace('info', options);
 </script>
 @include('admin.includes.toastr')
 @endsection
